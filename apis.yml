@@ -1,0 +1,83 @@
+---
+aid: kings-college-london
+name: King's College London
+description: >-
+  King's College London (KCL) is a public research university in London, United
+  Kingdom, ranked #41 in the QS World University Rankings 2025. Like most
+  research universities, King's does not operate a centralized public developer
+  portal; its machine-readable footprint is concentrated in research and library
+  infrastructure. The King's Research Portal (Pure) exposes a live OAI-PMH
+  metadata interface, and the King's research data repository is hosted on
+  Figshare, which provides a public REST API and OAI-PMH endpoint. King's also
+  runs an e-Research group with a large public GitHub organization.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/kings-college-london/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research
+  - Open Data
+  - OAI-PMH
+  - Library
+  - United Kingdom
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: kings-college-london:pure-oai
+    name: King's Research Portal (Pure) OAI-PMH
+    description: >-
+      OAI-PMH metadata harvesting interface for the King's Research Portal,
+      the front end of Pure, King's research information system and
+      institutional repository. The interface returns a live OAI-PMH response
+      (repositoryName "Pure OAI Repository") supporting standard verbs such as
+      Identify, ListRecords and ListMetadataFormats over an OpenAIRE CERIF
+      profile.
+    humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
+    baseURL: https://kclpure.kcl.ac.uk/ws/oai
+    tags: [ Research, OAI-PMH, Repository, Metadata, Pure ]
+    properties:
+      - type: Documentation
+        url: https://www.kcl.ac.uk/research/explore/kings-research-portal
+      - type: Website
+        url: https://kclpure.kcl.ac.uk/portal/
+  - aid: kings-college-london:figshare-repository
+    name: King's College London Research Repository (Figshare)
+    description: >-
+      King's research data repository hosted on Figshare. Public access to the
+      repository's records is available through the Figshare public REST API
+      (api.figshare.com/v2) and a Figshare OAI-PMH endpoint, both of which
+      return live responses. The KCL-branded repository front end is at
+      kcl.figshare.com.
+    humanURL: https://kcl.figshare.com/
+    baseURL: https://api.figshare.com/v2
+    tags: [ Research Data, Repository, Figshare, OAI-PMH, REST ]
+    properties:
+      - type: Documentation
+        url: https://docs.figshare.com/
+      - type: Website
+        url: https://kcl.figshare.com/
+common:
+  - type: Website
+    url: https://www.kcl.ac.uk/
+  - type: GitHub
+    url: https://github.com/kcl-eresearch
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/king's-college-london/
+  - type: DeveloperPortal
+    url: https://docs.er.kcl.ac.uk/
+  - type: Plans
+    url: plans/kings-college-london-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/kings-college-london-rate-limits.yml
+  - type: FinOps
+    url: finops/kings-college-london-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

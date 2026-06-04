@@ -1,0 +1,46 @@
+---
+name: King's College London
+description: King's College London public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/kings-college-london/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      King's College London has no centralized public developer portal. Its
+      verifiable machine-readable footprint is research and library
+      infrastructure: the King's Research Portal (Pure) returns a live OAI-PMH
+      response (HTTP 200, repositoryName "Pure OAI Repository"), and the King's
+      research data repository is hosted on Figshare, whose public REST API and
+      OAI-PMH endpoints both responded 200. The e-Research GitHub org
+      (kcl-eresearch, ~86 repos) was confirmed. No endpoints were fabricated;
+      only URLs that resolved live are cataloged.
+    endpoints:
+      - url: https://kclpure.kcl.ac.uk/ws/oai?verb=Identify
+        status: 200
+        note: Live Pure OAI-PMH Identify response (OpenAIRE CERIF profile).
+      - url: https://kclpure.kcl.ac.uk/ws/OAIHandler?verb=Identify
+        status: 405
+        note: Legacy/alternate OAI path returns 405; canonical path is /ws/oai.
+      - url: https://kclpure.kcl.ac.uk/portal/
+        status: 200
+        note: King's Research Portal (Pure) front end.
+      - url: https://kcl.figshare.com/
+        status: 202
+        note: KCL-branded Figshare research repository front end.
+      - url: https://api.figshare.com/v2/articles?page_size=1
+        status: 200
+        note: Figshare public REST API backing the repository.
+      - url: https://api.figshare.com/v2/oai?verb=Identify
+        status: 200
+        note: Figshare OAI-PMH endpoint for metadata harvesting.
+      - url: https://docs.er.kcl.ac.uk/
+        status: 200
+        note: King's e-Research documentation portal (gated tools/infrastructure).
+      - url: https://github.com/kcl-eresearch
+        status: 200
+        note: Official King's e-Research GitHub organization (~86 repos).
+      - url: https://www.kcl.ac.uk/
+        status: 200
+        note: Official institutional website.
