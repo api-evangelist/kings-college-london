@@ -1,0 +1,53 @@
+---
+# Spectral ruleset encoding patterns observed in the Figshare API used by the
+# King's College London research repository (api.figshare.com/v2).
+formats:
+  - oas3
+extends:
+  - "spectral:oas"
+rules:
+  kcl-info-contact:
+    description: API info object should declare a contact, as Figshare does.
+    severity: warn
+    given: "$.info"
+    then:
+      field: contact
+      function: truthy
+  kcl-info-license:
+    description: API info object should declare a license.
+    severity: warn
+    given: "$.info"
+    then:
+      field: license
+      function: truthy
+  kcl-server-figshare-v2:
+    description: Server URL should be the public Figshare v2 base URL.
+    severity: warn
+    given: "$.servers[*].url"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://api\\.figshare\\.com/v2"
+  kcl-article-doi-present:
+    description: Article schema should expose a doi property (research items are DOI-minted).
+    severity: warn
+    given: "$.components.schemas.Article.properties"
+    then:
+      field: doi
+      function: truthy
+  kcl-identifier-integer:
+    description: Object id properties are integers in the Figshare model.
+    severity: info
+    given: "$.components.schemas[*].properties.id"
+    then:
+      field: type
+      function: pattern
+      functionOptions:
+        match: "integer"
+  kcl-operation-description:
+    description: Every operation should carry a description.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: description
+      function: truthy

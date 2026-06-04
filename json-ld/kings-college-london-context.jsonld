@@ -1,0 +1,56 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "kcl": "https://www.kcl.ac.uk/ns#",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "CollegeOrUniversity": "schema:CollegeOrUniversity",
+    "institution": {
+      "@id": "kcl:institution",
+      "@type": "schema:CollegeOrUniversity"
+    },
+
+    "Article": {
+      "@id": "kcl:Article",
+      "@context": {
+        "id": "schema:identifier",
+        "title": "schema:name",
+        "doi": { "@id": "kcl:doi" },
+        "handle": { "@id": "kcl:handle" },
+        "url": { "@id": "schema:url", "@type": "@id" },
+        "url_public_html": { "@id": "kcl:urlPublicHtml", "@type": "@id" },
+        "url_public_api": { "@id": "kcl:urlPublicApi", "@type": "@id" },
+        "thumb": { "@id": "schema:thumbnailUrl", "@type": "@id" },
+        "defined_type_name": "schema:additionalType",
+        "published_date": { "@id": "schema:datePublished" },
+        "created_date": { "@id": "schema:dateCreated" },
+        "authors": { "@id": "schema:author", "@container": "@set" }
+      }
+    },
+    "Collection": {
+      "@id": "kcl:Collection",
+      "@context": {
+        "id": "schema:identifier",
+        "title": "schema:name",
+        "doi": { "@id": "kcl:doi" },
+        "handle": { "@id": "kcl:handle" },
+        "url": { "@id": "schema:url", "@type": "@id" }
+      }
+    },
+    "Author": {
+      "@id": "schema:Person",
+      "@context": {
+        "id": "schema:identifier",
+        "full_name": "schema:name",
+        "first_name": "schema:givenName",
+        "last_name": "schema:familyName",
+        "orcid_id": { "@id": "kcl:orcid" }
+      }
+    }
+  },
+  "@type": "CollegeOrUniversity",
+  "name": "King's College London",
+  "url": "https://www.kcl.ac.uk/"
+}

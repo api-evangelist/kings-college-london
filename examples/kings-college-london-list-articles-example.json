@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1434614,
+    "title": "Test article title",
+    "doi": "10.6084/m9.figshare.1434614",
+    "handle": "111184/figshare.1234",
+    "url": "https://api.figshare.com/v2/articles/1434614",
+    "url_public_html": "https://figshare.com/articles/media/Test_article_title/1434614",
+    "url_public_api": "https://api.figshare.com/v2/articles/1434614",
+    "url_private_html": "https://figshare.com/account/articles/1434614",
+    "url_private_api": "https://api.figshare.com/v2/account/articles/1434614",
+    "timeline": {
+      "posted": "2015-06-01T00:00:00Z",
+      "firstOnline": "2015-06-01T00:00:00Z"
+    },
+    "thumb": "https://ndownloader.figshare.com/files/2000003/preview/2000003/thumb.png",
+    "defined_type": 3,
+    "defined_type_name": "media",
+    "group_id": 1234,
+    "resource_title": "Resource title",
+    "resource_doi": "10.6084/m9.figshare.resource.1434614",
+    "published_date": "2015-06-01T00:00:00Z"
+  }
+]

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kings-college-london/main/json-schema/kings-college-london-article-schema.json",
+  "title": "Figshare Article",
+  "description": "A public research item (article) as returned by the Figshare public REST API used by the King's College London research repository.",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "doi",
+    "handle",
+    "url",
+    "url_public_html",
+    "url_public_api",
+    "url_private_html",
+    "url_private_api",
+    "timeline",
+    "thumb",
+    "defined_type",
+    "defined_type_name",
+    "resource_title",
+    "resource_doi",
+    "created_date"
+  ],
+  "properties": {
+    "id": { "type": "integer", "description": "Unique identifier for article" },
+    "title": { "type": "string", "description": "Title of article" },
+    "doi": { "type": "string", "description": "DOI" },
+    "handle": { "type": "string", "description": "Handle" },
+    "url": { "type": "string", "format": "uri", "description": "Api endpoint for article" },
+    "url_public_html": { "type": "string", "format": "uri", "description": "Public site endpoint for article" },
+    "url_public_api": { "type": "string", "format": "uri", "description": "Public Api endpoint for article" },
+    "url_private_html": { "type": "string", "format": "uri", "description": "Private site endpoint for article" },
+    "url_private_api": { "type": "string", "format": "uri", "description": "Private Api endpoint for article" },
+    "thumb": { "type": "string", "description": "Thumbnail image" },
+    "defined_type": { "type": "integer", "description": "Type id of the article" },
+    "defined_type_name": { "type": "string", "description": "Name of the article type" },
+    "group_id": { "type": "integer", "description": "Group id of the article owner" },
+    "resource_title": { "type": "string", "description": "Title of the associated resource" },
+    "resource_doi": { "type": "string", "description": "DOI of the associated resource" },
+    "published_date": { "type": "string", "description": "Date when the article was published" },
+    "created_date": { "type": "string", "description": "Date when the article was created" },
+    "timeline": {
+      "type": "object",
+      "description": "Important dates in the lifecycle of the article",
+      "properties": {
+        "posted": { "type": "string" },
+        "firstOnline": { "type": "string" },
+        "revision": { "type": "string" },
+        "submission": { "type": "string" },
+        "publisherPublication": { "type": "string" },
+        "publisherAcceptance": { "type": "string" }
+      }
+    }
+  }
+}

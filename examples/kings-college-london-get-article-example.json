@@ -1,0 +1,49 @@
+{
+  "id": 1434614,
+  "title": "Test article title",
+  "doi": "10.6084/m9.figshare.1434614",
+  "handle": "111184/figshare.1234",
+  "url": "https://api.figshare.com/v2/articles/1434614",
+  "url_public_html": "https://figshare.com/articles/media/Test_article_title/1434614",
+  "url_public_api": "https://api.figshare.com/v2/articles/1434614",
+  "url_private_html": "https://figshare.com/account/articles/1434614",
+  "url_private_api": "https://api.figshare.com/v2/account/articles/1434614",
+  "figshare_url": "https://figshare.com/articles/media/Test_article_title/1434614",
+  "download_disabled": false,
+  "thumb": "https://ndownloader.figshare.com/files/2000003/preview/2000003/thumb.png",
+  "defined_type": 3,
+  "defined_type_name": "media",
+  "resource_title": "Resource title",
+  "resource_doi": "10.6084/m9.figshare.resource.1434614",
+  "published_date": "2015-06-01T00:00:00Z",
+  "created_date": "2015-05-01T00:00:00Z",
+  "timeline": {
+    "posted": "2015-06-01T00:00:00Z",
+    "firstOnline": "2015-06-01T00:00:00Z",
+    "submission": "2015-05-15T00:00:00Z"
+  },
+  "authors": [
+    {
+      "id": 97657,
+      "full_name": "John Doe",
+      "first_name": "John",
+      "last_name": "Doe",
+      "is_active": true,
+      "url_name": "John_Doe",
+      "orcid_id": "1234-5678-9123-1234"
+    }
+  ],
+  "files": [
+    {
+      "id": 2000003,
+      "name": "dataset.csv",
+      "size": 14638,
+      "is_link_only": false,
+      "download_url": "https://ndownloader.figshare.com/files/2000003",
+      "computed_md5": "5b3f7e2a1c9d4e6f8a0b2c4d6e8f0a12"
+    }
+  ],
+  "custom_fields": [],
+  "embargo_options": [],
+  "folder_structure": {}
+}

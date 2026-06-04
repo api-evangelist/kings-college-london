@@ -1,0 +1,63 @@
+---
+vocabulary:
+  name: King's College London Research Repository Vocabulary
+  description: >-
+    Controlled vocabulary of the core terms used by the Figshare public REST API
+    that powers the King's College London research data repository
+    (kcl.figshare.com), plus the OAI-PMH research metadata interface of the
+    King's Research Portal (Pure). Definitions are derived from the live
+    Figshare OpenAPI 3.0.3 specification.
+  version: "1.0.0"
+  terms:
+    - term: Article
+      definition: >-
+        A single published research item (dataset, paper, media, figure, poster
+        and similar) in the repository, identified by an integer id and a DOI.
+      tags: [ figshare, core, research-output ]
+    - term: Collection
+      definition: >-
+        A curated grouping of related research items, identified by an integer id,
+        DOI and handle.
+      tags: [ figshare, core ]
+    - term: Author
+      definition: >-
+        A contributor to a research item, with full name, ORCID identifier and an
+        active flag indicating whether they have published items.
+      tags: [ figshare, people ]
+    - term: Category
+      definition: >-
+        A taxonomy classification applied to research items, with a parent id and
+        a path of ancestor ids in a standard subject taxonomy.
+      tags: [ figshare, taxonomy ]
+    - term: Timeline
+      definition: >-
+        The set of important lifecycle dates for a research item, including posted,
+        firstOnline, submission and revision timestamps.
+      tags: [ figshare, dates ]
+    - term: DOI
+      definition: >-
+        Digital Object Identifier minted for an article or collection, used as the
+        persistent citation handle for the research output.
+      tags: [ identifier, persistent ]
+    - term: Handle
+      definition: >-
+        A Handle System persistent identifier assigned to articles and collections.
+      tags: [ identifier, persistent ]
+    - term: ORCID
+      definition: >-
+        Open Researcher and Contributor ID assigned to an author for unambiguous
+        attribution across systems.
+      tags: [ identifier, people ]
+    - term: OAI-PMH
+      definition: >-
+        Open Archives Initiative Protocol for Metadata Harvesting, used by the
+        King's Research Portal (Pure) and the Figshare endpoint to expose record
+        metadata to harvesters via verbs such as Identify, ListRecords and
+        ListMetadataFormats.
+      tags: [ pure, harvesting, metadata, protocol ]
+    - term: Pure
+      definition: >-
+        Elsevier's research information system that backs the King's Research
+        Portal, the institutional repository front end exposing an OAI-PMH
+        interface over an OpenAIRE CERIF profile.
+      tags: [ pure, repository ]

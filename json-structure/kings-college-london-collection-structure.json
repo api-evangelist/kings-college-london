@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kings-college-london/main/json-structure/kings-college-london-collection-structure.json",
+  "name": "Collection",
+  "description": "JSON Structure for a Figshare collection in the King's College London research repository.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "int64", "description": "Collection id" },
+    "title": { "type": "string", "description": "Collection title" },
+    "doi": { "type": "string", "description": "Collection DOI" },
+    "handle": { "type": "string", "description": "Collection Handle" },
+    "url": { "type": "uri", "description": "Api endpoint" },
+    "timeline": {
+      "type": "object",
+      "description": "Important dates in the lifecycle of the collection",
+      "properties": {
+        "posted": { "type": "string" },
+        "firstOnline": { "type": "string" },
+        "revision": { "type": "string" },
+        "submission": { "type": "string" }
+      }
+    }
+  },
+  "required": ["id", "title", "doi", "handle", "url", "timeline"]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kings-college-london/main/json-schema/kings-college-london-collection-schema.json",
+  "title": "Figshare Collection",
+  "description": "A public collection of research items as returned by the Figshare public REST API used by the King's College London research repository.",
+  "type": "object",
+  "required": ["id", "title", "doi", "handle", "url", "timeline"],
+  "properties": {
+    "id": { "type": "integer", "description": "Collection id" },
+    "title": { "type": "string", "description": "Collection title" },
+    "doi": { "type": "string", "description": "Collection DOI" },
+    "handle": { "type": "string", "description": "Collection Handle" },
+    "url": { "type": "string", "format": "uri", "description": "Api endpoint" },
+    "timeline": {
+      "type": "object",
+      "description": "Important dates in the lifecycle of the collection",
+      "properties": {
+        "posted": { "type": "string" },
+        "firstOnline": { "type": "string" },
+        "revision": { "type": "string" },
+        "submission": { "type": "string" }
+      }
+    }
+  }
+}

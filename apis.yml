@@ -61,6 +61,14 @@ apis:
         url: https://docs.figshare.com/
       - type: Website
         url: https://kcl.figshare.com/
+      - type: OpenAPI
+        url: openapi/kings-college-london-figshare-repository.yaml
+      - type: x-json-schema
+        url: json-schema/kings-college-london-article-schema.json
+      - type: x-vocabulary
+        url: vocabulary/kings-college-london-vocabulary.yml
+      - type: x-spectral-rules
+        url: rules/kings-college-london-rules.yml
 common:
   - type: Website
     url: https://www.kcl.ac.uk/
@@ -78,6 +86,8 @@ common:
     url: finops/kings-college-london-finops.yml
   - type: Review
     url: review.yml
+  - type: x-json-ld
+    url: json-ld/kings-college-london-context.jsonld
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

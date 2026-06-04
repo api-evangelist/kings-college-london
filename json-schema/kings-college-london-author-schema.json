@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kings-college-london/main/json-schema/kings-college-london-author-schema.json",
+  "title": "Figshare Author",
+  "description": "An author of a research item as returned by the Figshare public REST API used by the King's College London research repository.",
+  "type": "object",
+  "required": ["id", "full_name", "first_name", "last_name", "is_active", "url_name", "orcid_id"],
+  "properties": {
+    "id": { "type": "integer", "description": "Author id" },
+    "full_name": { "type": "string", "description": "Author full name" },
+    "first_name": { "type": "string", "description": "Author first name" },
+    "last_name": { "type": "string", "description": "Author last name" },
+    "is_active": { "type": "boolean", "description": "True if author has published items" },
+    "url_name": { "type": "string", "description": "Author url name" },
+    "orcid_id": { "type": "string", "description": "Author ORCID identifier" }
+  }
+}
