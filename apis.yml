@@ -70,6 +70,10 @@ apis:
       - type: x-spectral-rules
         url: rules/kings-college-london-rules.yml
 common:
+  - type: DomainSecurity
+    url: security/kings-college-london-domain-security.yml
+  - type: Authentication
+    url: authentication/kings-college-london-authentication.yml
   - type: OAuthScopes
     url: scopes/kings-college-london-scopes.yml
   - type: Website
