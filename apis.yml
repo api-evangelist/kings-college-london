@@ -70,6 +70,8 @@ apis:
       - type: x-spectral-rules
         url: rules/kings-college-london-rules.yml
 common:
+  - type: OAuthScopes
+    url: scopes/kings-college-london-scopes.yml
   - type: Website
     url: https://www.kcl.ac.uk/
   - type: GitHub
@@ -88,6 +90,8 @@ common:
     url: review.yml
   - type: x-json-ld
     url: json-ld/kings-college-london-context.jsonld
+  - url: https://www.kcl.ac.uk/news
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

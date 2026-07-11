@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/kings-college-london-figshare-repository.yaml
+schemes:
+- name: OAuth2
+  source: openapi/kings-college-london-figshare-repository.yaml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://figshare.com/account/applications/authorize
+    tokenUrl: https://api.figshare.com/v2/token
+scopes:
+- scope: all
+  description: Grants all access
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/kings-college-london-figshare-repository.yaml
