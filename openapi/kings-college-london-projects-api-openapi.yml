@@ -1,0 +1,2971 @@
+openapi: 3.0.3
+info:
+  title: Figshare altmetric projects API
+  description: Figshare API v2 - Full REST API documentation for managing articles, collections, projects and more.
+  version: '2.0'
+  contact:
+    name: Figshare Support
+    url: https://support.figshare.com/support/home
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://api.figshare.com/v2
+tags:
+- name: projects
+paths:
+  /projects:
+    get:
+      tags:
+      - projects
+      summary: Public Projects
+      description: Returns a list of public projects
+      operationId: projects_list
+      parameters:
+      - name: X-Cursor
+        in: header
+        description: Unique hash used for bypassing the item retrieval limit of 9,000 entities. When using this parameter, please note that the offset parameter will not be available, but the limit parameter will still work as expected.
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page number. Used for pagination with page_size
+        schema:
+          maximum: 5000
+          minimum: 1
+          type: integer
+      - name: page_size
+        in: query
+        description: The number of results included on a page. Used for pagination with page
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          default: 10
+      - name: limit
+        in: query
+        description: Number of results included on a page. Used for pagination with query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - name: offset
+        in: query
+        description: Where to start the listing (the offset of the first result). Used for pagination with limit
+        schema:
+          maximum: 5000
+          minimum: 0
+          type: integer
+      - name: order
+        in: query
+        description: The field by which to order. Default varies by endpoint/resource.
+        schema:
+          type: string
+          default: published_date
+          enum:
+          - published_date
+          - modified_date
+          - views
+      - name: order_direction
+        in: query
+        schema:
+          type: string
+          default: desc
+          enum:
+          - asc
+          - desc
+      - name: institution
+        in: query
+        description: only return collections from this institution
+        schema:
+          type: integer
+      - name: published_since
+        in: query
+        description: Filter by article publishing date. Will only return articles published after the date. date(ISO 8601) YYYY-MM-DD
+        schema:
+          type: string
+      - name: group
+        in: query
+        description: only return collections from this group
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK. An array of projects
+          headers:
+            X-Cursor:
+              description: Unique hash used for bypassing the item retrieval limit of 9,000 entities.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+        '400':
+          description: Bad Request
+          content: {}
+        '422':
+          description: Bad Request
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security: []
+  /projects/search:
+    post:
+      tags:
+      - projects
+      summary: Public Projects Search
+      description: Returns a list of public articles
+      operationId: projects_search
+      parameters:
+      - name: X-Cursor
+        in: header
+        description: Unique hash used for bypassing the item retrieval limit of 9,000 entities. When using this parameter, please note that the offset parameter will not be available, but the limit parameter will still work as expected.
+        schema:
+          type: string
+      requestBody:
+        description: Search Parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectsSearch'
+        required: false
+      responses:
+        '200':
+          description: OK. An array of projects
+          headers:
+            X-Cursor:
+              description: Unique hash used for bypassing the item retrieval limit of 9,000 entities.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+        '400':
+          description: Bad Request
+          content: {}
+        '422':
+          description: Bad Request
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security: []
+      x-codegen-request-body-name: search
+  /projects/{project_id}:
+    get:
+      tags:
+      - projects
+      summary: Public Project
+      description: View a project
+      operationId: project_details
+      parameters:
+      - name: project_id
+        in: path
+        description: Project Unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. Project representation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectComplete'
+        '400':
+          description: Bad Request
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security: []
+  /projects/{project_id}/articles:
+    get:
+      tags:
+      - projects
+      summary: Public Project Articles
+      description: List articles in project
+      operationId: project_articles
+      parameters:
+      - name: project_id
+        in: path
+        description: Project Unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: page
+        in: query
+        description: Page number. Used for pagination with page_size
+        schema:
+          maximum: 5000
+          minimum: 1
+          type: integer
+      - name: page_size
+        in: query
+        description: The number of results included on a page. Used for pagination with page
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          default: 10
+      - name: limit
+        in: query
+        description: Number of results included on a page. Used for pagination with query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - name: offset
+        in: query
+        description: Where to start the listing (the offset of the first result). Used for pagination with limit
+        schema:
+          maximum: 5000
+          minimum: 0
+          type: integer
+      responses:
+        '200':
+          description: OK. Project articles list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+        '400':
+          description: Bad Request
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security: []
+  /account/projects/search:
+    post:
+      tags:
+      - projects
+      summary: Private Projects search
+      description: Search inside the private projects
+      operationId: private_projects_search
+      requestBody:
+        description: Search Parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectsSearch'
+        required: false
+      responses:
+        '200':
+          description: OK. An array of projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectPrivate'
+        '400':
+          description: Bad Request
+          content: {}
+        '422':
+          description: Bad Request
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security: []
+      x-codegen-request-body-name: search
+  /account/projects:
+    get:
+      tags:
+      - projects
+      summary: Private Projects
+      description: List private projects
+      operationId: private_projects_list
+      parameters:
+      - name: page
+        in: query
+        description: Page number. Used for pagination with page_size
+        schema:
+          maximum: 5000
+          minimum: 1
+          type: integer
+      - name: page_size
+        in: query
+        description: The number of results included on a page. Used for pagination with page
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          default: 10
+      - name: limit
+        in: query
+        description: Number of results included on a page. Used for pagination with query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - name: offset
+        in: query
+        description: Where to start the listing (the offset of the first result). Used for pagination with limit
+        schema:
+          maximum: 5000
+          minimum: 0
+          type: integer
+      - name: order
+        in: query
+        description: The field by which to order.
+        schema:
+          type: string
+          default: published_date
+          enum:
+          - published_date
+          - modified_date
+          - views
+      - name: order_direction
+        in: query
+        schema:
+          type: string
+          default: desc
+          enum:
+          - asc
+          - desc
+      - name: storage
+        in: query
+        description: only return collections from this institution
+        schema:
+          type: string
+          enum:
+          - group
+          - individual
+      - name: roles
+        in: query
+        description: 'Any combination of owner, collaborator, viewer separated by comma. Examples: "owner" or "owner,collaborator".'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK. An array of projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectPrivate'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+    post:
+      tags:
+      - projects
+      summary: Create project
+      description: Create a new project
+      operationId: private_project_create
+      requestBody:
+        description: Project  description
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCreate'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProjectResponse'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project
+      x-codegen-request-body-name: Project
+  /account/projects/{project_id}:
+    get:
+      tags:
+      - projects
+      summary: View project details
+      description: View a private project
+      operationId: private_project_details
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. Project representation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectCompletePrivate'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project
+    put:
+      tags:
+      - projects
+      summary: Update project
+      description: Updating an project by passing body parameters.
+      operationId: private_project_update
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: Project description
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectUpdate'
+        required: true
+      responses:
+        '205':
+          description: Reset Content
+          headers:
+            Location:
+              description: Location of project
+              schema:
+                type: string
+                format: link
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project
+      x-codegen-request-body-name: Project
+    delete:
+      tags:
+      - projects
+      summary: Delete project
+      description: 'A project can be deleted only if: - it is not public - it does not have public articles.
+
+
+        When an individual project is deleted, all the articles are moved to my data of each owner.
+
+
+        When a group project is deleted, all the articles and files are deleted as well. Only project owner, group admin and above can delete a project.
+
+        '
+      operationId: private_project_delete
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '204':
+          description: No Content
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project
+    patch:
+      tags:
+      - projects
+      summary: Partially update project
+      description: Partially update a project; only provided fields will be changed.
+      operationId: private_project_partial_update
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: Fields to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectUpdate'
+        required: false
+      responses:
+        '205':
+          description: Reset Content
+          headers:
+            Location:
+              description: Location of project
+              schema:
+                type: string
+                format: link
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project
+      x-codegen-request-body-name: Project
+  /account/projects/{project_id}/publish:
+    post:
+      tags:
+      - projects
+      summary: Private Project Publish
+      description: Publish a project. Possible after all items inside it are public
+      operationId: private_project_publish
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+  /account/projects/{project_id}/notes:
+    get:
+      tags:
+      - projects
+      summary: List project notes
+      description: List project notes
+      operationId: private_project_notes_list
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: page
+        in: query
+        description: Page number. Used for pagination with page_size
+        schema:
+          maximum: 5000
+          minimum: 1
+          type: integer
+      - name: page_size
+        in: query
+        description: The number of results included on a page. Used for pagination with page
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          default: 10
+      - name: limit
+        in: query
+        description: Number of results included on a page. Used for pagination with query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - name: offset
+        in: query
+        description: Where to start the listing (the offset of the first result). Used for pagination with limit
+        schema:
+          maximum: 5000
+          minimum: 0
+          type: integer
+      responses:
+        '200':
+          description: OK. List of project notes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectNote'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Notes
+    post:
+      tags:
+      - projects
+      summary: Create project note
+      description: Create a new project note
+      operationId: private_project_notes_create
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: Note message
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectNoteCreate'
+        required: true
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              description: Location note
+              schema:
+                type: string
+                format: url
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Notes
+      x-codegen-request-body-name: Note
+  /account/projects/{project_id}/notes/{note_id}:
+    get:
+      tags:
+      - projects
+      summary: Project note details
+      operationId: private_project_note
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: note_id
+        in: path
+        description: Note unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. Note representation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectNotePrivate'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Notes
+    put:
+      tags:
+      - projects
+      summary: Update project note
+      operationId: private_project_note_update
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: note_id
+        in: path
+        description: Note unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: Note message
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectNoteCreate'
+        required: true
+      responses:
+        '205':
+          description: Reset Content
+          headers:
+            Location:
+              description: Location note
+              schema:
+                type: string
+                format: url
+          content: {}
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Notes
+      x-codegen-request-body-name: Note
+    delete:
+      tags:
+      - projects
+      summary: Delete project note
+      operationId: private_project_note_delete
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: note_id
+        in: path
+        description: Note unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '204':
+          description: No Content
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Notes
+  /account/projects/{project_id}/leave:
+    post:
+      tags:
+      - projects
+      summary: Private Project Leave
+      description: 'Please note: project''s owner cannot leave the project.'
+      operationId: private_project_leave
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '204':
+          description: No Content
+          content: {}
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Collaborators
+  /account/projects/{project_id}/collaborators:
+    get:
+      tags:
+      - projects
+      summary: List project collaborators
+      description: List Project collaborators and invited users
+      operationId: private_project_collaborators_list
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. List of Collaborators
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectCollaborator'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Collaborators
+    post:
+      tags:
+      - projects
+      summary: Invite project collaborators
+      description: Invite users to collaborate on project or view the project
+      operationId: private_project_collaborators_invite
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: viewer or collaborator role. User user_id or email of user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCollaboratorInvite'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Collaborators
+      x-codegen-request-body-name: Collaborator
+  /account/projects/{project_id}/collaborators/{user_id}:
+    delete:
+      tags:
+      - projects
+      summary: Remove project collaborator
+      description: Remove project collaborator
+      operationId: private_project_collaborator__Delete
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: user_id
+        in: path
+        description: User unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '204':
+          description: OK
+          content: {}
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Collaborators
+  /account/projects/{project_id}/articles:
+    get:
+      tags:
+      - projects
+      summary: List project articles
+      description: List project articles
+      operationId: private_project_articles_list
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. List of articles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Articles
+    post:
+      tags:
+      - projects
+      summary: Create project article
+      description: Create a new Article and associate it with this project
+      operationId: private_project_articles_create
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: Article description
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArticleProjectCreate'
+        required: true
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              description: Location of article
+              schema:
+                type: string
+                format: url
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Articles
+      x-codegen-request-body-name: Article
+  /account/projects/{project_id}/articles/{article_id}:
+    get:
+      tags:
+      - projects
+      summary: Project article details
+      description: Project article details
+      operationId: private_project_article_details
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: article_id
+        in: path
+        description: Project Article unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. Article representation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArticleCompletePrivate'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Articles
+    delete:
+      tags:
+      - projects
+      summary: Delete project article
+      description: Delete project article
+      operationId: private_project_article_delete
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: article_id
+        in: path
+        description: Project Article unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '204':
+          description: No Content
+          content: {}
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Articles
+  /account/projects/{project_id}/articles/{article_id}/files:
+    get:
+      tags:
+      - projects
+      summary: Project article list files
+      description: List article files
+      operationId: private_project_article_files
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: article_id
+        in: path
+        description: Project Article unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. List of files
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrivateFile'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Articles
+  /account/projects/{project_id}/articles/{article_id}/files/{file_id}:
+    get:
+      tags:
+      - projects
+      summary: Project article file details
+      description: Project article file details
+      operationId: private_project_article_file
+      parameters:
+      - name: project_id
+        in: path
+        description: Project unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: article_id
+        in: path
+        description: Project Article unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: file_id
+        in: path
+        description: File unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. File representation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateFile'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Project Articles
+components:
+  schemas:
+    CommonSearch:
+      type: object
+      properties:
+        search_for:
+          type: string
+          description: Search term
+          example: figshare
+        page:
+          maximum: 5000
+          minimum: 1
+          type: integer
+          description: Page number. Used for pagination with page_size
+          example: 1
+        page_size:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          description: The number of results included on a page. Used for pagination with page
+          example: 10
+          default: 10
+        limit:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          description: Number of results included on a page. Used for pagination with query
+          example: 10
+        offset:
+          maximum: 5000
+          minimum: 0
+          type: integer
+          description: Where to start the listing (the offset of the first result). Used for pagination with limit
+          example: 0
+        order_direction:
+          type: string
+          description: Direction of ordering
+          example: desc
+          default: desc
+          enum:
+          - asc
+          - desc
+        institution:
+          type: integer
+          description: only return collections from this institution
+          example: 2000013
+        published_since:
+          type: string
+          description: Filter by article publishing date. Will only return articles published after the date. date(ISO 8601) YYYY-MM-DD or date-time(ISO 8601) YYYY-MM-DDTHH:mm:ssZ
+          example: '2017-12-22'
+        modified_since:
+          type: string
+          description: Filter by article modified date. Will only return articles modified after the date. date(ISO 8601) YYYY-MM-DD or date-time(ISO 8601) YYYY-MM-DDTHH:mm:ssZ
+          example: '2017-12-22'
+        group:
+          type: integer
+          description: only return collections from this group
+          example: 2000013
+      x-tag: common
+    CustomArticleFieldAdd:
+      required:
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+          description: Custom  metadata name
+          example: key
+        value:
+          description: Custom metadata value (can be either a string, an array of strings, or empty)
+          example: value
+          nullable: true
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          - type: object
+      x-tag: articles
+    Collaborator:
+      required:
+      - name
+      - role_name
+      - user_id
+      type: object
+      properties:
+        role_name:
+          type: string
+          description: Collaborator role
+          example: Owner
+        user_id:
+          type: integer
+          description: Collaborator id
+          example: 1
+        name:
+          type: string
+          description: Collaborator name
+          example: name
+      x-tag: projects
+    CreateProjectResponse:
+      required:
+      - entity_id
+      - location
+      type: object
+      properties:
+        entity_id:
+          type: integer
+          description: Figshare ID of the entity
+          example: 33334444
+        location:
+          type: string
+          description: Url for entity
+          format: url
+      x-tag: common
+    ProjectNotePrivate:
+      required:
+      - text
+      properties:
+        text:
+          type: string
+          description: Full text of note
+          example: text
+      allOf:
+      - $ref: '#/components/schemas/ProjectNote'
+      x-tag: projects
+    ProjectCollaboratorInvite:
+      required:
+      - role_name
+      type: object
+      properties:
+        role_name:
+          type: string
+          description: Role of the the collaborator inside the project
+          example: viewer
+          enum:
+          - viewer
+          - collaborator
+        user_id:
+          type: integer
+          description: User id of the collaborator
+          example: 100008
+        email:
+          type: string
+          description: Collaborator email
+          example: user@domain.com
+        comment:
+          type: string
+          description: Text sent when inviting the user to the project
+          example: hey
+      x-tag: projects
+    ProjectCollaborator:
+      required:
+      - name
+      - role_name
+      - status
+      - user_id
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of collaborator invitation
+          example: invited
+        role_name:
+          type: string
+          description: Collaborator role
+          example: Owner
+        user_id:
+          type: integer
+          description: Collaborator id
+          example: 1
+        name:
+          type: string
+          description: Collaborator name
+          example: name
+      x-tag: projects
+    ErrorMessage:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: A machine friendly error code, used by the dev team to identify the error.
+        message:
+          type: string
+          description: A human friendly message explaining the error.
+      x-tag: common
+    ProjectCompletePrivate:
+      required:
+      - account_id
+      - collaborators
+      - created_date
+      - custom_fields
+      - description
+      - funding
+      - funding_list
+      - group_id
+      - modified_date
+      - quota
+      - used_quota
+      - used_quota_private
+      - used_quota_public
+      properties:
+        funding:
+          type: string
+          description: Project funding
+          example: none
+        funding_list:
+          type: array
+          description: Full Project funding information
+          items:
+            $ref: '#/components/schemas/FundingInformation'
+        description:
+          type: string
+          description: Project description
+          example: description
+        collaborators:
+          type: array
+          description: List of project collaborators
+          items:
+            $ref: '#/components/schemas/Collaborator'
+        quota:
+          type: integer
+          description: Project quota
+          example: 0
+        used_quota:
+          type: integer
+          description: Project used quota
+          example: 0
+        created_date:
+          type: string
+          description: Date when project was created
+          example: '2017-05-16T14:52:54Z'
+        modified_date:
+          type: string
+          description: Date when project was last modified
+          example: '2017-05-16T14:52:54Z'
+        used_quota_private:
+          type: integer
+          description: Project private quota used
+          example: 0
+        used_quota_public:
+          type: integer
+          description: Project public quota used
+          example: 0
+        group_id:
+          type: integer
+          description: Group of project if any
+          example: 0
+        account_id:
+          type: integer
+          description: ID of the account owning the project
+          example: 1000001
+        custom_fields:
+          type: array
+          description: Collection custom fields
+          items:
+            $ref: '#/components/schemas/ShortCustomField'
+      allOf:
+      - $ref: '#/components/schemas/ProjectPrivate'
+      x-tag: projects
+    Project:
+      required:
+      - created_date
+      - id
+      - modified_date
+      - title
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+          description: Api endpoint
+          example: http://api.figshare.com/v2/account/projects/1
+        id:
+          type: integer
+          description: Project id
+          example: 1
+        title:
+          type: string
+          description: Project title
+          example: project
+        created_date:
+          type: string
+          description: Date when project was created
+          example: '2017-05-16T14:52:54Z'
+        modified_date:
+          type: string
+          description: Date when project was last modified
+          example: '2017-05-16T14:52:54Z'
+      x-tag: projects
+    ProjectArticle:
+      required:
+      - categories
+      - citation
+      - confidential_reason
+      - created_date
+      - description
+      - embargo_reason
+      - embargo_title
+      - funding
+      - funding_list
+      - has_linked_file
+      - is_confidential
+      - is_embargoed
+      - is_metadata_record
+      - is_public
+      - keywords
+      - license
+      - metadata_reason
+      - references
+      - size
+      - status
+      - tags
+      - version
+      properties:
+        citation:
+          type: string
+          description: Article citation
+          example: "lilliput, figshare admin (2017): first project item. figshare.\n \n Retrieved: 14 01, May 22, 2017 (GMT)"
+        confidential_reason:
+          type: string
+          description: Confidentiality reason
+          example: none
+        is_confidential:
+          type: boolean
+          description: Article Confidentiality
+          example: true
+        size:
+          type: integer
+          description: Article size
+          example: 69939
+        funding:
+          type: string
+          description: Article funding
+          example: none
+        funding_list:
+          type: array
+          description: Full Article funding information
+          items:
+            $ref: '#/components/schemas/FundingInformation'
+        tags:
+          type: array
+          description: List of article tags. Keywords can be used instead
+          example:
+          - t1
+          - t2
+          - t3
+          items:
+            type: string
+        keywords:
+          type: array
+          description: List of article keywords. Tags can be used instead
+          example:
+          - t1
+          - t2
+          - t3
+          items:
+            type: string
+        version:
+          type: integer
+          description: Article version
+          example: 1
+        is_metadata_record:
+          type: boolean
+          description: True if article has no files
+          example: false
+        metadata_reason:
+          type: string
+          description: Article metadata reason
+          example: hosted somewhere else
+        status:
+          type: string
+          description: Article status
+          example: public
+        description:
+          type: string
+          description: Article description
+          example: article description
+        is_embargoed:
+          type: boolean
+          description: True if article is embargoed
+          example: true
+        is_public:
+          type: boolean
+          description: True if article is published
+          example: true
+        created_date:
+          type: string
+          description: Date when article was created
+          example: '2017-05-18T11:49:03Z'
+        has_linked_file:
+          type: boolean
+          description: True if any files are linked to the article
+          example: true
+        categories:
+          type: array
+          description: List of categories selected for the article
+          items:
+            $ref: '#/components/schemas/Category'
+        license:
+          $ref: '#/components/schemas/License'
+        embargo_title:
+          type: string
+          description: Title for embargo
+          example: File(s) under embargo
+        embargo_reason:
+          type: string
+          description: Reason for embargo
+          example: not complete
+        references:
+          type: array
+          description: List of references
+          example:
+          - http://figshare.com
+          - http://figshare.com/api
+          items:
+            type: string
+            format: url
+        related_materials:
+          type: array
+          description: List of related materials; supersedes references and resource DOI/title.
+          example:
+          - id: 10432
+            identifier: 10.6084/m9.figshare.1407024
+            identifier_type: DOI
+            relation: IsSupplementTo
+            title: Figshare for institutions brochure
+            is_linkout: false
+          items:
+            $ref: '#/components/schemas/RelatedMaterial'
+      allOf:
+      - $ref: '#/components/schemas/Article'
+      x-tag: articles
+    ProjectsSearch:
+      properties:
+        order:
+          type: string
+          description: The field by which to order.
+          example: published_date
+          default: published_date
+          enum:
+          - published_date
+          - modified_date
+          - views
+      allOf:
+      - $ref: '#/components/schemas/CommonSearch'
+      x-tag: projects
+    Location:
+      required:
+      - location
+      type: object
+      properties:
+        location:
+          type: string
+          description: Url for item
+          format: url
+      x-tag: common
+    TimelineUpdate:
+      type: object
+      properties:
+        firstOnline:
+          type: string
+          description: Online posted date
+          example: '2015-12-31'
+        publisherPublication:
+          type: string
+          description: Publish date
+          example: '2015-12-31'
+        publisherAcceptance:
+          type: string
+          description: Date when the item was accepted for publication
+          example: '2015-12-31'
+      x-tag: timeline_update
+    Author:
+      required:
+      - first_name
+      - full_name
+      - id
+      - is_active
+      - last_name
+      - orcid_id
+      - url_name
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Author id
+          example: 97657
+        full_name:
+          type: string
+          description: Author full name
+          example: John Doe
+        first_name:
+          type: string
+          description: Author first name
+          example: John
+        last_name:
+          type: string
+          description: Author last name
+          example: Doe
+        is_active:
+          type: boolean
+          description: True if author has published items
+          example: false
+        url_name:
+          type: string
+          description: Author url name
+          example: John_Doe
+        orcid_id:
+          type: string
+          description: Author Orcid
+          example: 1234-5678-9123-1234
+      x-tag: authors
+    GroupEmbargoOptions:
+      required:
+      - id
+      - ip_name
+      - type
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Embargo option id
+          example: 364
+        type:
+          type: string
+          description: Embargo permission type
+          example: ip_range
+          enum:
+          - logged_in
+          - ip_range
+          - administrator
+        ip_name:
+          type: string
+          description: IP range name; value appears if type is ip_range
+          example: Figshare IP range
+      x-tag: institutions
+    Category:
+      required:
+      - id
+      - parent_id
+      - path
+      - source_id
+      - taxonomy_id
+      - title
+      type: object
+      properties:
+        parent_id:
+          type: integer
+          description: Parent category
+          example: 1
+        id:
+          type: integer
+          description: Category id
+          example: 11
+        title:
+          type: string
+          description: Category title
+          example: Anatomy
+        path:
+          type: string
+          description: Path to all ancestor ids
+          example: /450/1024/6532
+        source_id:
+          type: string
+          description: ID in original standard taxonomy
+          example: '300204'
+        taxonomy_id:
+          type: integer
+          description: Internal id of taxonomy the category is part of
+          example: 4
+      x-tag: common
+    ArticleCompletePrivate:
+      required:
+      - account_id
+      - curation_status
+      properties:
+        account_id:
+          type: integer
+          description: ID of the account owning the article
+          example: 1000001
+        curation_status:
+          type: string
+          description: Curation status of the article
+          example: approved
+      allOf:
+      - $ref: '#/components/schemas/ArticleComplete'
+      x-tag: articles
+    ResponseMessage:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+          description: Response message text
+          example: Project 1 has been published
+      x-tag: common
+    Article:
+      required:
+      - created_date
+      - defined_type
+      - defined_type_name
+      - doi
+      - handle
+      - id
+      - resource_doi
+      - resource_title
+      - thumb
+      - timeline
+      - title
+      - url
+      - url_private_api
+      - url_private_html
+      - url_public_api
+      - url_public_html
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for article
+          example: 1434614
+        title:
+          type: string
+          description: Title of article
+          example: Test article title
+        doi:
+          type: string
+          description: DOI
+          example: 10.6084/m9.figshare.1434614
+        handle:
+          type: string
+          description: Handle
+          example: 111184/figshare.1234
+        url:
+          type: string
+          description: Api endpoint for article
+          format: url
+          example: http://api.figshare.com/articles/1434614
+        url_public_html:
+          type: string
+          description: Public site endpoint for article
+          format: url
+          example: https://figshare.com/articles/media/Test_article_title/1434614
+        url_public_api:
+          type: string
+          description: Public Api endpoint for article
+          format: url
+          example: https://api.figshare.com/articles/1434614
+        url_private_html:
+          type: string
+          description: Private site endpoint for article
+          format: url
+          example: https://figshare.com/account/articles/1434614
+        url_private_api:
+          type: string
+          description: Private Api endpoint for article
+          format: url
+          example: https://api.figshare.com/account/articles/1434614
+        timeline:
+          $ref: '#/components/schemas/Timeline'
+        thumb:
+          type: string
+          description: Thumbnail image
+          format: url
+          example: https://ndownloader.figshare.com/files/123456789/preview/12345678/thumb.png
+        defined_type:
+          type: integer
+          description: Type of article identifier
+          example: 3
+        defined_type_name:
+          type: string
+          description: Name of the article type identifier
+          example: media
+        resource_doi:
+          type: string
+          description: Deprecated by related materials. Not applicable to regular users. In a publisher case, this is the publisher article DOI.
+          default: ''
+        resource_title:
+          type: string
+          description: Deprecated by related materials. Not applicable to regular users. In a publisher case, this is the publisher article title.
+          default: ''
+        created_date:
+          type: string
+          description: Date when article was created
+          example: '2017-05-18T11:49:03Z'
+      x-tag: articles
+    License:
+      required:
+      - name
+      - url
+      - value
+      type: object
+      properties:
+        value:
+          type: integer
+          description: License value
+          example: 1
+        name:
+          type: string
+          description: License name
+          example: CC BY
+        url:
+          type: string
+          description: License url
+          format: url
+          example: http://creativecommons.org/licenses/by/4.0/
+      x-tag: institutions
+    ProjectNote:
+      required:
+      - abstract
+      - created_date
+      - id
+      - modified_date
+      - user_id
+      - user_name
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Project note id
+          example: 1
+        user_id:
+          type: integer
+          description: User who wrote the note
+          example: 100008
+        abstract:
+          type: string
+          description: Note Abstract - short/truncated content
+          example: text
+        user_name:
+          type: string
+          description: Username of the one who wrote the note
+          example: user
+        created_date:
+          type: string
+          description: Date when note was created
+          example: '2017-05-16T16:49:11Z'
+        modified_date:
+          type: string
+          description: Date when note was last modified
+          example: '2017-05-16T16:49:11Z'
+      x-tag: projects
+    ProjectComplete:
+      required:
+      - collaborators
+      - created_date
+      - custom_fields
+      - description
+      - funding
+      - funding_list
+      - modified_date
+      properties:
+        funding:
+          type: string
+          description: Project funding
+          example: ''
+        funding_list:
+          type: array
+          description: Full Project funding information
+          items:
+            $ref: '#/components/schemas/FundingInformation'
+        description:
+          type: string
+          description: Project description
+          example: description
+        collaborators:
+          type: array
+          description: List of project collaborators
+          items:
+            $ref: '#/components/schemas/Collaborator'
+        custom_fields:
+          type: array
+          description: Project custom fields
+          items:
+            $ref: '#/components/schemas/CustomArticleField'
+        modified_date:
+          type: string
+          description: Date when project was last modified
+          example: '2017-05-16T14:52:54Z'
+        created_date:
+          type: string
+          description: Date when project was created
+          example: '2017-05-16T14:52:54Z'
+      allOf:
+      - $ref: '#/components/schemas/Project'
+      x-tag: projects
+    ArticleProjectCreate:
+      required:
+      - title
+      type: object
+      properties:
+        title:
+          maxLength: 1000
+          minLength: 3
+          type: string
+          description: Title of article
+          example: Test article title
+        description:
+          maxLength: 20000
+          type: string
+          description: The article description. In a publisher case, usually this is the remote article description
+          example: Test description of article
+          default: ''
+        tags:
+          type: array
+          description: List of tags to be associated with the article. Keywords can be used instead
+          example:
+          - tag1
+          - tag2
+          items:
+            type: string
+        keywords:
+          type: array
+          description: List of tags to be associated with the article. Tags can be used instead
+          example:
+          - tag1
+          - tag2
+          items:
+            type: string
+        references:
+          type: array
+          description: List of links to be associated with the article (e.g ["http://link1", "http://link2", "http://link3"])
+          example:
+          - http://figshare.com
+          - http://api.figshare.com
+          items:
+            type: string
+            format: link
+        related_materials:
+          type: array
+          description: List of related materials; supersedes references and resource DOI/title.
+          example:
+          - id: 10432
+            identifier: 10.6084/m9.figshare.1407024
+            identifier_type: DOI
+            relation: IsSupplementTo
+            title: Figshare for institutions brochure
+            is_linkout: false
+          items:
+            $ref: '#/components/schemas/RelatedMaterial'
+        categories:
+          type: array
+          description: List of category ids to be associated with the article(e.g [1, 23, 33, 66])
+          example:
+          - 1
+          - 10
+          - 11
+          items:
+            type: integer
+        categories_by_source_id:
+          type: array
+          description: List of category source ids to be associated with the article, supersedes the categories property
+          example:
+          - '300204'
+          - '400207'
+          items:
+            type: string
+        authors:
+          type: array
+          description: 'List of authors to be associated with the article. The list can contain the following fields: id, name, first_name, last_name, email, orcid_id. If an id is supplied, it will take priority and everything else will be ignored. For adding more authors use the specific authors endpoint.'
+          example:
+          - name: John Doe
+          - id: 1000008
+          items:
+            type: object
+            properties: {}
+        custom_fields:
+          type: object
+          properties: {}
+          description: List of key, values pairs to be associated with the article
+          example:
+            defined_key: value for it
+        custom_fields_list:
+          type: array
+          description: List of custom fields values, supersedes custom_fields parameter
+          items:
+            $ref: '#/components/schemas/CustomArticleFieldAdd'
+        defined_type:
+          type: string
+          description: <b>One of:</b> <code>figure</code> <code>online resource</code> <code>preprint</code> <code>book</code> <code>conference contribution</code> <code>media</code> <code>dataset</code> <code>poster</code> <code>journal contribution</code> <code>presentation</code> <code>thesis</code> <code>software</code>
+          example: media
+        funding:
+          type: string
+          description: Grant number or funding authority
+          default: ''
+        funding_list:
+          type: array
+          description: Funding creation / update items
+          items:
+            $ref: '#/components/schemas/FundingCreate'
+        license:
+          type: integer
+          description: License id for this article.
+          example: 1
+          default: 0
+        doi:
+          type: string
+          description: Not applicable for regular users. In an institutional case, make sure your group supports setting DOIs. This setting is applied by figshare via opening a ticket through our support/helpdesk system.
+          default: ''
+        handle:
+          type: string
+          description: Not applicable for regular users. In an institutional case, make sure your group supports setting Handles. This setting is applied by figshare via opening a ticket through our support/helpdesk system.
+          default: ''
+        resource_doi:
+          type: string
+          description: Deprecated by related materials. Not applicable to regular users. In a publisher case, this is the publisher article DOI.
+          default: ''
+        resource_title:
+          type: string
+          description: Deprecated by related materials. Not applicable to regular users. In a publisher case, this is the publisher article title.
+          default: ''
+        timeline:
+          $ref: '#/components/schemas/TimelineUpdate'
+      x-tag: articles
+    ProjectNoteCreate:
+      required:
+      - text
+      type: object
+      properties:
+        text:
+          minLength: 3
+          type: string
+          description: Text of the note
+          example: note to remember
+      x-tag: projects
+    RelatedMaterial:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID of the related material; can be used to add existing materials of the same account to items.
+          example: 10432
+        identifier:
+          type: string
+          description: The related material identifier (e.g., DOI, Handle, ISBN). Mandatory if creating a new material.
+          example: 10.6084/m9.figshare.1407024
+        title:
+          type: string
+          description: The related material title
+          example: 'Rooter: A Methodology for the Typical Unification of Access Points and Redundancy'
+        relation:
+          type: string
+          description: The relation between the item and the related material; defaults to 'References'. Mandatory if creating a new material.
+          example: IsSupplementTo
+          default: References
+          enum:
+          - IsCitedBy
+          - Cites
+          - IsSupplementTo
+          - IsSupplementedBy
+          - IsContinuedBy
+          - Continues
+          - Describes
+          - IsDescribedBy
+          - HasMetadata
+          - IsMetadataFor
+          - HasVersion
+          - IsVersionOf
+          - IsNewVersionOf
+          - IsPreviousVersionOf
+          - IsPartOf
+          - HasPart
+          - IsPublishedIn
+          - IsReferencedBy
+          - References
+          - IsDocumentedBy
+          - Documents
+          - IsCompiledBy
+          - Compiles
+          - IsVariantFormOf
+          - IsOriginalFormOf
+          - IsIdenticalTo
+          - IsReviewedBy
+          - Reviews
+          - IsDerivedFrom
+          - IsSourceOf
+          - IsRequiredBy
+          - Requires
+          - IsObsoletedBy
+          - Obsoletes
+        identifier_type:
+          type: string
+          description: The type of the identifier of the related material; defaults to 'URL'. Mandatory if creating a new material.
+          example: DOI
+          default: URL
+          enum:
+          - ARK
+          - arXiv
+          - bibcode
+          - DOI
+          - EAN13
+          - EISSN
+          - Handle
+          - IGSN
+          - ISBN
+          - ISSN
+          - ISTC
+          - LISSN
+          - LSID
+          - PMID
+          - PURL
+          - UPC
+          - URL
+          - URN
+          - w3id
+        is_linkout:
+          type: boolean
+          description: Flag for highlighting this related material in the call-out box
+          example: true
+        link:
+          type: string
+          description: The full hyperlink for the identifier. Automatically generated by Figshare.
+          readOnly: true
+          example: https://doi.org/10.6084/m9.figshare.1407024
+    PrivateFile:
+      required:
+      - is_attached_to_public_version
+      - preview_state
+      - upload_token
+      - upload_url
+      - viewer_type
+      properties:
+        viewer_type:
+          type: string
+          description: File viewer type
+        preview_state:
+          type: string
+          description: File preview state
+          example: preview not available
+        upload_url:
+          type: string
+          description: Upload url for file
+          format: url
+          example: https://uploads.figshare.com
+        upload_token:
+          type: string
+          description: Token for file upload
+          example: 9dfc5fe3-d617-4d93-ac11-8afe7e984a4b
+        is_attached_to_public_version:
+          type: boolean
+          description: True if the file is attached to a public item version
+          example: true
+      allOf:
+      - $ref: '#/components/schemas/PublicFile'
+      x-tag: common
+    ArticleComplete:
+      required:
+      - authors
+      - custom_fields
+      - download_disabled
+      - embargo_options
+      - figshare_url
+      - files
+      - folder_structure
+      properties:
+        figshare_url:
+          type: string
+          description: Article public url
+          format: url
+          example: http://figshare.com/articles/media/article_name/2000005
+        download_disabled:
+          type: boolean
+          description: If true, downloading of files for this article is disabled
+          example: false
+        files:
+          type: array
+          description: List of up to 10 article files.
+          items:
+            $ref: '#/components/schemas/PublicFile'
+        folder_structure:
+          type: object
+          properties: {}
+          description: Mapping of file ids to folder paths, if folders are used
+          example:
+            '3000002': Test Folder
+        authors:
+          type: array
+          description: List of article authors
+          items:
+            $ref: '#/components/schemas/Author'
+        custom_fields:
+          type: array
+          description: List of custom fields values
+          items:
+            $ref: '#/components/schemas/CustomArticleField'
+        embargo_options:
+          type: array
+          description: List of embargo options
+          items:
+            $ref: '#/components/schemas/GroupEmbargoOptions'
+      allOf:
+      - $ref: '#/components/schemas/ProjectArticle'
+      x-tag: articles
+    ShortCustomField:
+      required:
+      - field_type
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Custom field id
+          example: 365
+        name:
+          type: string
+          description: Custom field name
+          example: my custom field
+        field_type:
+          type: string
+          description: Custom field type
+          example: textarea
+          enum:
+          - text
+          - textarea
+          - dropdown
+          - url
+          - email
+          - date
+          - dropdown_large_list
+        settings:
+          type: object
+          properties: {}
+          description: Settings for the custom field
+          example:
+            validations:
+              min_length: 1
+              max_length: 1000
+            placeholder: Enter your custom field here
+        order:
+          type: integer
+          description: Order of the field in the group
+          example: 1
+        is_mandatory:
+          type: boolean
+          description: Whether the field is mandatory or not
+          example: false
+      x-tag: institutions
+    PublicFile:
+      required:
+      - computed_md5
+      - download_url
+      - id
+      - is_link_only
+      - name
+      - size
+      - supplied_md5
+      type: object
+      properties:
+        id:
+          type: integer
+          description: File id
+          example: 3000002
+        name:
+          type: string
+          description: File name
+          example: test.xls
+        size:
+          type: integer
+          description: File size
+          example: 14848
+        is_link_only:
+          type: boolean
+          description: True if file is hosted somewhere else
+          example: false
+        download_url:
+          type: string
+          description: Url for file download
+          format: url
+          example: https://ndownloader.figshare.com/files/3000002
+        supplied_md5:
+          type: string
+          description: File supplied md5
+          example: 043a51806d646e88cafbf19e7b82846f
+        computed_md5:
+          type: string
+          description: File computed md5
+          example: 043a51806d646e88cafbf19e7b82846f
+        mimetype:
+          type: string
+          description: MIME Type of the file, it defaults to an empty string
+          example: application/pdf
+      x-tag: common
+    ProjectUpdate:
+      type: object
+      properties:
+        title:
+          maxLength: 1000
+          minLength: 3
+          type: string
+          description: The title for this project - mandatory. 3 - 1000 characters.
+          example: project title
+        description:
+          maxLength: 20000
+          type: string
+          description: Project description
+          example: project description
+        funding:
+          type: string
+          description: Grant number or organization(s) that funded this project. Up to 2000 characters permitted.
+          example: ''
+        funding_list:
+          type: array
+          description: Funding creation / update items
+          items:
+            $ref: '#/components/schemas/FundingCreate'
+        custom_fields:
+          type: object
+          properties: {}
+          description: List of key, values pairs to be associated with the project
+          example:
+            defined_key: value for it
+        custom_fields_list:
+          type: array
+          description: List of custom fields values, supersedes custom_fields parameter
+          items:
+            $ref: '#/components/schemas/CustomArticleFieldAdd'
+      x-tag: projects
+    CustomArticleField:
+      required:
+      - field_type
+      - is_mandatory
+      - name
+      - order
+      - settings
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+          description: Custom  metadata name
+          example: key
+        value:
+          type: object
+          description: Custom metadata value (can be either a string or an array of strings)
+          example: value
+        field_type:
+          type: string
+          description: Custom field type
+          example: textarea
+          enum:
+          - text
+          - textarea
+          - dropdown
+          - url
+          - email
+          - date
+          - dropdown_large_list
+        settings:
+          type: object
+          properties: {}
+          description: Settings for the custom field
+          example:
+            validations:
+              min_length: 1
+              max_length: 1000
+            placeholder: Enter your custom field here
+        order:
+          type: integer
+          description: Order of the custom field
+          example: 1
+        is_mandatory:
+          type: boolean
+          description: Whether the field is mandatory or not
+          example: false
+      x-tag: articles
+    ProjectPrivate:
+      required:
+      - role
+      - storage
+      properties:
+        role:
+          type: string
+          description: Role inside this project
+          example: Owner
+          enum:
+          - Owner
+          - Collaborator
+          - Viewer
+        storage:
+          type: string
+          description: Project storage type
+          example: individual
+          enum:
+          - individual
+          - group
+      allOf:
+      - $ref: '#/components/schemas/Project'
+      x-tag: projects
+    FundingCreate:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: A funding ID as returned by the Funding Search endpoint
+        title:
+          type: string
+          description: The title of the new user created funding
+      x-tag: funding
+    Timeline:
+      allOf:
+      - $ref: '#/components/schemas/TimelineUpdate'
+      x-tag: timeline
+    FundingInformation:
+      required:
+      - funder_name
+      - grant_code
+      - id
+      - is_user_defined
+      - title
+      - url
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Funding id
+          example: 1
+        title:
+          type: string
+          description: The funding name
+          example: Scholarly funding
+        grant_code:
+          type: string
+          description: The grant code
+        funder_name:
+          type: string
+          description: Funder's name
+        is_user_defined:
+          type: integer
+          description: Return 1 whether the grant has been introduced manually, 0 otherwise
+        url:
+          type: string
+          description: The grant url
+          format: url
+          example: https://app.dimensions.ai/details/grant/1
+      x-tag: funding
+    ProjectCreate:
+      required:
+      - title
+      type: object
+      properties:
+        title:
+          maxLength: 1000
+          minLength: 3
+          type: string
+          description: The title for this project - mandatory. 3 - 1000 characters.
+          example: project title
+        description:
+          maxLength: 20000
+          type: string
+          description: Project description
+          example: project description
+        funding:
+          type: string
+          description: Grant number or organization(s) that funded this project. Up to 2000 characters permitted.
+          example: ''
+        funding_list:
+          type: array
+          description: Funding creation / update items
+          items:
+            $ref: '#/components/schemas/FundingCreate'
+        group_id:
+          type: integer
+          description: Only if project type is group.
+          example: 0
+        custom_fields:
+          type: object
+          properties: {}
+          description: List of key, values pairs to be associated with the project
+          example:
+            defined_key: value for it
+        custom_fields_list:
+          type: array
+          description: List of custom fields values, supersedes custom_fields parameter
+          items:
+            $ref: '#/components/schemas/CustomArticleFieldAdd'
+      x-tag: projects
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://figshare.com/account/applications/authorize
+          tokenUrl: https://api.figshare.com/v2/token
+          scopes:
+            all: Grants all access
+x-additional-descriptions:
+- title: Upload files
+  position: bottom
+  subsections:
+  - title: Steps to upload file
+    content: description_upload_steps
+  - title: Uploads API
+    content: description_upload_api
+  - title: Parts API
+    content: description_upload_parts_api
+  - title: Example Upload on figshare
+    content: description_upload_example
+  - title: Output of Script
+    content: description_upload_output
+  - title: Upload Bash Script
+    content: description_upload_bash
+  - title: Upload S3 File to Figshare
+    content: description_upload_from_s3
+- title: Search
+  position: bottom
+  subsections:
+  - title: How to find data on figshare
+    content: description_search_intro
+  - title: Search operators
+    content: description_search_operators
+  - title: Searchable attributes
+    content: description_search_attributes
+  - title: Quick search
+    content: description_search_quick
+  - title: Advanced search
+    content: description_search_advanced
+  - title: Combined field search
+    content: description_search_combined
+  - title: Complex searches
+    content: description_search_complex
+- title: Stats
+  position: bottom
+  subsections:
+  - title: Stats service
+    subsections:
+    - title: Intro
+      content: description_stats_service_intro
+    - title: Authentication
+      content: description_stats_service_auth
+    - title: Errors
+      content: description_stats_service_errors
+    - title: Endpoints
+      content: description_stats_service_endpoints
+  - title: Breakdown
+    subsections:
+    - title: Endpoints for retrieving a breakdown
+      content: description_stats_breakdown_endpoints
+    - title: Authorization
+      content: description_stats_breakdown_auth
+    - title: Endpoint format
+      content: description_stats_breakdown_format
+    - title: Request parameters
+      content: description_stats_breakdown_params
+    - title: Examples
+      content: description_stats_breakdown_examples
+  - title: Timeline
+    subsections:
+    - title: Endpoints for retrieving a timeline
+      content: description_stats_timeline_endpoints
+    - title: Authorization
+      content: description_stats_timeline_auth
+    - title: Endpoint format
+      content: description_stats_timeline_format
+    - title: Request parameters
+      content: description_stats_timeline_params
+    - title: Examples
+      content: description_stats_timeline_examples
+  - title: Tops
+    subsections:
+    - title: Endpoints for retrieving tops
+      content: description_stats_tops_endpoints
+    - title: Authorization
+      content: description_stats_tops_auth
+    - title: Endpoint format
+      content: description_stats_tops_format
+    - title: Request parameters
+      content: description_stats_tops_params
+    - title: Examples
+      content: description_stats_tops_examples
+  - title: Totals
+    subsections:
+    - title: Endpoints for retrieving totals
+      content: description_stats_totals_endpoints
+    - title: Authorization
+      content: description_stats_totals_auth
+    - title: Endpoint format
+      content: description_stats_totals_format
+    - title: Examples
+      content: description_stats_totals_examples
+  - title: Count Articles
+    subsections:
+    - title: Endpoint for retrieving counts
+      content: description_stats_count_endpoints
+    - title: Authorization
+      content: description_stats_count_auth
+    - title: Endpoint format
+      content: description_stats_count_format
+    - title: Example
+      content: description_stats_count_examples
+- title: OAI PMH
+  position: bottom
+  subsections:
+  - title: OAI-PMH
+    content: description_oai_pmh
+  - title: Base URL
+    content: description_oai_baseurl
+  - title: Item equals Article
+    content: description_oai_itemarticle
+  - title: Metadata formats
+    content: description_oai_metadata
+  - title: Datestamps
+    content: description_oai_datestamp
+  - title: Sets
+    content: description_oai_sets
+  - title: Update schedule
+    content: description_oai_update_schedule
+  - title: Pagination and Resumption Token Expiration
+    content: description_oai_pagination
+  - title: Rate limit
+    content: description_oai_ratelimit
+  - title: Future development
+    content: description_oai_futuredev
+  - title: Some examples
+    content: description_oai_someexamples
+- title: HR Feed
+  position: bottom
+  subsections:
+  - title: HR Feed Private Endpoint
+    content: description_hrfeed_endpoint
+  - title: HR Feed examples
+    subsections:
+    - title: Python
+      content: description_hrfeed_examples_python
+    - title: Java
+      content: description_hrfeed_examples_java
+    - title: C Sharp
+      content: description_hrfeed_examples_csharp
+    - title: Curl
+      content: description_hrfeed_examples_curl
+  - title: Response
+    content: description_hrfeed_response
+  - title: Errors
+    content: description_hrfeed_errors
+  - title: Notes
+    content: description_hrfeed_notes
+- title: Custom Fields
+  position: bottom
+  subsections:
+  - title: Custom Fields Private Endpoints
+    content: description_custom_fields_endpoint
+  - title: Custom Fields examples
+    subsections:
+    - title: Python
+      content: description_custom_fields_examples_python
+    - title: Java
+      content: description_custom_fields_examples_java
+    - title: C Sharp
+      content: description_custom_fields_examples_csharp
+    - title: Curl
+      content: description_custom_fields_examples_curl
+  - title: Response
+    content: description_custom_fields_response
+  - title: Errors
+    content: description_custom_fields_errors
+  - title: Notes
+    content: description_custom_fields_notes
+- title: figshare Documentation
+  position: top
+  subsections:
+  - title: figshare Documentation
+    content: description_intro
+  - title: OAuth
+    subsections:
+    - title: Intro
+      content: description_oauth_intro
+    - title: Quick guide
+      content: description_oauth_quick
+    - title: Scope
+      content: description_oauth_scope
+    - title: Grant Types
+      content: description_oauth_grant
+  - title: API description
+    subsections:
+    - title: Feature list
+      content: description_api_features
+    - title: Sending parameters
+      content: description_api_parameters
+    - title: Resource representations
+      content: description_api_resourcerepresentation
+    - title: Authentication
+      content: description_api_auth
+    - title: Errors
+      content: description_api_errors
+    - title: Searching filtering and pagination
+      content: description_api_search
+    - title: Rate limiting
+      content: description_api_ratelimit
+    - title: Conditional requests
+      content: description_api_requests
+    - title: CORS policy
+      content: description_api_cors
+    - title: Impersonation
+      content: description_api_impersonation
+x-original-swagger-version: '2.0'

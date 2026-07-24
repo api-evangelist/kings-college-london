@@ -1,0 +1,3239 @@
+openapi: 3.0.3
+info:
+  title: Figshare altmetric collections API
+  description: Figshare API v2 - Full REST API documentation for managing articles, collections, projects and more.
+  version: '2.0'
+  contact:
+    name: Figshare Support
+    url: https://support.figshare.com/support/home
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://api.figshare.com/v2
+tags:
+- name: collections
+paths:
+  /collections:
+    get:
+      tags:
+      - collections
+      summary: Public Collections
+      description: Returns a list of public collections
+      operationId: collections_list
+      parameters:
+      - name: X-Cursor
+        in: header
+        description: Unique hash used for bypassing the item retrieval limit of 9,000 entities. When using this parameter, please note that the offset parameter will not be available, but the limit parameter will still work as expected.
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page number. Used for pagination with page_size
+        schema:
+          maximum: 5000
+          minimum: 1
+          type: integer
+      - name: page_size
+        in: query
+        description: The number of results included on a page. Used for pagination with page
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          default: 10
+      - name: limit
+        in: query
+        description: Number of results included on a page. Used for pagination with query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - name: offset
+        in: query
+        description: Where to start the listing (the offset of the first result). Used for pagination with limit
+        schema:
+          maximum: 5000
+          minimum: 0
+          type: integer
+      - name: order
+        in: query
+        description: The field by which to order. Default varies by endpoint/resource.
+        schema:
+          type: string
+          default: published_date
+          enum:
+          - published_date
+          - created_date
+          - modified_date
+          - views
+          - shares
+          - cites
+      - name: order_direction
+        in: query
+        schema:
+          type: string
+          default: desc
+          enum:
+          - asc
+          - desc
+      - name: institution
+        in: query
+        description: only return collections from this institution
+        schema:
+          type: integer
+      - name: published_since
+        in: query
+        description: Filter by collection publishing date. Will only return collections published after the date. date(ISO 8601) YYYY-MM-DD
+        schema:
+          type: string
+      - name: modified_since
+        in: query
+        description: Filter by collection modified date. Will only return collections modified after the date. date(ISO 8601) YYYY-MM-DD
+        schema:
+          type: string
+      - name: group
+        in: query
+        description: only return collections from this group
+        schema:
+          type: integer
+      - name: resource_doi
+        in: query
+        description: only return collections with this resource_doi
+        schema:
+          type: string
+      - name: doi
+        in: query
+        description: only return collections with this doi
+        schema:
+          type: string
+      - name: handle
+        in: query
+        description: only return collections with this handle
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK. An array of collections
+          headers:
+            X-Cursor:
+              description: Unique hash used for bypassing the item retrieval limit of 9,000 entities.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Collection'
+        '400':
+          description: Bad Request
+          content: {}
+        '422':
+          description: Bad Request
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security: []
+  /collections/search:
+    post:
+      tags:
+      - collections
+      summary: Public Collections Search
+      description: Returns a list of public collections
+      operationId: collections_search
+      parameters:
+      - name: X-Cursor
+        in: header
+        description: Unique hash used for bypassing the item retrieval limit of 9,000 entities. When using this parameter, please note that the offset parameter will not be available, but the limit parameter will still work as expected.
+        schema:
+          type: string
+      requestBody:
+        description: Search Parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionSearch'
+        required: false
+      responses:
+        '200':
+          description: OK. An array of collections
+          headers:
+            X-Cursor:
+              description: Unique hash used for bypassing the item retrieval limit of 9,000 entities.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Collection'
+        '400':
+          description: Bad Request
+          content: {}
+        '422':
+          description: Bad Request
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security: []
+      x-codegen-request-body-name: search
+  /collections/{collection_id}:
+    get:
+      tags:
+      - collections
+      summary: Collection details
+      description: View a collection
+      operationId: collection_details
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection Unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. Collection representation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionComplete'
+        '400':
+          description: Bad Request
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security: []
+      x-subcategory: Public Collection
+  /collections/{collection_id}/versions:
+    get:
+      tags:
+      - collections
+      summary: Collection Versions list
+      description: Returns a list of public collection Versions
+      operationId: collection_versions
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection Unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. An array of versions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CollectionVersions'
+        '400':
+          description: Bad Request
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security: []
+      x-subcategory: Public Collection
+  /collections/{collection_id}/versions/{version_id}:
+    get:
+      tags:
+      - collections
+      summary: Collection Version details
+      description: View details for a certain version of a collection
+      operationId: collection_version_details
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection Unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: version_id
+        in: path
+        description: Version Number
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. Collection for that version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionComplete'
+        '400':
+          description: Bad Request
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security: []
+      x-subcategory: Public Collection
+  /collections/{collection_id}/articles:
+    get:
+      tags:
+      - collections
+      summary: Public Collection Articles
+      description: Returns a list of public collection articles
+      operationId: collection_articles
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection Unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: page
+        in: query
+        description: Page number. Used for pagination with page_size
+        schema:
+          maximum: 5000
+          minimum: 1
+          type: integer
+      - name: page_size
+        in: query
+        description: The number of results included on a page. Used for pagination with page
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          default: 10
+      - name: limit
+        in: query
+        description: Number of results included on a page. Used for pagination with query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - name: offset
+        in: query
+        description: Where to start the listing (the offset of the first result). Used for pagination with limit
+        schema:
+          maximum: 5000
+          minimum: 0
+          type: integer
+      responses:
+        '200':
+          description: OK. An array of articles belonging to the collection
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+        '400':
+          description: Bad Request
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+        '422':
+          description: Bad Request
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security: []
+  /account/collections:
+    get:
+      tags:
+      - collections
+      summary: Private Collections List
+      description: List private collections
+      operationId: private_collections_list
+      parameters:
+      - name: page
+        in: query
+        description: Page number. Used for pagination with page_size
+        schema:
+          maximum: 5000
+          minimum: 1
+          type: integer
+      - name: page_size
+        in: query
+        description: The number of results included on a page. Used for pagination with page
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          default: 10
+      - name: limit
+        in: query
+        description: Number of results included on a page. Used for pagination with query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - name: offset
+        in: query
+        description: Where to start the listing (the offset of the first result). Used for pagination with limit
+        schema:
+          maximum: 5000
+          minimum: 0
+          type: integer
+      - name: order
+        in: query
+        description: The field by which to order. Default varies by endpoint/resource.
+        schema:
+          type: string
+          default: published_date
+          enum:
+          - published_date
+          - modified_date
+          - views
+          - shares
+          - cites
+      - name: order_direction
+        in: query
+        schema:
+          type: string
+          default: desc
+          enum:
+          - asc
+          - desc
+      responses:
+        '200':
+          description: OK. An array of collections
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Collection'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+    post:
+      tags:
+      - collections
+      summary: Create collection
+      description: Create a new Collection by sending collection information
+      operationId: private_collection_create
+      requestBody:
+        description: Collection description
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionCreate'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationWarnings'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection
+      x-codegen-request-body-name: Collection
+  /account/collections/{collection_id}:
+    get:
+      tags:
+      - collections
+      summary: Collection details
+      description: View a collection
+      operationId: private_collection_details
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection Unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. Collection representation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionCompletePrivate'
+        '400':
+          description: Bad Request
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection
+    put:
+      tags:
+      - collections
+      summary: Update collection
+      description: Update a collection by passing full body parameters.
+      operationId: private_collection_update
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection Unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: Collection description
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionUpdate'
+        required: true
+      responses:
+        '205':
+          description: Reset Content
+          headers:
+            Location:
+              description: Location of collection
+              schema:
+                type: string
+                format: link
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationWarningsUpdate'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection
+      x-codegen-request-body-name: Collection
+    delete:
+      tags:
+      - collections
+      summary: Delete collection
+      description: Delete n collection
+      operationId: private_collection_delete
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection Unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '204':
+          description: No Content
+          content: {}
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection
+    patch:
+      tags:
+      - collections
+      summary: Partially update collection
+      description: Partially update a collection by sending only the fields to change.
+      operationId: private_collection_patch
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection Unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: Subset of collection fields to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionUpdate'
+        required: true
+      responses:
+        '205':
+          description: Reset Content
+          headers:
+            Location:
+              description: Location of collection
+              schema:
+                type: string
+                format: link
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationWarningsUpdate'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection
+      x-codegen-request-body-name: Collection
+  /account/collections/search:
+    post:
+      tags:
+      - collections
+      summary: Private Collections Search
+      description: Returns a list of private Collections
+      operationId: private_collections_search
+      requestBody:
+        description: Search Parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrivateCollectionSearch'
+        required: true
+      responses:
+        '200':
+          description: OK. An array of collections
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Collection'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-codegen-request-body-name: search
+  /account/collections/{collection_id}/reserve_doi:
+    post:
+      tags:
+      - collections
+      summary: Private Collection Reserve DOI
+      description: Reserve DOI for collection
+      operationId: private_collection_reserve_doi
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection Unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionDOI'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+  /account/collections/{collection_id}/reserve_handle:
+    post:
+      tags:
+      - collections
+      summary: Private Collection Reserve Handle
+      description: Reserve Handle for collection
+      operationId: private_collection_reserve_handle
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection Unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionHandle'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+  /account/collections/{collection_id}/resource:
+    post:
+      tags:
+      - collections
+      summary: Private Collection Resource
+      description: Edit collection resource data.
+      operationId: private_collection_resource
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: Resource data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Resource'
+        required: true
+      responses:
+        '205':
+          description: Reset Content
+          headers:
+            Location:
+              description: Location for account collection details
+              schema:
+                type: string
+                format: link
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '422':
+          description: Unprocessable Entity
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-codegen-request-body-name: Resource
+  /account/collections/{collection_id}/publish:
+    post:
+      tags:
+      - collections
+      summary: Private Collection Publish
+      description: When a collection is published, a new public version will be generated. Any further updates to the collection will affect the private collection data. In order to make these changes publicly visible, an explicit publish operation is needed.
+      operationId: private_collection_publish
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection Unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              description: Location of collection
+              schema:
+                type: string
+                format: link
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+  /account/collections/{collection_id}/authors:
+    get:
+      tags:
+      - collections
+      summary: List collection authors
+      description: List collection authors
+      operationId: private_collection_authors_list
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. Embargo for article
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Authors
+    put:
+      tags:
+      - collections
+      summary: Replace collection authors
+      description: Associate new authors with the collection. This will remove all already associated authors and add these new ones
+      operationId: private_collection_authors_replace
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: List of authors
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorsCreator'
+        required: true
+      responses:
+        '205':
+          description: Reset Content
+          headers:
+            Location:
+              description: Location of list of authors
+              schema:
+                type: string
+                format: url
+          content: {}
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Authors
+      x-codegen-request-body-name: Authors
+    post:
+      tags:
+      - collections
+      summary: Add collection authors
+      description: Associate new authors with the collection. This will add new authors to the list of already associated authors
+      operationId: private_collection_authors_add
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: List of authors
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorsCreator'
+        required: true
+      responses:
+        '201':
+          description: Reset Content
+          headers:
+            Location:
+              description: Location of list of authors
+              schema:
+                type: string
+                format: url
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Authors
+      x-codegen-request-body-name: Authors
+  /account/collections/{collection_id}/authors/{author_id}:
+    delete:
+      tags:
+      - collections
+      summary: Delete collection author
+      description: Delete collection author
+      operationId: private_collection_author_delete
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: author_id
+        in: path
+        description: Collection Author unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '204':
+          description: No Content
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Authors
+  /account/collections/{collection_id}/categories:
+    get:
+      tags:
+      - collections
+      summary: List collection categories
+      description: List collection categories
+      operationId: private_collection_categories_list
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. Categories list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Categories
+    put:
+      tags:
+      - collections
+      summary: Replace collection categories
+      description: Associate new categories with the collection. This will remove all already associated categories and add these new ones
+      operationId: private_collection_categories_replace
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: Categories list
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoriesCreator'
+        required: true
+      responses:
+        '205':
+          description: Reset Content
+          headers:
+            Location:
+              description: Location of list of categories
+              schema:
+                type: string
+                format: url
+          content: {}
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Categories
+      x-codegen-request-body-name: categories
+    post:
+      tags:
+      - collections
+      summary: Add collection categories
+      description: Associate new categories with the collection. This will add new categories to the list of already associated categories
+      operationId: private_collection_categories_add
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: Categories list
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoriesCreator'
+        required: true
+      responses:
+        '201':
+          description: Reset Content
+          headers:
+            Location:
+              description: Location of list of categories
+              schema:
+                type: string
+                format: url
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Categories
+      x-codegen-request-body-name: categories
+  /account/collections/{collection_id}/categories/{category_id}:
+    delete:
+      tags:
+      - collections
+      summary: Delete collection category
+      description: De-associate category from collection
+      operationId: private_collection_category_delete
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: category_id
+        in: path
+        description: Collection category unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '204':
+          description: No Content
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Categories
+  /account/collections/{collection_id}/articles:
+    get:
+      tags:
+      - collections
+      summary: List collection articles
+      description: List collection articles
+      operationId: private_collection_articles_list
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: page
+        in: query
+        description: Page number. Used for pagination with page_size
+        schema:
+          maximum: 5000
+          minimum: 1
+          type: integer
+      - name: page_size
+        in: query
+        description: The number of results included on a page. Used for pagination with page
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          default: 10
+      - name: limit
+        in: query
+        description: Number of results included on a page. Used for pagination with query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - name: offset
+        in: query
+        description: Where to start the listing (the offset of the first result). Used for pagination with limit
+        schema:
+          maximum: 5000
+          minimum: 0
+          type: integer
+      responses:
+        '200':
+          description: OK. Articles List
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Articles
+    put:
+      tags:
+      - collections
+      summary: Replace collection articles
+      description: Associate new articles with the collection. This will remove all already associated articles and add these new ones
+      operationId: private_collection_articles_replace
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: Articles List
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArticlesCreator'
+        required: true
+      responses:
+        '205':
+          description: Reset Content
+          headers:
+            Location:
+              description: Location of list of articles
+              schema:
+                type: string
+                format: url
+          content: {}
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Articles
+      x-codegen-request-body-name: articles
+    post:
+      tags:
+      - collections
+      summary: Add collection articles
+      description: Associate new articles with the collection. This will add new articles to the list of already associated articles
+      operationId: private_collection_articles_add
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        description: Articles list
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArticlesCreator'
+        required: true
+      responses:
+        '201':
+          description: Reset Content
+          headers:
+            Location:
+              description: Location of new articles
+              schema:
+                type: string
+                format: url
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Articles
+      x-codegen-request-body-name: articles
+  /account/collections/{collection_id}/articles/{article_id}:
+    delete:
+      tags:
+      - collections
+      summary: Delete collection article
+      description: De-associate article from collection
+      operationId: private_collection_article_delete
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: article_id
+        in: path
+        description: Collection article unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '204':
+          description: No Content
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Articles
+  /account/collections/{collection_id}/private_links:
+    get:
+      tags:
+      - collections
+      summary: List collection private links
+      description: List article private links
+      operationId: private_collection_private_links_list
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          description: OK. Collection private links
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrivateLink'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Private Links
+    post:
+      tags:
+      - collections
+      summary: Create collection private link
+      description: Create new private link
+      operationId: private_collection_private_link_create
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionPrivateLinkCreator'
+        required: false
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              description: Location of private link
+              schema:
+                type: string
+                format: url
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateLinkResponse'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Private Links
+      x-codegen-request-body-name: private_link
+  /account/collections/{collection_id}/private_links/{link_id}:
+    get:
+      tags:
+      - collections
+      summary: View collection private link
+      description: View existing private link for this collection
+      operationId: private_collection_private_link_details
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: link_id
+        in: path
+        description: Private link token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK. Collection private link
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateLink'
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Private Links
+    put:
+      tags:
+      - collections
+      summary: Update collection private link
+      description: Update existing private link for this collection
+      operationId: private_collection_private_link_update
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: link_id
+        in: path
+        description: Private link token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionPrivateLinkCreator'
+        required: false
+      responses:
+        '205':
+          description: Reset Content
+          headers:
+            Location:
+              description: Location of new private link
+              schema:
+                type: string
+                format: url
+          content: {}
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '422':
+          description: Unprocessable Entity
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Private Links
+      x-codegen-request-body-name: private_link
+    delete:
+      tags:
+      - collections
+      summary: Disable private link
+      description: Disable/delete private link for this collection
+      operationId: private_collection_private_link_delete
+      parameters:
+      - name: collection_id
+        in: path
+        description: Collection unique identifier
+        required: true
+        schema:
+          minimum: 1
+          type: integer
+      - name: link_id
+        in: path
+        description: Private link token
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+          content: {}
+        '400':
+          description: Bad Request
+          content: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Not Found
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+      security:
+      - OAuth2:
+        - all
+      x-subcategory: Private Collection Private Links
+components:
+  schemas:
+    CommonSearch:
+      type: object
+      properties:
+        search_for:
+          type: string
+          description: Search term
+          example: figshare
+        page:
+          maximum: 5000
+          minimum: 1
+          type: integer
+          description: Page number. Used for pagination with page_size
+          example: 1
+        page_size:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          description: The number of results included on a page. Used for pagination with page
+          example: 10
+          default: 10
+        limit:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          description: Number of results included on a page. Used for pagination with query
+          example: 10
+        offset:
+          maximum: 5000
+          minimum: 0
+          type: integer
+          description: Where to start the listing (the offset of the first result). Used for pagination with limit
+          example: 0
+        order_direction:
+          type: string
+          description: Direction of ordering
+          example: desc
+          default: desc
+          enum:
+          - asc
+          - desc
+        institution:
+          type: integer
+          description: only return collections from this institution
+          example: 2000013
+        published_since:
+          type: string
+          description: Filter by article publishing date. Will only return articles published after the date. date(ISO 8601) YYYY-MM-DD or date-time(ISO 8601) YYYY-MM-DDTHH:mm:ssZ
+          example: '2017-12-22'
+        modified_since:
+          type: string
+          description: Filter by article modified date. Will only return articles modified after the date. date(ISO 8601) YYYY-MM-DD or date-time(ISO 8601) YYYY-MM-DDTHH:mm:ssZ
+          example: '2017-12-22'
+        group:
+          type: integer
+          description: only return collections from this group
+          example: 2000013
+      x-tag: common
+    CustomArticleFieldAdd:
+      required:
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+          description: Custom  metadata name
+          example: key
+        value:
+          description: Custom metadata value (can be either a string, an array of strings, or empty)
+          example: value
+          nullable: true
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+          - type: object
+      x-tag: articles
+    Resource:
+      type: object
+      properties:
+        id:
+          maxLength: 255
+          type: string
+          description: ID of resource item
+          example: aaaa23512
+          default: ''
+        title:
+          maxLength: 1000
+          type: string
+          description: Title of resource item
+          example: Test title
+          default: ''
+        doi:
+          type: string
+          description: DOI of resource item
+          default: ''
+        link:
+          maxLength: 255
+          type: string
+          description: Link of resource item
+          example: https://docs.figshare.com
+          default: ''
+        status:
+          maxLength: 100
+          type: string
+          description: Status of resource item
+          example: frozen
+          default: ''
+        version:
+          type: integer
+          description: Version of resource item
+          example: 1
+          default: 0
+      x-tag: resource
+    CollectionVersions:
+      required:
+      - funding
+      - url
+      - version
+      type: object
+      properties:
+        version:
+          type: integer
+          description: Version number
+          example: 1
+        url:
+          type: string
+          description: Api endpoint for the collection version
+          format: url
+          example: https://api.figshare.com/v2/collections/2000005/versions/1
+        funding:
+          type: array
+          description: Full Collection funding information
+          items:
+            $ref: '#/components/schemas/FundingInformation'
+      x-tag: collections
+    PrivateCollectionSearch:
+      properties:
+        resource_id:
+          type: string
+          description: only return collections with this resource_id
+          example: '1407024'
+      allOf:
+      - $ref: '#/components/schemas/CollectionSearch'
+      x-tag: collections
+    CollectionSearch:
+      properties:
+        resource_doi:
+          type: string
+          description: Only return collections with this resource_doi
+          example: 10.6084/m9.figshare.1407024
+        doi:
+          type: string
+          description: Only return collections with this doi
+          example: 10.6084/m9.figshare.1407024
+        handle:
+          type: string
+          description: Only return collections with this handle
+          example: 10084/figshare.1407024
+        order:
+          type: string
+          description: The field by which to order.
+          example: published_date
+          default: created_date
+          enum:
+          - created_date
+          - published_date
+          - modified_date
+          - views
+          - shares
+          - cites
+      allOf:
+      - $ref: '#/components/schemas/CommonSearch'
+      x-tag: collections
+    LocationWarnings:
+      required:
+      - entity_id
+      - location
+      - warnings
+      type: object
+      properties:
+        entity_id:
+          type: integer
+          description: Figshare ID of the entity
+          example: 33334444
+        location:
+          type: string
+          description: Url for entity
+          format: url
+        warnings:
+          type: array
+          description: Issues encountered during the operation
+          items:
+            type: string
+      x-tag: common
+    CollectionCreate:
+      required:
+      - title
+      type: object
+      properties:
+        funding:
+          type: string
+          description: Grant number or funding authority
+          default: ''
+        funding_list:
+          type: array
+          description: Funding creation / update items
+          items:
+            $ref: '#/components/schemas/FundingCreate'
+        title:
+          maxLength: 1000
+          minLength: 3
+          type: string
+          description: Title of collection
+          example: Test collection title
+        description:
+          maxLength: 20000
+          type: string
+          description: The collection description. In a publisher case, usually this is the remote collection description
+          example: Test description of article
+          default: ''
+        articles:
+          type: array
+          description: List of articles to be associated with the collection
+          example:
+          - 2000001
+          - 2000005
+          items:
+            type: integer
+        authors:
+          type: array
+          description: 'List of authors to be associated with the collection. The list can contain the following fields: id, name, first_name, last_name, email, orcid_id. If an id is supplied, it will take priority and everything else will be ignored. For adding more authors use the specific authors endpoint.'
+          example:
+          - name: John Doe
+          - id: 20005
+          items:
+            type: object
+            properties: {}
+        categories:
+          type: array
+          description: List of category ids to be associated with the collection(e.g [1, 23, 33, 66])
+          example:
+          - 1
+          - 10
+          - 11
+          items:
+            type: integer
+        categories_by_source_id:
+          type: array
+          description: List of category source ids to be associated with the collection, supersedes the categories property
+          example:
+          - '300204'
+          - '400207'
+          items:
+            type: string
+        tags:
+          type: array
+          description: List of tags to be associated with the collection. Keywords can be used instead
+          example:
+          - tag1
+          - tag2
+          items:
+            type: string
+        keywords:
+          type: array
+          description: List of tags to be associated with the collection. Tags can be used instead
+          example:
+          - tag1
+          - tag2
+          items:
+            type: string
+        references:
+          type: array
+          description: List of links to be associated with the collection (e.g ["http://link1", "http://link2", "http://link3"])
+          example:
+          - http://figshare.com
+          - http://api.figshare.com
+          items:
+            type: string
+            format: link
+        related_materials:
+          type: array
+          description: List of related materials; supersedes references and resource DOI/title.
+          example:
+          - id: 10432
+            identifier: 10.6084/m9.figshare.1407024
+            identifier_type: DOI
+            relation: IsSupplementTo
+            title: Figshare for institutions brochure
+            is_linkout: false
+          items:
+            $ref: '#/components/schemas/RelatedMaterial'
+        custom_fields:
+          type: object
+          properties: {}
+          description: List of key, values pairs to be associated with the collection
+          example:
+            defined_key: value for it
+        custom_fields_list:
+          type: array
+          description: List of custom fields values, supersedes custom_fields parameter
+          items:
+            $ref: '#/components/schemas/CustomArticleFieldAdd'
+        doi:
+          type: string
+          description: Not applicable for regular users. In an institutional case, make sure your group supports setting DOIs. This setting is applied by figshare via opening a ticket through our support/helpdesk system.
+          default: ''
+        handle:
+          type: string
+          description: Not applicable for regular users. In an institutional case, make sure your group supports setting Handles. This setting is applied by figshare via opening a ticket through our support/helpdesk system.
+          default: ''
+        resource_id:
+          type: string
+          description: Not applicable to regular users. In a publisher case, this is the publisher article id
+        resource_doi:
+          type: string
+          description: Not applicable to regular users. In a publisher case, this is the publisher article DOI.
+          default: ''
+        resource_link:
+          type: string
+          description: Not applicable to regular users. In a publisher case, this is the publisher article link
+        resource_title:
+          type: string
+          description: Not applicable to regular users. In a publisher case, this is the publisher article title.
+          default: ''
+        resource_version:
+          type: integer
+          description: Not applicable to regular users. In a publisher case, this is the publisher article version
+        group_id:
+          type: integer
+          description: Not applicable to regular users. This field is reserved to institutions/publishers with access to assign to specific groups
+        timeline:
+          $ref: '#/components/schemas/TimelineUpdate'
+      x-tag: collections
+    ErrorMessage:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: A machine friendly error code, used by the dev team to identify the error.
+        message:
+          type: string
+          description: A human friendly message explaining the error.
+      x-tag: common
+    PrivateLink:
+      required:
+      - expires_date
+      - html_location
+      - id
+      - is_active
+      type: object
+      properties:
+        id:
+          type: string
+          description: Private link id
+          example: 0cfb0dbeac92df445df4aba45f63fdc85fa0b9a888b64e157ce3c93b576aa300fb3621ef3a219515dd482
+        is_active:
+          type: boolean
+          description: True if private link is active
+          example: true
+        expires_date:
+          type: string
+          description: Date when link will expire
+          example: '2015-07-03T00:00:00'
+        html_location:
+          type: string
+          description: HTML url for private link
+          format: url
+          example: https://figshare.com/s/d5ec7a85bcd6dbe9d9b2
+      x-tag: articles
+    CollectionUpdate:
+      type: object
+      properties:
+        funding:
+          type: string
+          description: Grant number or funding authority
+          default: ''
+        funding_list:
+          type: array
+          description: Funding creation / update items
+          items:
+            $ref: '#/components/schemas/FundingCreate'
+        title:
+          maxLength: 1000
+          minLength: 3
+          type: string
+          description: Title of collection
+          example: Test collection title
+        description:
+          maxLength: 20000
+          type: string
+          description: The collection description. In a publisher case, usually this is the remote collection description
+          example: Test description of collection
+          default: ''
+        articles:
+          type: array
+          description: List of articles to be associated with the collection
+          example:
+          - 2000001
+          - 2000005
+          items:
+            type: integer
+        authors:
+          type: array
+          description: 'List of authors to be associated with the collection. The list can contain the following fields: id, name, first_name, last_name, email, orcid_id. If an id is supplied, it will take priority and everything else will be ignored. For adding more authors use the specific authors endpoint.'
+          example:
+          - name: John Doe
+          - id: 20005
+          items:
+            type: object
+            properties: {}
+        categories:
+          type: array
+          description: List of category ids to be associated with the collection (e.g [1, 23, 33, 66])
+          example:
+          - 1
+          - 10
+          - 11
+          items:
+            type: integer
+        categories_by_source_id:
+          type: array
+          description: List of category source ids to be associated with the article, supersedes the categories property
+          example:
+          - '300204'
+          - '400207'
+          items:
+            type: string
+        tags:
+          type: array
+          description: List of tags to be associated with the collection. Keywords can be used instead
+          example:
+          - tag1
+          - tag2
+          items:
+            type: string
+        keywords:
+          type: array
+          description: List of tags to be associated with the collection. Tags can be used instead
+          example:
+          - tag1
+          - tag2
+          items:
+            type: string
+        references:
+          type: array
+          description: List of links to be associated with the collection (e.g ["http://link1", "http://link2", "http://link3"])
+          example:
+          - http://figshare.com
+          - http://api.figshare.com
+          items:
+            type: string
+            format: link
+        related_materials:
+          type: array
+          description: List of related materials; supersedes references and resource DOI/title.
+          example:
+          - id: 10432
+            identifier: 10.6084/m9.figshare.1407024
+            identifier_type: DOI
+            relation: IsSupplementTo
+            title: Figshare for institutions brochure
+            is_linkout: false
+          items:
+            $ref: '#/components/schemas/RelatedMaterial'
+        custom_fields:
+          type: object
+          properties: {}
+          description: List of key, values pairs to be associated with the collection
+          example:
+            defined_key: value for it
+        custom_fields_list:
+          type: array
+          description: List of custom fields values, supersedes custom_fields parameter
+          items:
+            $ref: '#/components/schemas/CustomArticleFieldAdd'
+        doi:
+          type: string
+          description: Not applicable for regular users. In an institutional case, make sure your group supports setting DOIs. This setting is applied by figshare via opening a ticket through our support/helpdesk system.
+          default: ''
+        handle:
+          type: string
+          description: Not applicable for regular users. In an institutional case, make sure your group supports setting Handles. This setting is applied by figshare via opening a ticket through our support/helpdesk system.
+          default: ''
+        resource_id:
+          type: string
+          description: Not applicable to regular users. In a publisher case, this is the publisher article id
+        resource_doi:
+          type: string
+          description: Not applicable to regular users. In a publisher case, this is the publisher article DOI.
+          default: ''
+        resource_link:
+          type: string
+          description: Not applicable to regular users. In a publisher case, this is the publisher article link
+        resource_title:
+          type: string
+          description: Not applicable to regular users. In a publisher case, this is the publisher article title.
+          default: ''
+        resource_version:
+          type: integer
+          description: Not applicable to regular users. In a publisher case, this is the publisher article version
+        group_id:
+          type: integer
+          description: Not applicable to regular users. This field is reserved to institutions/publishers with access to assign to specific groups
+        timeline:
+          $ref: '#/components/schemas/TimelineUpdate'
+      x-tag: collections
+    Location:
+      required:
+      - location
+      type: object
+      properties:
+        location:
+          type: string
+          description: Url for item
+          format: url
+      x-tag: common
+    TimelineUpdate:
+      type: object
+      properties:
+        firstOnline:
+          type: string
+          description: Online posted date
+          example: '2015-12-31'
+        publisherPublication:
+          type: string
+          description: Publish date
+          example: '2015-12-31'
+        publisherAcceptance:
+          type: string
+          description: Date when the item was accepted for publication
+          example: '2015-12-31'
+      x-tag: timeline_update
+    Author:
+      required:
+      - first_name
+      - full_name
+      - id
+      - is_active
+      - last_name
+      - orcid_id
+      - url_name
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Author id
+          example: 97657
+        full_name:
+          type: string
+          description: Author full name
+          example: John Doe
+        first_name:
+          type: string
+          description: Author first name
+          example: John
+        last_name:
+          type: string
+          description: Author last name
+          example: Doe
+        is_active:
+          type: boolean
+          description: True if author has published items
+          example: false
+        url_name:
+          type: string
+          description: Author url name
+          example: John_Doe
+        orcid_id:
+          type: string
+          description: Author Orcid
+          example: 1234-5678-9123-1234
+      x-tag: authors
+    CollectionDOI:
+      required:
+      - doi
+      type: object
+      properties:
+        doi:
+          type: string
+          description: Reserved DOI
+          example: 10.5072/FK2.FIGSHARE.20345
+      x-tag: collections
+    PrivateLinkResponse:
+      required:
+      - html_location
+      - location
+      - token
+      type: object
+      properties:
+        location:
+          type: string
+          description: Url for private link
+          format: url
+        html_location:
+          type: string
+          description: HTML url for private link
+          format: url
+          example: https://figshare.com/s/d5ec7a85bcd6dbe9d9b2
+        token:
+          type: string
+          description: Token for private link
+          example: d5ec7a85bcd6dbe9d9b2
+      x-tag: common
+    ArticlesCreator:
+      required:
+      - articles
+      type: object
+      properties:
+        articles:
+          type: array
+          description: List of article ids
+          example:
+          - 2000003
+          - 2000004
+          items:
+            type: integer
+            description: Id of article
+      x-tag: articles
+    CollectionPrivateLinkCreator:
+      type: object
+      properties:
+        expires_date:
+          type: string
+          description: Date when this private link should expire - optional. By default private links expire in 365 days.
+          example: '2018-02-22 22:22:22'
+      x-tag: collections
+    LocationWarningsUpdate:
+      required:
+      - location
+      - warnings
+      type: object
+      properties:
+        location:
+          type: string
+          description: Url for entity
+          format: url
+        warnings:
+          type: array
+          description: Issues encountered during the operation
+          items:
+            type: string
+      x-tag: common
+    Category:
+      required:
+      - id
+      - parent_id
+      - path
+      - source_id
+      - taxonomy_id
+      - title
+      type: object
+      properties:
+        parent_id:
+          type: integer
+          description: Parent category
+          example: 1
+        id:
+          type: integer
+          description: Category id
+          example: 11
+        title:
+          type: string
+          description: Category title
+          example: Anatomy
+        path:
+          type: string
+          description: Path to all ancestor ids
+          example: /450/1024/6532
+        source_id:
+          type: string
+          description: ID in original standard taxonomy
+          example: '300204'
+        taxonomy_id:
+          type: integer
+          description: Internal id of taxonomy the category is part of
+          example: 4
+      x-tag: common
+    Article:
+      required:
+      - created_date
+      - defined_type
+      - defined_type_name
+      - doi
+      - handle
+      - id
+      - resource_doi
+      - resource_title
+      - thumb
+      - timeline
+      - title
+      - url
+      - url_private_api
+      - url_private_html
+      - url_public_api
+      - url_public_html
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for article
+          example: 1434614
+        title:
+          type: string
+          description: Title of article
+          example: Test article title
+        doi:
+          type: string
+          description: DOI
+          example: 10.6084/m9.figshare.1434614
+        handle:
+          type: string
+          description: Handle
+          example: 111184/figshare.1234
+        url:
+          type: string
+          description: Api endpoint for article
+          format: url
+          example: http://api.figshare.com/articles/1434614
+        url_public_html:
+          type: string
+          description: Public site endpoint for article
+          format: url
+          example: https://figshare.com/articles/media/Test_article_title/1434614
+        url_public_api:
+          type: string
+          description: Public Api endpoint for article
+          format: url
+          example: https://api.figshare.com/articles/1434614
+        url_private_html:
+          type: string
+          description: Private site endpoint for article
+          format: url
+          example: https://figshare.com/account/articles/1434614
+        url_private_api:
+          type: string
+          description: Private Api endpoint for article
+          format: url
+          example: https://api.figshare.com/account/articles/1434614
+        timeline:
+          $ref: '#/components/schemas/Timeline'
+        thumb:
+          type: string
+          description: Thumbnail image
+          format: url
+          example: https://ndownloader.figshare.com/files/123456789/preview/12345678/thumb.png
+        defined_type:
+          type: integer
+          description: Type of article identifier
+          example: 3
+        defined_type_name:
+          type: string
+          description: Name of the article type identifier
+          example: media
+        resource_doi:
+          type: string
+          description: Deprecated by related materials. Not applicable to regular users. In a publisher case, this is the publisher article DOI.
+          default: ''
+        resource_title:
+          type: string
+          description: Deprecated by related materials. Not applicable to regular users. In a publisher case, this is the publisher article title.
+          default: ''
+        created_date:
+          type: string
+          description: Date when article was created
+          example: '2017-05-18T11:49:03Z'
+      x-tag: articles
+    CollectionCompletePrivate:
+      required:
+      - account_id
+      - articles_count
+      - authors
+      - categories
+      - citation
+      - created_date
+      - custom_fields
+      - description
+      - funding
+      - group_id
+      - institution_id
+      - keywords
+      - modified_date
+      - public
+      - references
+      - resource_doi
+      - resource_id
+      - resource_link
+      - resource_title
+      - resource_version
+      - tags
+      - timeline
+      - version
+      properties:
+        account_id:
+          type: integer
+          description: ID of the account owning the collection
+          example: 1000001
+        funding:
+          type: array
+          description: Full Collection funding information
+          items:
+            $ref: '#/components/schemas/FundingInformation'
+        resource_id:
+          type: string
+          description: Collection resource id
+          example: ''
+        resource_doi:
+          type: string
+          description: Collection resource doi
+          example: 10.6084/m9.figshare.123
+        resource_title:
+          type: string
+          description: Collection resource title
+          example: test
+        resource_link:
+          type: string
+          description: Collection resource link
+          example: http://figshare.com
+        resource_version:
+          type: integer
+          description: Collection resource version
+          example: 0
+        version:
+          type: integer
+          description: Collection version
+          example: 1
+        description:
+          type: string
+          description: Collection description
+          example: description
+        categories:
+          type: array
+          description: List of collection categories
+          items:
+            $ref: '#/components/schemas/Category'
+        references:
+          type: array
+          description: List of collection references
+          items:
+            type: string
+            format: url
+        related_materials:
+          type: array
+          description: List of related materials; supersedes references and resource DOI/title.
+          example:
+          - id: 10432
+            identifier: 10.6084/m9.figshare.1407024
+            identifier_type: DOI
+            relation: IsSupplementTo
+            title: Figshare for institutions brochure
+            is_linkout: false
+          items:
+            $ref: '#/components/schemas/RelatedMaterial'
+        tags:
+          type: array
+          description: List of collection tags. Keywords can be used instead
+          example:
+          - t1
+          - t2
+          items:
+            type: string
+        keywords:
+          type: array
+          description: List of collection keywords. Tags can be used instead
+          example:
+          - t1
+          - t2
+          items:
+            type: string
+        authors:
+          type: array
+          description: List of collection authors
+          items:
+            $ref: '#/components/schemas/Author'
+        institution_id:
+          type: integer
+          description: Collection institution
+          example: 1
+        group_id:
+          type: integer
+          description: Collection group
+          example: 1
+        articles_count:
+          type: integer
+          description: Number of articles in collection
+          example: 1
+        public:
+          type: boolean
+          description: True if collection is published
+          example: true
+        citation:
+          type: string
+          description: Collection citation
+          example: citation
+        custom_fields:
+          type: array
+          description: Collection custom fields
+          items:
+            $ref: '#/components/schemas/CustomArticleField'
+        modified_date:
+          type: string
+          description: Date when collection was last modified
+          example: '2017-05-15T15:12:26Z'
+        created_date:
+          type: string
+          description: Date when collection was created
+          example: '2017-05-15T15:12:26Z'
+        timeline:
+          $ref: '#/components/schemas/Timeline'
+      allOf:
+      - $ref: '#/components/schemas/Collection'
+      x-tag: collections
+    CollectionHandle:
+      required:
+      - handle
+      type: object
+      properties:
+        handle:
+          type: string
+          description: Reserved Handle
+          example: 11172/FK2.FIGSHARE.20345
+      x-tag: collections
+    RelatedMaterial:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID of the related material; can be used to add existing materials of the same account to items.
+          example: 10432
+        identifier:
+          type: string
+          description: The related material identifier (e.g., DOI, Handle, ISBN). Mandatory if creating a new material.
+          example: 10.6084/m9.figshare.1407024
+        title:
+          type: string
+          description: The related material title
+          example: 'Rooter: A Methodology for the Typical Unification of Access Points and Redundancy'
+        relation:
+          type: string
+          description: The relation between the item and the related material; defaults to 'References'. Mandatory if creating a new material.
+          example: IsSupplementTo
+          default: References
+          enum:
+          - IsCitedBy
+          - Cites
+          - IsSupplementTo
+          - IsSupplementedBy
+          - IsContinuedBy
+          - Continues
+          - Describes
+          - IsDescribedBy
+          - HasMetadata
+          - IsMetadataFor
+          - HasVersion
+          - IsVersionOf
+          - IsNewVersionOf
+          - IsPreviousVersionOf
+          - IsPartOf
+          - HasPart
+          - IsPublishedIn
+          - IsReferencedBy
+          - References
+          - IsDocumentedBy
+          - Documents
+          - IsCompiledBy
+          - Compiles
+          - IsVariantFormOf
+          - IsOriginalFormOf
+          - IsIdenticalTo
+          - IsReviewedBy
+          - Reviews
+          - IsDerivedFrom
+          - IsSourceOf
+          - IsRequiredBy
+          - Requires
+          - IsObsoletedBy
+          - Obsoletes
+        identifier_type:
+          type: string
+          description: The type of the identifier of the related material; defaults to 'URL'. Mandatory if creating a new material.
+          example: DOI
+          default: URL
+          enum:
+          - ARK
+          - arXiv
+          - bibcode
+          - DOI
+          - EAN13
+          - EISSN
+          - Handle
+          - IGSN
+          - ISBN
+          - ISSN
+          - ISTC
+          - LISSN
+          - LSID
+          - PMID
+          - PURL
+          - UPC
+          - URL
+          - URN
+          - w3id
+        is_linkout:
+          type: boolean
+          description: Flag for highlighting this related material in the call-out box
+          example: true
+        link:
+          type: string
+          description: The full hyperlink for the identifier. Automatically generated by Figshare.
+          readOnly: true
+          example: https://doi.org/10.6084/m9.figshare.1407024
+    Collection:
+      required:
+      - doi
+      - handle
+      - id
+      - timeline
+      - title
+      - url
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Collection id
+          example: 123
+        title:
+          type: string
+          description: Collection title
+          example: Sample collection
+        doi:
+          type: string
+          description: Collection DOI
+          example: 10.6084/m9.figshare.123
+        handle:
+          type: string
+          description: Collection Handle
+          example: 111184/figshare.1234
+        url:
+          type: string
+          description: Api endpoint
+          example: https://api.figshare.com/v2/collections/123
+        timeline:
+          $ref: '#/components/schemas/Timeline'
+      x-tag: collections
+    CategoriesCreator:
+      required:
+      - categories
+      type: object
+      properties:
+        categories:
+          type: array
+          description: List of category ids
+          example:
+          - 1
+          - 10
+          - 11
+          items:
+            type: integer
+            description: Id of category
+      x-tag: articles
+    CustomArticleField:
+      required:
+      - field_type
+      - is_mandatory
+      - name
+      - order
+      - settings
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+          description: Custom  metadata name
+          example: key
+        value:
+          type: object
+          description: Custom metadata value (can be either a string or an array of strings)
+          example: value
+        field_type:
+          type: string
+          description: Custom field type
+          example: textarea
+          enum:
+          - text
+          - textarea
+          - dropdown
+          - url
+          - email
+          - date
+          - dropdown_large_list
+        settings:
+          type: object
+          properties: {}
+          description: Settings for the custom field
+          example:
+            validations:
+              min_length: 1
+              max_length: 1000
+            placeholder: Enter your custom field here
+        order:
+          type: integer
+          description: Order of the custom field
+          example: 1
+        is_mandatory:
+          type: boolean
+          description: Whether the field is mandatory or not
+          example: false
+      x-tag: articles
+    Timeline:
+      allOf:
+      - $ref: '#/components/schemas/TimelineUpdate'
+      x-tag: timeline
+    AuthorsCreator:
+      required:
+      - authors
+      type: object
+      properties:
+        authors:
+          type: array
+          description: 'List of authors to be associated with the article. The list can contain the following fields: id, name, first_name, last_name, email, orcid_id. If an id is supplied, it will take priority and everything else will be ignored. For adding more authors use the specific authors endpoint.'
+          example:
+          - id: 12121
+          - id: 34345
+          - name: John Doe
+          items:
+            type: object
+            properties: {}
+      x-tag: articles
+    FundingCreate:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: A funding ID as returned by the Funding Search endpoint
+        title:
+          type: string
+          description: The title of the new user created funding
+      x-tag: funding
+    CollectionComplete:
+      required:
+      - articles_count
+      - authors
+      - categories
+      - citation
+      - created_date
+      - custom_fields
+      - description
+      - funding
+      - group_id
+      - institution_id
+      - keywords
+      - modified_date
+      - public
+      - references
+      - related_materials
+      - resource_doi
+      - resource_id
+      - resource_link
+      - resource_title
+      - resource_version
+      - tags
+      - timeline
+      - version
+      properties:
+        funding:
+          type: array
+          description: Full Collection funding information
+          items:
+            $ref: '#/components/schemas/FundingInformation'
+        resource_id:
+          type: string
+          description: Collection resource id
+          example: ''
+        resource_doi:
+          type: string
+          description: Collection resource doi
+          example: 10.6084/m9.figshare.123
+        resource_title:
+          type: string
+          description: Collection resource title
+          example: test
+        resource_link:
+          type: string
+          description: Collection resource link
+          example: http://figshare.com
+        resource_version:
+          type: integer
+          description: Collection resource version
+          example: 0
+        version:
+          type: integer
+          description: Collection version
+          example: 1
+        description:
+          type: string
+          description: Collection description
+          example: description
+        categories:
+          type: array
+          description: List of collection categories
+          items:
+            $ref: '#/components/schemas/Category'
+        references:
+          type: array
+          description: List of collection references
+          items:
+            type: string
+            format: url
+        related_materials:
+          type: array
+          description: List of related materials; supersedes references and resource DOI/title.
+          example:
+          - id: 10432
+            identifier: 10.6084/m9.figshare.1407024
+            identifier_type: DOI
+            relation: IsSupplementTo
+            title: Figshare for institutions brochure
+            is_linkout: false
+          items:
+            $ref: '#/components/schemas/RelatedMaterial'
+        tags:
+          type: array
+          description: List of collection tags. Keywords can be used instead
+          example:
+          - t1
+          - t2
+          items:
+            type: string
+        keywords:
+          type: array
+          description: List of collection keywords. Tags can be used instead
+          example:
+          - t1
+          - t2
+          items:
+            type: string
+        authors:
+          type: array
+          description: List of collection authors
+          items:
+            $ref: '#/components/schemas/Author'
+        institution_id:
+          type: integer
+          description: Collection institution
+          example: 1
+        group_id:
+          type: integer
+          description: Collection group
+          example: 1
+        articles_count:
+          type: integer
+          description: Number of articles in collection
+          example: 1
+        public:
+          type: boolean
+          description: True if collection is published
+          example: true
+        citation:
+          type: string
+          description: Collection citation
+          example: citation
+        custom_fields:
+          type: array
+          description: Collection custom fields
+          items:
+            $ref: '#/components/schemas/CustomArticleField'
+        modified_date:
+          type: string
+          description: Date when collection was last modified
+          example: '2017-05-15T15:12:26Z'
+        created_date:
+          type: string
+          description: Date when collection was created
+          example: '2017-05-15T15:12:26Z'
+        timeline:
+          $ref: '#/components/schemas/Timeline'
+      allOf:
+      - $ref: '#/components/schemas/Collection'
+      x-tag: collections
+    FundingInformation:
+      required:
+      - funder_name
+      - grant_code
+      - id
+      - is_user_defined
+      - title
+      - url
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Funding id
+          example: 1
+        title:
+          type: string
+          description: The funding name
+          example: Scholarly funding
+        grant_code:
+          type: string
+          description: The grant code
+        funder_name:
+          type: string
+          description: Funder's name
+        is_user_defined:
+          type: integer
+          description: Return 1 whether the grant has been introduced manually, 0 otherwise
+        url:
+          type: string
+          description: The grant url
+          format: url
+          example: https://app.dimensions.ai/details/grant/1
+      x-tag: funding
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://figshare.com/account/applications/authorize
+          tokenUrl: https://api.figshare.com/v2/token
+          scopes:
+            all: Grants all access
+x-additional-descriptions:
+- title: Upload files
+  position: bottom
+  subsections:
+  - title: Steps to upload file
+    content: description_upload_steps
+  - title: Uploads API
+    content: description_upload_api
+  - title: Parts API
+    content: description_upload_parts_api
+  - title: Example Upload on figshare
+    content: description_upload_example
+  - title: Output of Script
+    content: description_upload_output
+  - title: Upload Bash Script
+    content: description_upload_bash
+  - title: Upload S3 File to Figshare
+    content: description_upload_from_s3
+- title: Search
+  position: bottom
+  subsections:
+  - title: How to find data on figshare
+    content: description_search_intro
+  - title: Search operators
+    content: description_search_operators
+  - title: Searchable attributes
+    content: description_search_attributes
+  - title: Quick search
+    content: description_search_quick
+  - title: Advanced search
+    content: description_search_advanced
+  - title: Combined field search
+    content: description_search_combined
+  - title: Complex searches
+    content: description_search_complex
+- title: Stats
+  position: bottom
+  subsections:
+  - title: Stats service
+    subsections:
+    - title: Intro
+      content: description_stats_service_intro
+    - title: Authentication
+      content: description_stats_service_auth
+    - title: Errors
+      content: description_stats_service_errors
+    - title: Endpoints
+      content: description_stats_service_endpoints
+  - title: Breakdown
+    subsections:
+    - title: Endpoints for retrieving a breakdown
+      content: description_stats_breakdown_endpoints
+    - title: Authorization
+      content: description_stats_breakdown_auth
+    - title: Endpoint format
+      content: description_stats_breakdown_format
+    - title: Request parameters
+      content: description_stats_breakdown_params
+    - title: Examples
+      content: description_stats_breakdown_examples
+  - title: Timeline
+    subsections:
+    - title: Endpoints for retrieving a timeline
+      content: description_stats_timeline_endpoints
+    - title: Authorization
+      content: description_stats_timeline_auth
+    - title: Endpoint format
+      content: description_stats_timeline_format
+    - title: Request parameters
+      content: description_stats_timeline_params
+    - title: Examples
+      content: description_stats_timeline_examples
+  - title: Tops
+    subsections:
+    - title: Endpoints for retrieving tops
+      content: description_stats_tops_endpoints
+    - title: Authorization
+      content: description_stats_tops_auth
+    - title: Endpoint format
+      content: description_stats_tops_format
+    - title: Request parameters
+      content: description_stats_tops_params
+    - title: Examples
+      content: description_stats_tops_examples
+  - title: Totals
+    subsections:
+    - title: Endpoints for retrieving totals
+      content: description_stats_totals_endpoints
+    - title: Authorization
+      content: description_stats_totals_auth
+    - title: Endpoint format
+      content: description_stats_totals_format
+    - title: Examples
+      content: description_stats_totals_examples
+  - title: Count Articles
+    subsections:
+    - title: Endpoint for retrieving counts
+      content: description_stats_count_endpoints
+    - title: Authorization
+      content: description_stats_count_auth
+    - title: Endpoint format
+      content: description_stats_count_format
+    - title: Example
+      content: description_stats_count_examples
+- title: OAI PMH
+  position: bottom
+  subsections:
+  - title: OAI-PMH
+    content: description_oai_pmh
+  - title: Base URL
+    content: description_oai_baseurl
+  - title: Item equals Article
+    content: description_oai_itemarticle
+  - title: Metadata formats
+    content: description_oai_metadata
+  - title: Datestamps
+    content: description_oai_datestamp
+  - title: Sets
+    content: description_oai_sets
+  - title: Update schedule
+    content: description_oai_update_schedule
+  - title: Pagination and Resumption Token Expiration
+    content: description_oai_pagination
+  - title: Rate limit
+    content: description_oai_ratelimit
+  - title: Future development
+    content: description_oai_futuredev
+  - title: Some examples
+    content: description_oai_someexamples
+- title: HR Feed
+  position: bottom
+  subsections:
+  - title: HR Feed Private Endpoint
+    content: description_hrfeed_endpoint
+  - title: HR Feed examples
+    subsections:
+    - title: Python
+      content: description_hrfeed_examples_python
+    - title: Java
+      content: description_hrfeed_examples_java
+    - title: C Sharp
+      content: description_hrfeed_examples_csharp
+    - title: Curl
+      content: description_hrfeed_examples_curl
+  - title: Response
+    content: description_hrfeed_response
+  - title: Errors
+    content: description_hrfeed_errors
+  - title: Notes
+    content: description_hrfeed_notes
+- title: Custom Fields
+  position: bottom
+  subsections:
+  - title: Custom Fields Private Endpoints
+    content: description_custom_fields_endpoint
+  - title: Custom Fields examples
+    subsections:
+    - title: Python
+      content: description_custom_fields_examples_python
+    - title: Java
+      content: description_custom_fields_examples_java
+    - title: C Sharp
+      content: description_custom_fields_examples_csharp
+    - title: Curl
+      content: description_custom_fields_examples_curl
+  - title: Response
+    content: description_custom_fields_response
+  - title: Errors
+    content: description_custom_fields_errors
+  - title: Notes
+    content: description_custom_fields_notes
+- title: figshare Documentation
+  position: top
+  subsections:
+  - title: figshare Documentation
+    content: description_intro
+  - title: OAuth
+    subsections:
+    - title: Intro
+      content: description_oauth_intro
+    - title: Quick guide
+      content: description_oauth_quick
+    - title: Scope
+      content: description_oauth_scope
+    - title: Grant Types
+      content: description_oauth_grant
+  - title: API description
+    subsections:
+    - title: Feature list
+      content: description_api_features
+    - title: Sending parameters
+      content: description_api_parameters
+    - title: Resource representations
+      content: description_api_resourcerepresentation
+    - title: Authentication
+      content: description_api_auth
+    - title: Errors
+      content: description_api_errors
+    - title: Searching filtering and pagination
+      content: description_api_search
+    - title: Rate limiting
+      content: description_api_ratelimit
+    - title: Conditional requests
+      content: description_api_requests
+    - title: CORS policy
+      content: description_api_cors
+    - title: Impersonation
+      content: description_api_impersonation
+x-original-swagger-version: '2.0'
