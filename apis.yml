@@ -11,9 +11,22 @@ description: >-
   Figshare, which provides a public REST API and OAI-PMH endpoint. King's also
   runs an e-Research group with a large public GitHub organization.
 type: Index
+accessModel:
+  pricing: free
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Free · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/kings-college-london.png
 url: https://raw.githubusercontent.com/api-evangelist/kings-college-london/refs/heads/main/apis.yml
 tags:
   - Education
@@ -28,47 +41,226 @@ created: '2026-06-03'
 modified: '2026-06-03'
 specificationVersion: '0.19'
 apis:
-  - aid: kings-college-london:pure-oai
-    name: King's Research Portal (Pure) OAI-PMH
-    description: >-
-      OAI-PMH metadata harvesting interface for the King's Research Portal,
-      the front end of Pure, King's research information system and
-      institutional repository. The interface returns a live OAI-PMH response
-      (repositoryName "Pure OAI Repository") supporting standard verbs such as
-      Identify, ListRecords and ListMetadataFormats over an OpenAIRE CERIF
-      profile.
-    humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
-    baseURL: https://kclpure.kcl.ac.uk/ws/oai
-    tags: [ Research, OAI-PMH, Repository, Metadata, Pure ]
-    properties:
-      - type: Documentation
-        url: https://www.kcl.ac.uk/research/explore/kings-research-portal
-      - type: Website
-        url: https://kclpure.kcl.ac.uk/portal/
-  - aid: kings-college-london:figshare-repository
-    name: King's College London Research Repository (Figshare)
-    description: >-
-      King's research data repository hosted on Figshare. Public access to the
-      repository's records is available through the Figshare public REST API
-      (api.figshare.com/v2) and a Figshare OAI-PMH endpoint, both of which
-      return live responses. The KCL-branded repository front end is at
-      kcl.figshare.com.
-    humanURL: https://kcl.figshare.com/
-    baseURL: https://api.figshare.com/v2
-    tags: [ Research Data, Repository, Figshare, OAI-PMH, REST ]
-    properties:
-      - type: Documentation
-        url: https://docs.figshare.com/
-      - type: Website
-        url: https://kcl.figshare.com/
-      - type: OpenAPI
-        url: openapi/kings-college-london-figshare-repository.yaml
-      - type: x-json-schema
-        url: json-schema/kings-college-london-article-schema.json
-      - type: x-vocabulary
-        url: vocabulary/kings-college-london-vocabulary.yml
-      - type: x-spectral-rules
-        url: rules/kings-college-london-rules.yml
+- aid: kings-college-london:pure-oai
+  name: King's Research Portal (Pure) OAI-PMH
+  description: >-
+    OAI-PMH metadata harvesting interface for the King's Research Portal, the front end of Pure, King's
+    research information system and institutional repository. The interface returns a live OAI-PMH response
+    (repositoryName "Pure OAI Repository") supporting standard verbs such as Identify, ListRecords and
+    ListMetadataFormats over an OpenAIRE CERIF profile.
+  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
+  baseURL: https://kclpure.kcl.ac.uk/ws/oai
+  tags:
+  - Research
+  - OAI-PMH
+  - Repository
+  - Metadata
+  - Pure
+  properties:
+  - type: Documentation
+    url: https://www.kcl.ac.uk/research/explore/kings-research-portal
+  - type: Website
+    url: https://kclpure.kcl.ac.uk/portal/
+- aid: kings-college-london:kings-college-london-altmetric-api
+  name: King's College London altmetric API
+  description: The altmetric API from King's College London — 1 operation(s) for altmetric.
+  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
+  baseURL: https://kclpure.kcl.ac.uk/ws/oai
+  tags:
+  - altmetric
+  properties:
+  - type: OpenAPI
+    url: openapi/kings-college-london-altmetric-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: Website
+    url: https://kcl.figshare.com/
+  - type: x-json-schema
+    url: json-schema/kings-college-london-article-schema.json
+  - type: x-vocabulary
+    url: vocabulary/kings-college-london-vocabulary.yml
+  - type: x-spectral-rules
+    url: rules/kings-college-london-rules.yml
+- aid: kings-college-london:kings-college-london-articles-api
+  name: King's College London articles API
+  description: The articles API from King's College London — 34 operation(s) for articles.
+  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
+  baseURL: https://kclpure.kcl.ac.uk/ws/oai
+  tags:
+  - articles
+  properties:
+  - type: OpenAPI
+    url: openapi/kings-college-london-articles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: Website
+    url: https://kcl.figshare.com/
+  - type: x-json-schema
+    url: json-schema/kings-college-london-article-schema.json
+  - type: x-vocabulary
+    url: vocabulary/kings-college-london-vocabulary.yml
+  - type: x-spectral-rules
+    url: rules/kings-college-london-rules.yml
+- aid: kings-college-london:kings-college-london-authors-api
+  name: King's College London authors API
+  description: The authors API from King's College London — 2 operation(s) for authors.
+  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
+  baseURL: https://kclpure.kcl.ac.uk/ws/oai
+  tags:
+  - authors
+  properties:
+  - type: OpenAPI
+    url: openapi/kings-college-london-authors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: Website
+    url: https://kcl.figshare.com/
+  - type: x-json-schema
+    url: json-schema/kings-college-london-article-schema.json
+  - type: x-vocabulary
+    url: vocabulary/kings-college-london-vocabulary.yml
+  - type: x-spectral-rules
+    url: rules/kings-college-london-rules.yml
+- aid: kings-college-london:kings-college-london-collections-api
+  name: King's College London collections API
+  description: The collections API from King's College London — 21 operation(s) for collections.
+  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
+  baseURL: https://kclpure.kcl.ac.uk/ws/oai
+  tags:
+  - collections
+  properties:
+  - type: OpenAPI
+    url: openapi/kings-college-london-collections-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: Website
+    url: https://kcl.figshare.com/
+  - type: x-json-schema
+    url: json-schema/kings-college-london-article-schema.json
+  - type: x-vocabulary
+    url: vocabulary/kings-college-london-vocabulary.yml
+  - type: x-spectral-rules
+    url: rules/kings-college-london-rules.yml
+- aid: kings-college-london:kings-college-london-institutions-api
+  name: King's College London institutions API
+  description: The institutions API from King's College London — 20 operation(s) for institutions.
+  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
+  baseURL: https://kclpure.kcl.ac.uk/ws/oai
+  tags:
+  - institutions
+  properties:
+  - type: OpenAPI
+    url: openapi/kings-college-london-institutions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: Website
+    url: https://kcl.figshare.com/
+  - type: x-json-schema
+    url: json-schema/kings-college-london-article-schema.json
+  - type: x-vocabulary
+    url: vocabulary/kings-college-london-vocabulary.yml
+  - type: x-spectral-rules
+    url: rules/kings-college-london-rules.yml
+- aid: kings-college-london:kings-college-london-oauth-api
+  name: King's College London oauth API
+  description: The oauth API from King's College London — 1 operation(s) for oauth.
+  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
+  baseURL: https://kclpure.kcl.ac.uk/ws/oai
+  tags:
+  - oauth
+  properties:
+  - type: OpenAPI
+    url: openapi/kings-college-london-oauth-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: Website
+    url: https://kcl.figshare.com/
+  - type: x-json-schema
+    url: json-schema/kings-college-london-article-schema.json
+  - type: x-vocabulary
+    url: vocabulary/kings-college-london-vocabulary.yml
+  - type: x-spectral-rules
+    url: rules/kings-college-london-rules.yml
+- aid: kings-college-london:kings-college-london-other-api
+  name: King's College London other API
+  description: The other API from King's College London — 7 operation(s) for other.
+  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
+  baseURL: https://kclpure.kcl.ac.uk/ws/oai
+  tags:
+  - other
+  properties:
+  - type: OpenAPI
+    url: openapi/kings-college-london-other-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: Website
+    url: https://kcl.figshare.com/
+  - type: x-json-schema
+    url: json-schema/kings-college-london-article-schema.json
+  - type: x-vocabulary
+    url: vocabulary/kings-college-london-vocabulary.yml
+  - type: x-spectral-rules
+    url: rules/kings-college-london-rules.yml
+- aid: kings-college-london:kings-college-london-profiles-api
+  name: King's College London profiles API
+  description: The profiles API from King's College London — 2 operation(s) for profiles.
+  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
+  baseURL: https://kclpure.kcl.ac.uk/ws/oai
+  tags:
+  - profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/kings-college-london-profiles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: Website
+    url: https://kcl.figshare.com/
+  - type: x-json-schema
+    url: json-schema/kings-college-london-article-schema.json
+  - type: x-vocabulary
+    url: vocabulary/kings-college-london-vocabulary.yml
+  - type: x-spectral-rules
+    url: rules/kings-college-london-rules.yml
+- aid: kings-college-london:kings-college-london-projects-api
+  name: King's College London projects API
+  description: The projects API from King's College London — 17 operation(s) for projects.
+  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
+  baseURL: https://kclpure.kcl.ac.uk/ws/oai
+  tags:
+  - projects
+  properties:
+  - type: OpenAPI
+    url: openapi/kings-college-london-projects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: Website
+    url: https://kcl.figshare.com/
+  - type: x-json-schema
+    url: json-schema/kings-college-london-article-schema.json
+  - type: x-vocabulary
+    url: vocabulary/kings-college-london-vocabulary.yml
+  - type: x-spectral-rules
+    url: rules/kings-college-london-rules.yml
+- aid: kings-college-london:kings-college-london-symplectic-api
+  name: King's College London symplectic API
+  description: The symplectic API from King's College London — 5 operation(s) for symplectic.
+  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
+  baseURL: https://kclpure.kcl.ac.uk/ws/oai
+  tags:
+  - symplectic
+  properties:
+  - type: OpenAPI
+    url: openapi/kings-college-london-symplectic-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: Website
+    url: https://kcl.figshare.com/
+  - type: x-json-schema
+    url: json-schema/kings-college-london-article-schema.json
+  - type: x-vocabulary
+    url: vocabulary/kings-college-london-vocabulary.yml
+  - type: x-spectral-rules
+    url: rules/kings-college-london-rules.yml
 common:
   - type: AgenticAccess
     url: agentic-access/kings-college-london-agentic-access.yml
