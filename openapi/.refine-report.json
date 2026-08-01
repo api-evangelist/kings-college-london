@@ -1,0 +1,32 @@
+{
+  "provider": "kings-college-london",
+  "sources": [
+    "kings-college-london-altmetric-api-openapi.yml",
+    "kings-college-london-articles-api-openapi.yml",
+    "kings-college-london-authors-api-openapi.yml",
+    "kings-college-london-collections-api-openapi.yml",
+    "kings-college-london-institutions-api-openapi.yml",
+    "kings-college-london-oauth-api-openapi.yml",
+    "kings-college-london-other-api-openapi.yml",
+    "kings-college-london-profiles-api-openapi.yml",
+    "kings-college-london-projects-api-openapi.yml",
+    "kings-college-london-symplectic-api-openapi.yml"
+  ],
+  "outputs": [
+    "kings-college-london-altmetric-api-openapi.yml",
+    "kings-college-london-articles-api-openapi.yml",
+    "kings-college-london-authors-api-openapi.yml",
+    "kings-college-london-collections-api-openapi.yml",
+    "kings-college-london-institutions-api-openapi.yml",
+    "kings-college-london-oauth-api-openapi.yml",
+    "kings-college-london-other-api-openapi.yml",
+    "kings-college-london-profiles-api-openapi.yml",
+    "kings-college-london-projects-api-openapi.yml",
+    "kings-college-london-symplectic-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
