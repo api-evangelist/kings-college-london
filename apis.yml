@@ -1,295 +1,417 @@
----
 aid: kings-college-london
 name: King's College London
+x-type: university
+x-category: Public Research University
 description: >-
-  King's College London (KCL) is a public research university in London, United
-  Kingdom, ranked #41 in the QS World University Rankings 2025. Like most
-  research universities, King's does not operate a centralized public developer
-  portal; its machine-readable footprint is concentrated in research and library
-  infrastructure. The King's Research Portal (Pure) exposes a live OAI-PMH
-  metadata interface, and the King's research data repository is hosted on
-  Figshare, which provides a public REST API and OAI-PMH endpoint. King's also
-  runs an e-Research group with a large public GitHub organization.
+  King's College London is a UK public research university and Russell Group member, founded in
+  1829, ranked #40 in the QS World University Rankings. Re-profiled on 2026-08-19 under the API
+  Evangelist university pipeline, which settles WHO OPERATES a surface before crediting it to the
+  institution. The June 2026 profile credited King's with eleven API entries and ten OpenAPI
+  contracts; every one of them was api.figshare.com/v2 — a single Figshare document that the same
+  pass attributed to twenty-five different universities — split by tag into eleven apparent
+  surfaces. Those contracts, and the collections and agentic-access artifacts derived from them,
+  have been removed. What is left is what King's actually operates. The genuine find is the
+  e-Research AI Hub at ai.create.kcl.ac.uk: King's own OpenAI-compatible LLM inference platform
+  for researchers, live, bearer-authenticated, metered and billed, running on King's own
+  infrastructure — a real institution-operated API, and a rare one in this cohort. Alongside it
+  sit four tenancies that are real institutional facts but somebody else's engineering: the
+  King's Research Portal OAI-PMH endpoint (Elsevier Pure), the research data repository
+  (Figshare), LibrarySearch (Ex Libris Primo) and the UK federation identity provider
+  (OpenAthens). King's holds its own DataCite membership and prefix, and is registered in the UK
+  Access Management Federation and eduGAIN. It publishes no OpenAPI, no developer portal, no
+  open data portal, no llms.txt and no security.txt.
 type: Index
 accessModel:
-  pricing: free
-  onboarding: self-serve
-  trial: false
-  try_now: true
+  pricing: freemium
+  onboarding: affiliation
+  trial: true
+  try_now: false
   public: false
-  label: Free · Self-serve signup
-  confidence: high
+  label: Free tier for King's affiliates · metered beyond it · no public signup
+  confidence: medium
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
-  method: derived
+  generated: '2026-08-19'
+  method: probed
 position: Consumer
-access: 3rd-Party
+access: Private
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/kings-college-london.png
 url: https://raw.githubusercontent.com/api-evangelist/kings-college-london/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
-  - University
-  - Research
-  - Open Data
-  - OAI-PMH
-  - Library
-  - United Kingdom
+- University
+- Higher Education
+- Education
+- Russell Group
+- United Kingdom
+- London
+- Research
+- Research Computing
+- Artificial Intelligence
+- Institutional Repository
+- Identity Federation
+- OAI-PMH
+- Library
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 specificationVersion: '0.23'
+x-coverage:
+  state: gated
+  reason: >-
+    King's operates exactly one public-internet API of its own, and it requires a King's
+    credential. The e-Research AI Hub answers 401 with a structured error envelope, which proves
+    it is live and callable, but its API reference, model list, rate limits and billing rules all
+    sit behind Microsoft Entra ID sign-in and cannot be read from outside. The rest of the
+    programmable footprint is either vendor software running under a kcl.ac.uk hostname or, in
+    the case of the CREATE Cloud OpenStack API, on a hostname that publishes no public DNS at
+    all. Nothing blocked us: 40+ hosts and paths were probed successfully and the thinness is the
+    institution's, not a fetch failure.
+  detail: >-
+    Verified institution-operated and live: https://ai.create.kcl.ac.uk/api/v1/models returns 401
+    application/json with the OpenAI error envelope
+    ({"error":{"message":"Unauthorized — no bearer token provided","type":"invalid_request_error",
+    "param":null,"code":"invalid_api_key"}}) from nginx/1.30.4, and a request bearing an unknown
+    key returns a different message ("invalid API key"), which establishes the token is validated
+    rather than merely required. King's own documentation at docs.er.kcl.ac.uk/CREATE/ai_hub/
+    describes it as "King's College London's AI inference platform for researchers", OpenAI-
+    compatible, with chat completions, image generation, streaming, RAG, agent workflows and MCP
+    integration, free starter tokens and project budgets thereafter. No contract is published for
+    it: /openapi.json, /api/openapi.json, /v1/models and /.well-known/openapi all return the
+    application's 404. Institution-operated but unreachable: cloud.er.kcl.ac.uk, the CREATE Cloud
+    OpenStack API documented at docs.er.kcl.ac.uk/CREATE/cloud/openstack_api/, has no public DNS
+    record on 1.1.1.1 or 8.8.8.8 — it is VPN-only, and its application-credential and root-CA
+    flow is documented but not probeable. Institution-authored but internal: the KCL e-Research
+    Authentication API (github.com/kcl-eresearch/auth_api) documents its own REST surface for SSH
+    keys, OpenVPN certificates and MFA requests in a public README, with no public base URL; and
+    kcl-eresearch/artemis is a King's-authored Perplexity-compatible research API server. Neither
+    ships an OpenAPI. Verified live but tenant-operated: kclpure.kcl.ac.uk (CNAME
+    kings.elsevierpure.com), kcl.figshare.com (CNAME figshare.com), librarysearch.kcl.ac.uk
+    (CNAME kcl.primo.exlibrisgroup.com), keats.kcl.ac.uk (CNAME kcl-vle.bloom.ulcc.ac.uk) and the
+    UK federation IdP whose SSO endpoints are on login.openathens.net. Confirmed absent: no DNS
+    for data.kcl.ac.uk, developer.kcl.ac.uk, courses.kcl.ac.uk, sis.kcl.ac.uk, idp.kcl.ac.uk or
+    sso.kcl.ac.uk; api.kcl.ac.uk resolves to 137.73.130.161 but accepts no TCP connection on 80
+    or 443 across three attempts at 30s, 40s and 60s; www.kcl.ac.uk/llms.txt and
+    /.well-known/security.txt both 404. The development identity provider
+    https://kclidpdev.kcl.ac.uk/idp/shibboleth is registered in the UK federation but carries the
+    hide-from-discovery entity category and is treated as a placeholder, not a surface.
+  assessed: '2026-08-19'
+  method: pipeline-university
+  evidence:
+  - url: https://ai.create.kcl.ac.uk/api/v1/models
+    status: 401
+  - url: https://ai.create.kcl.ac.uk/
+    status: 200
+  - url: https://ai.create.kcl.ac.uk/docs
+    status: 200
+  - url: https://ai.create.kcl.ac.uk/openapi.json
+    status: 404
+  - url: https://ai.create.kcl.ac.uk/api/openapi.json
+    status: 404
+  - url: https://docs.er.kcl.ac.uk/CREATE/ai_hub/
+    status: 200
+  - url: https://docs.er.kcl.ac.uk/CREATE/cloud/openstack_api/
+    status: 200
+  - url: https://docs.er.kcl.ac.uk/sitemap.xml
+    status: 200
+  - url: https://kclpure.kcl.ac.uk/ws/oai?verb=Identify
+    status: 200
+  - url: https://kclpure.kcl.ac.uk/ws/oai?verb=ListMetadataFormats
+    status: 200
+  - url: https://kclpure.kcl.ac.uk/ws/oai?verb=ListSets
+    status: 200
+  - url: https://kclpure.kcl.ac.uk/ws/oai?verb=ListRecords&metadataPrefix=oai_dc&set=persons:all
+    status: 200
+  - url: http://metadata.ukfederation.org.uk/ukfederation-metadata.xml
+    status: 200
+  - url: https://met.refeds.org/met/entity/https%3A%2F%2Fkclidp.kcl.ac.uk%2Fidp%2Fshibboleth/
+    status: 200
+  - url: https://api.datacite.org/providers/hcbr
+    status: 200
+  - url: https://api.datacite.org/dois?provider-id=hcbr
+    status: 200
+  - url: https://api.crossref.org/members?query=king%27s+college+london
+    status: 200
+  - url: https://librarysearch.kcl.ac.uk/
+    status: 200
+  - url: https://keats.kcl.ac.uk/webservice/rest/server.php
+    status: 200
+  - url: https://keats.kcl.ac.uk/mod/lti/auth.php
+    status: 200
+  - url: https://keats.kcl.ac.uk/.well-known/openid-configuration
+    status: 404
+  - url: https://kcl.figshare.com/
+    status: 202
+  - url: https://portal.er.kcl.ac.uk/
+    status: 200
+  - url: https://github.com/kcl-eresearch
+    status: 200
+  - url: https://raw.githubusercontent.com/kcl-eresearch/auth_api/main/README.md
+    status: 200
+  - url: https://www.kcl.ac.uk/llms.txt
+    status: 404
+  - url: https://www.kcl.ac.uk/.well-known/security.txt
+    status: 404
+  - url: https://api.kcl.ac.uk/
+    status: 0
+  - url: https://cloud.er.kcl.ac.uk/
+    status: 0
+  removed: 10
+  removed_note: >-
+    Ten OpenAPI contracts and eleven apis[] entries, all of them api.figshare.com/v2, plus the
+    twenty Postman/OpenCollection files and the agentic-access classification derived from them.
 apis:
-- aid: kings-college-london:pure-oai
-  name: King's Research Portal (Pure) OAI-PMH
+- aid: kings-college-london:er-ai-hub
+  name: King's e-Research AI Hub API
+  x-operator: institution
+  x-operator-evidence: >-
+    ai.create.kcl.ac.uk is a CNAME to lbext-vip.er.kcl.ac.uk -> 193.61.202.139, King's own
+    e-Research load balancer, the same origin that serves docs.er.kcl.ac.uk, er.kcl.ac.uk and
+    portal.er.kcl.ac.uk. No vendor CNAME, no shared platform host. The service is described in
+    King's own documentation as "King's College London's AI inference platform for researchers",
+    support runs to support@er.kcl.ac.uk, and accounts are billed against King's project budgets.
+    This is King's engineering on King's infrastructure.
   description: >-
-    OAI-PMH metadata harvesting interface for the King's Research Portal, the front end of Pure, King's
-    research information system and institutional repository. The interface returns a live OAI-PMH response
-    (repositoryName "Pure OAI Repository") supporting standard verbs such as Identify, ListRecords and
-    ListMetadataFormats over an OpenAIRE CERIF profile.
-  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
-  baseURL: https://kclpure.kcl.ac.uk/ws/oai
+    An OpenAI-compatible LLM inference API operated by King's e-Research for researchers,
+    students and staff. Per King's documentation it serves chat completions against a curated set
+    of hosted models, image generation, streaming responses, RAG pipelines over user documents,
+    deep-research and agent workflows, and integrations with VS Code, OpenCode and MCP servers —
+    all reachable by pointing an official OpenAI client at a new base URL with an AI Hub API key.
+    New accounts receive an allocation of free tokens; sustained use is metered against a project
+    budget. Verified live from outside: GET /api/v1/models answers 401 application/json with the
+    OpenAI error envelope, and answers differently for a missing header than for an unknown key.
+    No OpenAPI is saved for this surface, because King's publishes none — the API reference at
+    /docs is behind Microsoft Entra ID sign-in, and authoring a contract from two probed responses
+    would credit King's with a document it has not written. This is the single most consequential
+    finding of the re-profile: a research university that built and operates its own agent-facing
+    inference API.
+  humanURL: https://docs.er.kcl.ac.uk/CREATE/ai_hub/
+  baseURL: https://ai.create.kcl.ac.uk/api/v1
   tags:
-  - Research
-  - OAI-PMH
-  - Repository
-  - Metadata
-  - Pure
+  - Artificial Intelligence
+  - LLM
+  - Inference
+  - Research Computing
+  - OpenAI Compatible
   properties:
   - type: Documentation
-    url: https://www.kcl.ac.uk/research/explore/kings-research-portal
+    url: https://docs.er.kcl.ac.uk/CREATE/ai_hub/
   - type: Website
-    url: https://kclpure.kcl.ac.uk/portal/
-- aid: kings-college-london:kings-college-london-altmetric-api
-  name: King's College London altmetric API
-  description: The altmetric API from King's College London — 1 operation(s) for altmetric.
-  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
-  baseURL: https://kclpure.kcl.ac.uk/ws/oai
-  tags:
-  - altmetric
-  properties:
-  - type: OpenAPI
-    url: openapi/kings-college-london-altmetric-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://kcl.figshare.com/
-  - type: x-json-schema
-    url: json-schema/kings-college-london-article-schema.json
-  - type: x-vocabulary
-    url: vocabulary/kings-college-london-vocabulary.yml
-  - type: x-spectral-rules
-    url: rules/kings-college-london-rules.yml
-- aid: kings-college-london:kings-college-london-articles-api
-  name: King's College London articles API
-  description: The articles API from King's College London — 34 operation(s) for articles.
-  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
-  baseURL: https://kclpure.kcl.ac.uk/ws/oai
-  tags:
-  - articles
-  properties:
-  - type: OpenAPI
-    url: openapi/kings-college-london-articles-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://kcl.figshare.com/
-  - type: x-json-schema
-    url: json-schema/kings-college-london-article-schema.json
-  - type: x-vocabulary
-    url: vocabulary/kings-college-london-vocabulary.yml
-  - type: x-spectral-rules
-    url: rules/kings-college-london-rules.yml
-- aid: kings-college-london:kings-college-london-authors-api
-  name: King's College London authors API
-  description: The authors API from King's College London — 2 operation(s) for authors.
-  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
-  baseURL: https://kclpure.kcl.ac.uk/ws/oai
-  tags:
-  - authors
-  properties:
-  - type: OpenAPI
-    url: openapi/kings-college-london-authors-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://kcl.figshare.com/
-  - type: x-json-schema
-    url: json-schema/kings-college-london-article-schema.json
-  - type: x-vocabulary
-    url: vocabulary/kings-college-london-vocabulary.yml
-  - type: x-spectral-rules
-    url: rules/kings-college-london-rules.yml
-- aid: kings-college-london:kings-college-london-collections-api
-  name: King's College London collections API
-  description: The collections API from King's College London — 21 operation(s) for collections.
-  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
-  baseURL: https://kclpure.kcl.ac.uk/ws/oai
-  tags:
-  - collections
-  properties:
-  - type: OpenAPI
-    url: openapi/kings-college-london-collections-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://kcl.figshare.com/
-  - type: x-json-schema
-    url: json-schema/kings-college-london-article-schema.json
-  - type: x-vocabulary
-    url: vocabulary/kings-college-london-vocabulary.yml
-  - type: x-spectral-rules
-    url: rules/kings-college-london-rules.yml
-- aid: kings-college-london:kings-college-london-institutions-api
-  name: King's College London institutions API
-  description: The institutions API from King's College London — 20 operation(s) for institutions.
-  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
-  baseURL: https://kclpure.kcl.ac.uk/ws/oai
-  tags:
-  - institutions
-  properties:
-  - type: OpenAPI
-    url: openapi/kings-college-london-institutions-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://kcl.figshare.com/
-  - type: x-json-schema
-    url: json-schema/kings-college-london-article-schema.json
-  - type: x-vocabulary
-    url: vocabulary/kings-college-london-vocabulary.yml
-  - type: x-spectral-rules
-    url: rules/kings-college-london-rules.yml
-- aid: kings-college-london:kings-college-london-oauth-api
-  name: King's College London oauth API
-  description: The oauth API from King's College London — 1 operation(s) for oauth.
-  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
-  baseURL: https://kclpure.kcl.ac.uk/ws/oai
-  tags:
-  - oauth
-  properties:
-  - type: OpenAPI
-    url: openapi/kings-college-london-oauth-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://kcl.figshare.com/
-  - type: x-json-schema
-    url: json-schema/kings-college-london-article-schema.json
-  - type: x-vocabulary
-    url: vocabulary/kings-college-london-vocabulary.yml
-  - type: x-spectral-rules
-    url: rules/kings-college-london-rules.yml
-- aid: kings-college-london:kings-college-london-other-api
-  name: King's College London other API
-  description: The other API from King's College London — 7 operation(s) for other.
-  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
-  baseURL: https://kclpure.kcl.ac.uk/ws/oai
-  tags:
-  - other
-  properties:
-  - type: OpenAPI
-    url: openapi/kings-college-london-other-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://kcl.figshare.com/
-  - type: x-json-schema
-    url: json-schema/kings-college-london-article-schema.json
-  - type: x-vocabulary
-    url: vocabulary/kings-college-london-vocabulary.yml
-  - type: x-spectral-rules
-    url: rules/kings-college-london-rules.yml
-- aid: kings-college-london:kings-college-london-profiles-api
-  name: King's College London profiles API
-  description: The profiles API from King's College London — 2 operation(s) for profiles.
-  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
-  baseURL: https://kclpure.kcl.ac.uk/ws/oai
-  tags:
-  - profiles
-  properties:
-  - type: OpenAPI
-    url: openapi/kings-college-london-profiles-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://kcl.figshare.com/
-  - type: x-json-schema
-    url: json-schema/kings-college-london-article-schema.json
-  - type: x-vocabulary
-    url: vocabulary/kings-college-london-vocabulary.yml
-  - type: x-spectral-rules
-    url: rules/kings-college-london-rules.yml
-- aid: kings-college-london:kings-college-london-projects-api
-  name: King's College London projects API
-  description: The projects API from King's College London — 17 operation(s) for projects.
-  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
-  baseURL: https://kclpure.kcl.ac.uk/ws/oai
-  tags:
-  - projects
-  properties:
-  - type: OpenAPI
-    url: openapi/kings-college-london-projects-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://kcl.figshare.com/
-  - type: x-json-schema
-    url: json-schema/kings-college-london-article-schema.json
-  - type: x-vocabulary
-    url: vocabulary/kings-college-london-vocabulary.yml
-  - type: x-spectral-rules
-    url: rules/kings-college-london-rules.yml
-- aid: kings-college-london:kings-college-london-symplectic-api
-  name: King's College London symplectic API
-  description: The symplectic API from King's College London — 5 operation(s) for symplectic.
-  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
-  baseURL: https://kclpure.kcl.ac.uk/ws/oai
-  tags:
-  - symplectic
-  properties:
-  - type: OpenAPI
-    url: openapi/kings-college-london-symplectic-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://kcl.figshare.com/
-  - type: x-json-schema
-    url: json-schema/kings-college-london-article-schema.json
-  - type: x-vocabulary
-    url: vocabulary/kings-college-london-vocabulary.yml
-  - type: x-spectral-rules
-    url: rules/kings-college-london-rules.yml
-common:
-  - type: AgenticAccess
-    url: agentic-access/kings-college-london-agentic-access.yml
-  - type: DomainSecurity
-    url: security/kings-college-london-domain-security.yml
+    url: https://ai.create.kcl.ac.uk/
+  - type: APIReference
+    url: https://ai.create.kcl.ac.uk/docs
   - type: Authentication
     url: authentication/kings-college-london-authentication.yml
-  - type: OAuthScopes
-    url: scopes/kings-college-london-scopes.yml
+  - type: Errors
+    url: errors/kings-college-london-problem-types.yml
+  - type: Support
+    url: https://docs.er.kcl.ac.uk/CREATE/getting_help/
+- aid: kings-college-london:pure-oai
+  name: King's Research Portal (Pure) OAI-PMH
+  x-operator: tenant
+  x-operator-evidence: >-
+    kclpure.kcl.ac.uk is a CNAME to kings.elsevierpure.com -> eu.prod.elsevierpure.com
+    (-> cloudflare). That is a platform CNAME, not a CDN in front of a King's origin: the
+    repository software, the hosting and the OAI implementation are Elsevier Pure's. The records,
+    the adminEmail puresupport@kcl.ac.uk and the 50-year publication history are King's.
+  description: >-
+    The standards-based harvesting interface for the King's Research Portal, the front end of
+    Pure — how King's research outputs reach OpenAIRE, CORE, BASE and the rest of the aggregator
+    layer. Identify returns repositoryName "Pure OAI Repository", protocolVersion 2.0,
+    earliestDatestamp 2014-10-22, granularity to the second and deletedRecord no.
+    ListMetadataFormats returns six prefixes — oai_dc, qdc, mods, uketd_dc, xmetadiss and
+    nl_didl, the fourth being the UK electronic theses profile. ListSets returns persons:all,
+    publications:all, publications:withFiles and a per-year publication set running from 1972.
+    The envelope declares the OpenAIRE CERIF 1.2 profile. Fully open, no credential. A legacy
+    path at /ws/OAIHandler answers 405; the canonical base URL is /ws/oai. No OpenAPI is saved:
+    the protocol is OAI's and the implementation is Elsevier's.
+  humanURL: https://www.kcl.ac.uk/research/explore/kings-research-portal
+  baseURL: https://kclpure.kcl.ac.uk/ws/oai
+  tags:
+  - Research
+  - OAI-PMH
+  - Institutional Repository
+  - Metadata Harvesting
+  - Pure
+  properties:
+  - type: APIReference
+    url: https://kclpure.kcl.ac.uk/ws/oai?verb=Identify
+  - type: Documentation
+    url: https://www.openarchives.org/OAI/openarchivesprotocol.html
   - type: Website
-    url: https://www.kcl.ac.uk/
-  - type: GitHub
-    url: https://github.com/kcl-eresearch
-  - type: LinkedIn
-    url: https://www.linkedin.com/school/king's-college-london/
-  - type: DeveloperPortal
-    url: https://docs.er.kcl.ac.uk/
-  - type: Plans
-    url: plans/kings-college-london-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/kings-college-london-rate-limits.yml
-  - type: FinOps
-    url: finops/kings-college-london-finops.yml
-  - type: Review
-    url: review.yml
-  - type: x-json-ld
-    url: json-ld/kings-college-london-context.jsonld
-  - url: https://www.kcl.ac.uk/news
-    type: Blog
+    url: https://kclpure.kcl.ac.uk/portal/
+  - type: Conformance
+    url: conformance/kings-college-london-education-standards.yml
+- aid: kings-college-london:figshare-repository
+  name: King's College London Research Data Repository (Figshare tenancy)
+  x-operator: tenant
+  x-operator-evidence: >-
+    kcl.figshare.com is a CNAME straight to figshare.com. This is the relationship the June 2026
+    profile mistook for a King's API: ten OpenAPI contracts and eleven apis[] entries were saved
+    here for api.figshare.com/v2, the generic Figshare host that twenty-five universities in this
+    catalog claimed simultaneously, and all eleven were removed on 2026-08-19. The tenancy itself
+    is recorded because it is real and it is King's: DataCite provider HCBR, repository BL.KCL,
+    prefix 10.18742, 1,118 DOIs published with publisher "King's College London" and landing
+    pages on kcl.figshare.com.
+  description: >-
+    King's research data repository, operated for King's by Figshare. The data, the DOIs, the
+    DataCite membership and the curation decisions are King's; the REST API, the OAI-PMH endpoint
+    and every line of the contract that describes them are Figshare's, and they score against
+    Figshare's own repo, not this one. Recorded as a relationship rather than as a set of
+    contracts — the deliberate output of the operator check, and the reason this profile's Kin
+    Score falls relative to its June 2026 value.
+  humanURL: https://kcl.figshare.com/
+  tags:
+  - Research Data
+  - Institutional Repository
+  - Open Data
+  - DataCite
+  - Figshare
+  properties:
+  - type: Website
+    url: https://kcl.figshare.com/
+  - type: x-datacite-provider
+    url: https://api.datacite.org/providers/hcbr
+  - type: Conformance
+    url: conformance/kings-college-london-education-standards.yml
+- aid: kings-college-london:uk-federation-idp
+  name: King's UK Access Management Federation / eduGAIN Identity Provider
+  x-operator: tenant
+  x-operator-evidence: >-
+    The entityID https://kclidp.kcl.ac.uk/idp/shibboleth is under kcl.ac.uk and the host resolves
+    to 193.61.202.17, but it answers no HTTP request — the entityID is a name, not a service. The
+    metadata's own comment reads "This is a OpenAthens IdP for King's College London", and both
+    SingleSignOnService Locations are https://login.openathens.net/saml/{1,2}/sso/kcl.ac.uk/c/ukfed.
+    An institution-specific path on a vendor platform is the textbook tenant shape. The
+    registration, the scope, the assurance certifications and the contacts are King's own.
+  description: >-
+    King's federated identity, and the surface class this pipeline flags as most often missed.
+    The entity is registered in the UK Access Management Federation (uk001282, registered
+    2010-04-22, registration authority ukfederation.org.uk) and exported to eduGAIN, carrying a
+    shibmd:Scope of kcl.ac.uk, signing and encryption keys, SAML 2.0 / SAML 1.1 /
+    urn:mace:shibboleth:1.0 protocol support, a SIRTFI assurance certification, REFEDS Research
+    and Scholarship entity-category support, a security contact at sirtfi@kcl.ac.uk and a
+    technical contact at ade.tayo@kcl.ac.uk. It is not self-service and it is not REST, but it is
+    a published, signed, machine-readable interface contract that King's is accountable for. A
+    second registered entity, https://kclidpdev.kcl.ac.uk/idp/shibboleth, carries the
+    hide-from-discovery category and is a development deployment — not counted as a surface.
+  humanURL: https://libanswers.kcl.ac.uk/faq/226697
+  baseURL: https://login.openathens.net/saml/2/sso/kcl.ac.uk/c/ukfed
+  tags:
+  - Identity
+  - Identity Federation
+  - SSO
+  - SAML
+  - eduGAIN
+  properties:
+  - type: x-saml-metadata
+    url: https://met.refeds.org/met/entity/https%3A%2F%2Fkclidp.kcl.ac.uk%2Fidp%2Fshibboleth/
+  - type: Documentation
+    url: https://www.ukfederation.org.uk/
+  - type: Authentication
+    url: authentication/kings-college-london-authentication.yml
+  - type: Conformance
+    url: conformance/kings-college-london-education-standards.yml
+- aid: kings-college-london:librarysearch-primo
+  name: King's LibrarySearch (Ex Libris Primo)
+  x-operator: tenant
+  x-operator-evidence: >-
+    librarysearch.kcl.ac.uk is a CNAME to kcl.primo.exlibrisgroup.com -> eu04.primo.exlibrisgroup.com.
+    The discovery layer is Ex Libris Primo VE; the King's tenancy is identified by
+    vid=44KCL_INST. King's has been an Ex Libris site since adopting Aleph in 1998.
+  description: >-
+    Library discovery for King's, on Ex Libris Primo. GET / returns 200 and redirects to
+    /discovery/search?vid=44KCL_INST:44KCL_INST. Recorded as a tenancy because the catalog and
+    the holdings are King's, but the Primo and Alma APIs behind it are Ex Libris's product and
+    are documented on developers.exlibrisgroup.com, a host every Ex Libris customer shares. No
+    contract is saved here.
+  humanURL: https://www.kcl.ac.uk/library
+  baseURL: https://librarysearch.kcl.ac.uk/discovery/search?vid=44KCL_INST:44KCL_INST
+  tags:
+  - Library
+  - Discovery
+  - Primo
+  - Ex Libris
+  properties:
+  - type: Website
+    url: https://librarysearch.kcl.ac.uk/
+  - type: Documentation
+    url: https://www.kcl.ac.uk/library
+- aid: kings-college-london:keats-moodle
+  name: KEATS Virtual Learning Environment (Moodle) web services
+  x-operator: tenant
+  x-operator-evidence: >-
+    keats.kcl.ac.uk is a CNAME to kcl-vle.bloom.ulcc.ac.uk -> kcl-vle-cluster.kcl.cdl.cosector.com.
+    The VLE is Moodle, hosted and operated by ULCC/Cosector. The courses and the enrolments are
+    King's.
+  description: >-
+    King's VLE exposes the standard Moodle machine interfaces on a King's hostname:
+    /webservice/rest/server.php answers 200 with an XML `invalidtoken` fault, /lib/ajax/service.php
+    answers 200 with a JSON error envelope, and the LTI authorization endpoint /mod/lti/auth.php
+    answers 200. There is no LTI 1.3 platform JWKS and no OIDC discovery document —
+    /.well-known/openid-configuration returns 404 — so LTI conformance is recorded as partial.
+    Recorded because it is a live, tokenised API surface under kcl.ac.uk, not because King's
+    authored any of it.
+  humanURL: https://keats.kcl.ac.uk/
+  baseURL: https://keats.kcl.ac.uk/webservice/rest/server.php
+  tags:
+  - Learning Management
+  - Moodle
+  - LTI
+  - Education Technology
+  properties:
+  - type: Website
+    url: https://keats.kcl.ac.uk/
+  - type: Conformance
+    url: conformance/kings-college-london-education-standards.yml
+common:
+- type: Website
+  url: https://www.kcl.ac.uk/
+- type: Blog
+  url: https://www.kcl.ac.uk/news
+- type: GitHubOrganization
+  url: https://github.com/kcl-eresearch
+- type: LinkedIn
+  url: https://www.linkedin.com/school/king's-college-london/
+- type: DeveloperPortal
+  url: https://docs.er.kcl.ac.uk/
+- type: Documentation
+  url: https://docs.er.kcl.ac.uk/CREATE/ai_hub/
+- type: Support
+  url: https://docs.er.kcl.ac.uk/CREATE/getting_help/
+- type: TermsOfService
+  url: https://www.kcl.ac.uk/terms
+- type: PrivacyPolicy
+  url: https://www.kcl.ac.uk/terms/privacy
+- type: IdentityFederation
+  url: https://met.refeds.org/met/entity/https%3A%2F%2Fkclidp.kcl.ac.uk%2Fidp%2Fshibboleth/
+- type: ResearchRepository
+  url: https://kcl.figshare.com/
+- type: LibraryCatalog
+  url: https://librarysearch.kcl.ac.uk/
+- type: CourseCatalog
+  url: https://www.kcl.ac.uk/study/undergraduate/courses
+- type: ResearchComputing
+  url: https://docs.er.kcl.ac.uk/CREATE/cloud/cloud_overview/
+- type: AIPolicy
+  url: https://www.kcl.ac.uk/about/strategy/learning-and-teaching/ai-guidance
+- type: AITooling
+  url: https://docs.er.kcl.ac.uk/CREATE/ai_hub/
+- type: Authentication
+  url: authentication/kings-college-london-authentication.yml
+- type: Errors
+  url: errors/kings-college-london-problem-types.yml
+- type: Conformance
+  url: conformance/kings-college-london-education-standards.yml
+- type: DomainSecurity
+  url: security/kings-college-london-domain-security.yml
+- type: Plans
+  url: plans/kings-college-london-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/kings-college-london-rate-limits.yml
+- type: FinOps
+  url: finops/kings-college-london-finops.yml
+- type: Review
+  url: review.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
