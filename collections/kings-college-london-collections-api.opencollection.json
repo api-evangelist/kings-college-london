@@ -1,0 +1,1178 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Figshare altmetric collections API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "collections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Public Collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/collections",
+            "headers": [
+              {
+                "name": "X-Cursor",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number. Used for pagination with page_size"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results included on a page. Used for pagination with page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results included on a page. Used for pagination with query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Where to start the listing (the offset of the first result). Used for pagination with limit"
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "The field by which to order. Default varies by endpoint/resource."
+              },
+              {
+                "name": "order_direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "institution",
+                "value": "",
+                "type": "query",
+                "description": "only return collections from this institution"
+              },
+              {
+                "name": "published_since",
+                "value": "",
+                "type": "query",
+                "description": "Filter by collection publishing date. Will only return collections published after the date. date(ISO 8601) YYYY-MM-DD"
+              },
+              {
+                "name": "modified_since",
+                "value": "",
+                "type": "query",
+                "description": "Filter by collection modified date. Will only return collections modified after the date. date(ISO 8601) YYYY-MM-DD"
+              },
+              {
+                "name": "group",
+                "value": "",
+                "type": "query",
+                "description": "only return collections from this group"
+              },
+              {
+                "name": "resource_doi",
+                "value": "",
+                "type": "query",
+                "description": "only return collections with this resource_doi"
+              },
+              {
+                "name": "doi",
+                "value": "",
+                "type": "query",
+                "description": "only return collections with this doi"
+              },
+              {
+                "name": "handle",
+                "value": "",
+                "type": "query",
+                "description": "only return collections with this handle"
+              }
+            ]
+          },
+          "docs": "Returns a list of public collections"
+        },
+        {
+          "info": {
+            "name": "Public Collections Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/collections/search",
+            "headers": [
+              {
+                "name": "X-Cursor",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a list of public collections"
+        },
+        {
+          "info": {
+            "name": "Collection details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/collections/:collection_id",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection Unique identifier"
+              }
+            ]
+          },
+          "docs": "View a collection"
+        },
+        {
+          "info": {
+            "name": "Collection Versions list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/collections/:collection_id/versions",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection Unique identifier"
+              }
+            ]
+          },
+          "docs": "Returns a list of public collection Versions"
+        },
+        {
+          "info": {
+            "name": "Collection Version details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/collections/:collection_id/versions/:version_id",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection Unique identifier"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "path",
+                "description": "Version Number"
+              }
+            ]
+          },
+          "docs": "View details for a certain version of a collection"
+        },
+        {
+          "info": {
+            "name": "Public Collection Articles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/collections/:collection_id/articles",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection Unique identifier"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number. Used for pagination with page_size"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results included on a page. Used for pagination with page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results included on a page. Used for pagination with query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Where to start the listing (the offset of the first result). Used for pagination with limit"
+              }
+            ]
+          },
+          "docs": "Returns a list of public collection articles"
+        },
+        {
+          "info": {
+            "name": "Private Collections List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/collections",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number. Used for pagination with page_size"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results included on a page. Used for pagination with page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results included on a page. Used for pagination with query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Where to start the listing (the offset of the first result). Used for pagination with limit"
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "The field by which to order. Default varies by endpoint/resource."
+              },
+              {
+                "name": "order_direction",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List private collections"
+        },
+        {
+          "info": {
+            "name": "Create collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/collections",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create a new Collection by sending collection information"
+        },
+        {
+          "info": {
+            "name": "Collection details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection Unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "View a collection"
+        },
+        {
+          "info": {
+            "name": "Update collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection Unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update a collection by passing full body parameters."
+        },
+        {
+          "info": {
+            "name": "Partially update collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection Unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Partially update a collection by sending only the fields to change."
+        },
+        {
+          "info": {
+            "name": "Delete collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection Unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete n collection"
+        },
+        {
+          "info": {
+            "name": "Private Collections Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/collections/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of private Collections"
+        },
+        {
+          "info": {
+            "name": "Private Collection Reserve DOI",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/reserve_doi",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection Unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Reserve DOI for collection"
+        },
+        {
+          "info": {
+            "name": "Private Collection Reserve Handle",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/reserve_handle",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection Unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Reserve Handle for collection"
+        },
+        {
+          "info": {
+            "name": "Private Collection Resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/resource",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Edit collection resource data."
+        },
+        {
+          "info": {
+            "name": "Private Collection Publish",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/publish",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection Unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "When a collection is published, a new public version will be generated. Any further updates to the collection will affect the private collection data. In order to make these changes publicly visible, an explicit publish operation is needed."
+        },
+        {
+          "info": {
+            "name": "List collection authors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/authors",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List collection authors"
+        },
+        {
+          "info": {
+            "name": "Add collection authors",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/authors",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Associate new authors with the collection. This will add new authors to the list of already associated authors"
+        },
+        {
+          "info": {
+            "name": "Replace collection authors",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/authors",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Associate new authors with the collection. This will remove all already associated authors and add these new ones"
+        },
+        {
+          "info": {
+            "name": "Delete collection author",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/authors/:author_id",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              },
+              {
+                "name": "author_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection Author unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete collection author"
+        },
+        {
+          "info": {
+            "name": "List collection categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/categories",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List collection categories"
+        },
+        {
+          "info": {
+            "name": "Add collection categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/categories",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Associate new categories with the collection. This will add new categories to the list of already associated categories"
+        },
+        {
+          "info": {
+            "name": "Replace collection categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/categories",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Associate new categories with the collection. This will remove all already associated categories and add these new ones"
+        },
+        {
+          "info": {
+            "name": "Delete collection category",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/categories/:category_id",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              },
+              {
+                "name": "category_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection category unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "De-associate category from collection"
+        },
+        {
+          "info": {
+            "name": "List collection articles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/articles",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number. Used for pagination with page_size"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results included on a page. Used for pagination with page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results included on a page. Used for pagination with query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Where to start the listing (the offset of the first result). Used for pagination with limit"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List collection articles"
+        },
+        {
+          "info": {
+            "name": "Add collection articles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/articles",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Associate new articles with the collection. This will add new articles to the list of already associated articles"
+        },
+        {
+          "info": {
+            "name": "Replace collection articles",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/articles",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Associate new articles with the collection. This will remove all already associated articles and add these new ones"
+        },
+        {
+          "info": {
+            "name": "Delete collection article",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/articles/:article_id",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              },
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection article unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "De-associate article from collection"
+        },
+        {
+          "info": {
+            "name": "List collection private links",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/private_links",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List article private links"
+        },
+        {
+          "info": {
+            "name": "Create collection private link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/private_links",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create new private link"
+        },
+        {
+          "info": {
+            "name": "View collection private link",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/private_links/:link_id",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              },
+              {
+                "name": "link_id",
+                "value": "",
+                "type": "path",
+                "description": "Private link token"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "View existing private link for this collection"
+        },
+        {
+          "info": {
+            "name": "Update collection private link",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/private_links/:link_id",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              },
+              {
+                "name": "link_id",
+                "value": "",
+                "type": "path",
+                "description": "Private link token"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update existing private link for this collection"
+        },
+        {
+          "info": {
+            "name": "Disable private link",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.figshare.com/v2/account/collections/:collection_id/private_links/:link_id",
+            "params": [
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Collection unique identifier"
+              },
+              {
+                "name": "link_id",
+                "value": "",
+                "type": "path",
+                "description": "Private link token"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Disable/delete private link for this collection"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

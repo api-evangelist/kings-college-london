@@ -1,0 +1,72 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Figshare altmetric authors API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "authors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Authors",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/authors/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Search for authors"
+        },
+        {
+          "info": {
+            "name": "Author details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/authors/:author_id",
+            "params": [
+              {
+                "name": "author_id",
+                "value": "",
+                "type": "path",
+                "description": "Author unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "View author details"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

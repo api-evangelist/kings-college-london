@@ -1,0 +1,1796 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Figshare altmetric articles API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "articles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Public Articles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/articles",
+            "headers": [
+              {
+                "name": "X-Cursor",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number. Used for pagination with page_size"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results included on a page. Used for pagination with page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results included on a page. Used for pagination with query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Where to start the listing (the offset of the first result). Used for pagination with limit"
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "The field by which to order. Default varies by endpoint/resource."
+              },
+              {
+                "name": "order_direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "institution",
+                "value": "",
+                "type": "query",
+                "description": "only return articles from this institution"
+              },
+              {
+                "name": "published_since",
+                "value": "",
+                "type": "query",
+                "description": "Filter by article publishing date. Will only return articles published after the date. date(ISO 8601) YYYY-MM-DD or date-time(ISO 8601) YYYY-MM-DDTHH:mm:ssZ"
+              },
+              {
+                "name": "modified_since",
+                "value": "",
+                "type": "query",
+                "description": "Filter by article modified date. Will only return articles modified after the date. date(ISO 8601) YYYY-MM-DD or date-time(ISO 8601) YYYY-MM-DDTHH:mm:ssZ"
+              },
+              {
+                "name": "group",
+                "value": "",
+                "type": "query",
+                "description": "only return articles from this group"
+              },
+              {
+                "name": "resource_doi",
+                "value": "",
+                "type": "query",
+                "description": "Deprecated by related materials. Only return articles with this resource_doi"
+              },
+              {
+                "name": "item_type",
+                "value": "",
+                "type": "query",
+                "description": "Only return articles with the respective type. Mapping for item_type is: 1 - Figure, 2 - Media, 3 - Dataset, 5 - Poster, 6 - Journal contribution, 7 - Presentation, 8 - Thesis, 9 - Software, 11 - Online resource, 12 - Preprint, 13 - Book, 14 - Conference contribution, 15 - Chapter, 16 - Peer review, 17 - Educational resource, 18 - Report, 19 - Standard, 20 - Composition, 21 - Funding, 22 - Physical object, 23 - Data management plan, 24 - Workflow, 25 - Monograph, 26 - Performance, 27 - Event, 28 - Service, 29 - Model"
+              },
+              {
+                "name": "doi",
+                "value": "",
+                "type": "query",
+                "description": "only return articles with this doi"
+              },
+              {
+                "name": "handle",
+                "value": "",
+                "type": "query",
+                "description": "only return articles with this handle"
+              }
+            ]
+          },
+          "docs": "Returns a list of public articles"
+        },
+        {
+          "info": {
+            "name": "Public Articles Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/articles/search",
+            "headers": [
+              {
+                "name": "X-Cursor",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a list of public articles, filtered by the search parameters"
+        },
+        {
+          "info": {
+            "name": "View article details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/articles/:article_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article Unique identifier"
+              }
+            ]
+          },
+          "docs": "View an article"
+        },
+        {
+          "info": {
+            "name": "List article versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/articles/:article_id/versions",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article Unique identifier"
+              }
+            ]
+          },
+          "docs": "List public article versions"
+        },
+        {
+          "info": {
+            "name": "Article details for version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/articles/:article_id/versions/:version_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article Unique identifier"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "path",
+                "description": "Article Version Number"
+              }
+            ]
+          },
+          "docs": "Article with specified version"
+        },
+        {
+          "info": {
+            "name": "Public Article version files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/articles/:article_id/versions/:version_id/files",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article Unique identifier"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "path",
+                "description": "Article Version Unique identifier"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number. Used for pagination with page_size"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results included on a page. Used for pagination with page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results included on a page. Used for pagination with query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Where to start the listing (the offset of the first result). Used for pagination with limit"
+              }
+            ]
+          },
+          "docs": "Article version file details"
+        },
+        {
+          "info": {
+            "name": "Public Article Download",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/articles/:article_id/download",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "folder_path",
+                "value": "",
+                "type": "query",
+                "description": "Folder path to download. If not provided, all files from the article will be downloaded"
+              }
+            ]
+          },
+          "docs": "Download files from a public article preserving the folder structure"
+        },
+        {
+          "info": {
+            "name": "Public Article Version Download",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/articles/:article_id/versions/:version_id/download",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "path",
+                "description": "Version Number"
+              },
+              {
+                "name": "folder_path",
+                "value": "",
+                "type": "query",
+                "description": "Folder path to download. If not provided, all files from the article will be downloaded"
+              }
+            ]
+          },
+          "docs": "Download files from a certain version of an public article preserving the folder structure"
+        },
+        {
+          "info": {
+            "name": "Public Article Embargo for article version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/articles/:article_id/versions/:version_id/embargo",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article Unique identifier"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "path",
+                "description": "Version Number"
+              }
+            ]
+          },
+          "docs": "Embargo for article version"
+        },
+        {
+          "info": {
+            "name": "Public Article Confidentiality for article version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/articles/:article_id/versions/:version_id/confidentiality",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article Unique identifier"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "path",
+                "description": "Version Number"
+              }
+            ]
+          },
+          "docs": "Confidentiality for article version. The confidentiality feature is now deprecated. This has been replaced by the new extended embargo functionality and all items that used to be confidential have now been migrated to items with a permanent embargo on files. All API endpoints related to this functionality will remain for backwards compatibility, but will now be attached to the new extended embargo workflows."
+        },
+        {
+          "info": {
+            "name": "List article files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/articles/:article_id/files",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article Unique identifier"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number. Used for pagination with page_size"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results included on a page. Used for pagination with page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results included on a page. Used for pagination with query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Where to start the listing (the offset of the first result). Used for pagination with limit"
+              }
+            ]
+          },
+          "docs": "Files list for article"
+        },
+        {
+          "info": {
+            "name": "Article file details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/articles/:article_id/files/:file_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article Unique identifier"
+              },
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "File Unique identifier"
+              }
+            ]
+          },
+          "docs": "File by id"
+        },
+        {
+          "info": {
+            "name": "Private Articles search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/articles/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of private articles filtered by the search parameters"
+        },
+        {
+          "info": {
+            "name": "Private Articles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/articles",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number. Used for pagination with page_size"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results included on a page. Used for pagination with page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results included on a page. Used for pagination with query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Where to start the listing (the offset of the first result). Used for pagination with limit"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get Own Articles"
+        },
+        {
+          "info": {
+            "name": "Create new Article",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/articles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create a new Article by sending article information"
+        },
+        {
+          "info": {
+            "name": "Article details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "View a private article"
+        },
+        {
+          "info": {
+            "name": "Update article",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update an article by passing full body parameters."
+        },
+        {
+          "info": {
+            "name": "Partially update article",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Partially update an article by sending only the fields to change."
+        },
+        {
+          "info": {
+            "name": "Delete article",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete an article"
+        },
+        {
+          "info": {
+            "name": "Article Embargo Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/embargo",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "View a private article embargo details"
+        },
+        {
+          "info": {
+            "name": "Update Article Embargo",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/embargo",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Note: setting an article under whole embargo does not imply that the article will be published when the embargo will expire. You must explicitly call the publish endpoint to enable this functionality."
+        },
+        {
+          "info": {
+            "name": "Delete Article Embargo",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/embargo",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Will lift the embargo for the specified article"
+        },
+        {
+          "info": {
+            "name": "Private Article Resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/resource",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Edit article resource data."
+        },
+        {
+          "info": {
+            "name": "Private Article Publish",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/publish",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "- If the whole article is under embargo, it will not be published immediately, but when the embargo expires or is lifted.\n- When an article is published, a new public version will be generated. Any further updates to the article will affect the private article data. In order to make these changes publicly visible, an explicit publish operation is needed."
+        },
+        {
+          "info": {
+            "name": "Public Article Unpublish",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/unpublish",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Allows authorized users to unpublish an article."
+        },
+        {
+          "info": {
+            "name": "Private Article Reserve DOI",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/reserve_doi",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Reserve DOI for article"
+        },
+        {
+          "info": {
+            "name": "Private Article Reserve Handle",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/reserve_handle",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Reserve Handle for article"
+        },
+        {
+          "info": {
+            "name": "Private Article Download",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/download",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "folder_path",
+                "value": "",
+                "type": "query",
+                "description": "Folder path to download. If not provided, all files from the article will be downloaded"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Download files from a private article preserving the folder structure"
+        },
+        {
+          "info": {
+            "name": "Update article version",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/versions/:version_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "path",
+                "description": "Article version identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updating an article version by passing body parameters."
+        },
+        {
+          "info": {
+            "name": "Partially update article version",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/versions/:version_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "path",
+                "description": "Article version identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Partially updating an article version by passing only the fields to change."
+        },
+        {
+          "info": {
+            "name": "Update article version thumbnail",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/versions/:version_id/update_thumb",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "path",
+                "description": "Article version identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "For a given public article version update the article thumbnail by choosing one of the associated files"
+        },
+        {
+          "info": {
+            "name": "List article authors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/authors",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List article authors"
+        },
+        {
+          "info": {
+            "name": "Add article authors",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/authors",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Associate new authors with the article. This will add new authors to the list of already associated authors"
+        },
+        {
+          "info": {
+            "name": "Replace article authors",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/authors",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Associate new authors with the article. This will remove all already associated authors and add these new ones"
+        },
+        {
+          "info": {
+            "name": "Delete article author",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/authors/:author_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "author_id",
+                "value": "",
+                "type": "path",
+                "description": "Article Author unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "De-associate author from article"
+        },
+        {
+          "info": {
+            "name": "List article categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/categories",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List article categories"
+        },
+        {
+          "info": {
+            "name": "Add article categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/categories",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Associate new categories with the article. This will add new categories to the list of already associated categories"
+        },
+        {
+          "info": {
+            "name": "Replace article categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/categories",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Associate new categories with the article. This will remove all already associated categories and add these new ones"
+        },
+        {
+          "info": {
+            "name": "Delete article category",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/categories/:category_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "category_id",
+                "value": "",
+                "type": "path",
+                "description": "Category unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "De-associate category from article"
+        },
+        {
+          "info": {
+            "name": "Article confidentiality details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/confidentiality",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "View confidentiality settings. The confidentiality feature is now deprecated. This has been replaced by the new extended embargo functionality and all items that used to be confidential have now been migrated to items with a permanent embargo on files. All API endpoints related to this functionality will remain for backwards compatibility, but will now be attached to the new extended embargo workflows."
+        },
+        {
+          "info": {
+            "name": "Update article confidentiality",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/confidentiality",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update confidentiality settings. The confidentiality feature is now deprecated. This has been replaced by the new extended embargo functionality and all items that used to be confidential have now been migrated to items with a permanent embargo on files. All API endpoints related to this functionality will remain for backwards compatibility, but will now be attached to the new extended embargo workflows."
+        },
+        {
+          "info": {
+            "name": "Delete article confidentiality",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/confidentiality",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete confidentiality settings. The confidentiality feature is now deprecated. This has been replaced by the new extended embargo functionality and all items that used to be confidential have now been migrated to items with a permanent embargo on files. All API endpoints related to this functionality will remain for backwards compatibility, but will now be attached to the new extended embargo workflows."
+        },
+        {
+          "info": {
+            "name": "List private links",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/private_links",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List private links"
+        },
+        {
+          "info": {
+            "name": "Create private link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/private_links",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create new private link for this article"
+        },
+        {
+          "info": {
+            "name": "Update private link",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/private_links/:link_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "link_id",
+                "value": "",
+                "type": "path",
+                "description": "Private link token"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update existing private link for this article"
+        },
+        {
+          "info": {
+            "name": "Disable private link",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/private_links/:link_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "link_id",
+                "value": "",
+                "type": "path",
+                "description": "Private link token"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Disable/delete private link for this article"
+        },
+        {
+          "info": {
+            "name": "List article files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/files",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number. Used for pagination with page_size"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results included on a page. Used for pagination with page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results included on a page. Used for pagination with query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Where to start the listing (the offset of the first result). Used for pagination with limit"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List private files"
+        },
+        {
+          "info": {
+            "name": "Initiate Upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/files",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number. Used for pagination with page_size"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results included on a page. Used for pagination with page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results included on a page. Used for pagination with query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Where to start the listing (the offset of the first result). Used for pagination with limit"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Initiate a new file upload within the article. Either use the link property to point to an existing file that resides elsewhere and will not be uploaded to Figshare or use the other 3 parameters (md5, name, size)."
+        },
+        {
+          "info": {
+            "name": "Single File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/files/:file_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "File unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "View details of file for specified article"
+        },
+        {
+          "info": {
+            "name": "Complete Upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/files/:file_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "File unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Complete file upload"
+        },
+        {
+          "info": {
+            "name": "File Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.figshare.com/v2/account/articles/:article_id/files/:file_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article unique identifier"
+              },
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "File unique identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Complete file upload"
+        },
+        {
+          "info": {
+            "name": "Account Article Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/articles/export",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "query",
+                "description": "A group ID to filter by"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Return status on all reports generated for the account from the oauth credentials"
+        },
+        {
+          "info": {
+            "name": "Initiate a new Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/articles/export",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Initiate a new Article Report for this Account. There is a limit of 1 report per day."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

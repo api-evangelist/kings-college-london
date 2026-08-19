@@ -1,0 +1,211 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Figshare altmetric symplectic API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "symplectic",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get changed articles for Symplectic Elements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/symplectic/articles",
+            "params": [
+              {
+                "name": "since",
+                "value": "2015-01-01 00:00:00",
+                "type": "query",
+                "description": "ISO 8601 datetime string indicating the start of the search window (format: YYYY-MM-DD HH:MM:SS)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by article status"
+              },
+              {
+                "name": "is_embargoed",
+                "value": "",
+                "type": "query",
+                "description": "Filter by embargo status. When true, only returns articles with EMBARGO_ARTICLE type"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of articles for Symplectic Elements integration to synchronize article data."
+        },
+        {
+          "info": {
+            "name": "Get institutional user ID for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/symplectic/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the institution user ID for a given user within the authenticated account's institution."
+        },
+        {
+          "info": {
+            "name": "Get article details for Symplectic Elements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/symplectic/articles/:article_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Article ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns detailed information about a specific article for Symplectic Elements integration, including full metadata and author account information."
+        },
+        {
+          "info": {
+            "name": "Get articles for a specific account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/symplectic/accounts/:external_user_id/articles",
+            "params": [
+              {
+                "name": "external_user_id",
+                "value": "",
+                "type": "path",
+                "description": "External user ID (symplectic_user_id or institution_user_id)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by article status"
+              },
+              {
+                "name": "is_embargoed",
+                "value": "",
+                "type": "query",
+                "description": "Filter by embargo status"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of articles for a specific user account identified by external_user_id (symplectic_user_id or institution_user_id)."
+        },
+        {
+          "info": {
+            "name": "Get changed accounts for Symplectic Elements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/symplectic/accounts",
+            "params": [
+              {
+                "name": "since",
+                "value": "2015-01-01 00:00:00",
+                "type": "query",
+                "description": "ISO 8601 datetime string indicating the start of the search window (format: YYYY-MM-DD HH:MM:SS)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of accounts that have been modified since the specified date for Symplectic Elements integration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

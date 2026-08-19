@@ -1,0 +1,850 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Figshare altmetric institutions API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "institutions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Public Institution Articles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/institutions/:institution_string_id/articles/filter-by",
+            "params": [
+              {
+                "name": "institution_string_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of articles belonging to the institution"
+        },
+        {
+          "info": {
+            "name": "Private Account Institutions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/institution",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Account institution details"
+        },
+        {
+          "info": {
+            "name": "Private Account Institution embargo options",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/institution/embargo_options",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Account institution embargo options details"
+        },
+        {
+          "info": {
+            "name": "Private Institution Articles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/institution/articles",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number. Used for pagination with page_size"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results included on a page. Used for pagination with page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results included on a page. Used for pagination with query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Where to start the listing (the offset of the first result). Used for pagination with limit"
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "The field by which to order. Default varies by endpoint/resource."
+              },
+              {
+                "name": "order_direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "published_since",
+                "value": "",
+                "type": "query",
+                "description": "Filter by article publishing date. Will only return articles published after the date. date(ISO 8601) YYYY-MM-DD or date-time(ISO 8601) YYYY-MM-DDTHH:mm:ssZ"
+              },
+              {
+                "name": "modified_since",
+                "value": "",
+                "type": "query",
+                "description": "Filter by article modified date. Will only return articles modified after the date. date(ISO 8601) YYYY-MM-DD or date-time(ISO 8601) YYYY-MM-DDTHH:mm:ssZ"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "only return collections with this status"
+              },
+              {
+                "name": "resource_doi",
+                "value": "",
+                "type": "query",
+                "description": "only return collections with this resource_doi"
+              },
+              {
+                "name": "item_type",
+                "value": "",
+                "type": "query",
+                "description": "Only return articles with the respective type. Mapping for item_type is: 1 - Figure, 2 - Media, 3 - Dataset, 5 - Poster, 6 - Journal contribution, 7 - Presentation, 8 - Thesis, 9 - Software, 11 - Online resource, 12 - Preprint, 13 - Book, 14 - Conference contribution, 15 - Chapter, 16 - Peer review, 17 - Educational resource, 18 - Report, 19 - Standard, 20 - Composition, 21 - Funding, 22 - Physical object, 23 - Data management plan, 24 - Workflow, 25 - Monograph, 26 - Performance, 27 - Event, 28 - Service, 29 - Model"
+              },
+              {
+                "name": "group",
+                "value": "",
+                "type": "query",
+                "description": "only return articles from this group"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get Articles from own institution. User must be administrator of the institution"
+        },
+        {
+          "info": {
+            "name": "Private account institution group custom fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/institution/custom_fields",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "query",
+                "description": "Group_id"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the custom fields in the group the user belongs to, or the ones in the group specified, if the user has access."
+        },
+        {
+          "info": {
+            "name": "Custom fields values files upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/institution/custom_fields/:custom_field_id/items/upload",
+            "params": [
+              {
+                "name": "custom_field_id",
+                "value": "",
+                "type": "path",
+                "description": "Custom field identifier"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "external_file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Uploads a CSV containing values for a specific custom field of type <b>dropdown_large_list</b>. More details in the <a href=\"#custom_fields\">Custom Fields section</a>"
+        },
+        {
+          "info": {
+            "name": "Private Account Categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/categories",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List institution categories (including parent Categories)"
+        },
+        {
+          "info": {
+            "name": "Private Account Institution Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/institution/groups",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the groups for which the account has administrative privileges (assigned and inherited)."
+        },
+        {
+          "info": {
+            "name": "Private Account Institution Group Embargo Options",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/institution/groups/:group_id/embargo_options",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Account institution group embargo options details"
+        },
+        {
+          "info": {
+            "name": "Private Account Institution Roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/institution/roles",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the roles available for groups and the institution group."
+        },
+        {
+          "info": {
+            "name": "Private Account Institution Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/institution/accounts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number. Used for pagination with page_size"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of results included on a page. Used for pagination with page"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results included on a page. Used for pagination with query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Where to start the listing (the offset of the first result). Used for pagination with limit"
+              },
+              {
+                "name": "is_active",
+                "value": "",
+                "type": "query",
+                "description": "Filter by active status"
+              },
+              {
+                "name": "institution_user_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by institution_user_id"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter by email"
+              },
+              {
+                "name": "id_lte",
+                "value": "",
+                "type": "query",
+                "description": "Retrieve accounts with an ID lower or equal to the specified value"
+              },
+              {
+                "name": "id_gte",
+                "value": "",
+                "type": "query",
+                "description": "Retrieve accounts with an ID greater or equal to the specified value"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the accounts for which the account has administrative privileges (assigned and inherited)."
+        },
+        {
+          "info": {
+            "name": "Create new Institution Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/institution/accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create a new Account by sending account information. When the institution_user_id is provided, no verification email will be sent. The email_verified flag will automatically be set to true. If the institution_user_id is not provided, a verification email will be sent. The email_verified flag will be set to true once the account is created."
+        },
+        {
+          "info": {
+            "name": "Private Institution Account information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/institution/accounts/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier the user is associated to"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Private Institution Account information"
+        },
+        {
+          "info": {
+            "name": "Update Institution Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.figshare.com/v2/account/institution/accounts/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier the user is associated to"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update Institution Account"
+        },
+        {
+          "info": {
+            "name": "List Institution Account Group Roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/institution/roles/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier the user is associated to"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List Institution Account Group Roles"
+        },
+        {
+          "info": {
+            "name": "Add Institution Account Group Roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/institution/roles/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier the user is associated to"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Add Institution Account Group Roles"
+        },
+        {
+          "info": {
+            "name": "Delete Institution Account Group Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.figshare.com/v2/account/institution/roles/:account_id/:group_id/:role_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier for which to remove the role"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group identifier for which to remove the role"
+              },
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path",
+                "description": "Role identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete Institution Account Group Role"
+        },
+        {
+          "info": {
+            "name": "Private Account Institution Accounts Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/institution/accounts/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the accounts for which the account has administrative privileges (assigned and inherited)."
+        },
+        {
+          "info": {
+            "name": "Private Account Institution User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/institution/users/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier the user is associated to"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve institution user information using the account_id"
+        },
+        {
+          "info": {
+            "name": "Institution Curation Reviews",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/institution/reviews",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the group ID"
+              },
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "query",
+                "description": "Retrieve the reviews for this article"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the status of the review"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results included on a page. Used for pagination with query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Where to start the listing (the offset of the first result). Used for pagination with limit"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve a list of curation reviews for this institution"
+        },
+        {
+          "info": {
+            "name": "Institution Curation Review",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/institution/review/:curation_id",
+            "params": [
+              {
+                "name": "curation_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the curation"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve a certain curation review by its ID"
+        },
+        {
+          "info": {
+            "name": "Institution Curation Review Comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/account/institution/review/:curation_id/comments",
+            "params": [
+              {
+                "name": "curation_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the curation"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results included on a page. Used for pagination with query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Where to start the listing (the offset of the first result). Used for pagination with limit"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve a certain curation review's comments."
+        },
+        {
+          "info": {
+            "name": "POST Institution Curation Review Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/account/institution/review/:curation_id/comments",
+            "params": [
+              {
+                "name": "curation_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the curation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Add a new comment to the review."
+        },
+        {
+          "info": {
+            "name": "Private Institution HRfeed Upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/institution/hrfeed/upload",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "hrfeed",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://figshare.com/account/applications/authorize",
+              "accessTokenUrl": "https://api.figshare.com/v2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "More info in the <a href=\"#hr_feed\">HR Feed section</a>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Figshare altmetric oauth API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "oauth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get OAuth token information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.figshare.com/v2/token",
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "OAuth access token"
+              }
+            ]
+          },
+          "docs": "Returns information about the current OAuth token"
+        },
+        {
+          "info": {
+            "name": "Create OAuth token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.figshare.com/v2/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates OAuth token using various grant types"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
