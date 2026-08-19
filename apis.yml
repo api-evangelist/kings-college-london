@@ -39,7 +39,7 @@ tags:
   - United Kingdom
 created: '2026-06-03'
 modified: '2026-06-03'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: kings-college-london:pure-oai
   name: King's Research Portal (Pure) OAI-PMH
