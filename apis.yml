@@ -191,6 +191,12 @@ apis:
   - LLM
   - Inference
   - Research Computing
+  - OpenAI-Compatible
+  tags_raw:
+  - Artificial Intelligence
+  - LLM
+  - Inference
+  - Research Computing
   - OpenAI Compatible
   properties:
   - type: Documentation
