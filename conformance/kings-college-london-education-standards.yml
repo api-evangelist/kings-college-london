@@ -1,0 +1,149 @@
+generated: '2026-08-19'
+method: probed
+source:
+- https://kclpure.kcl.ac.uk/ws/oai?verb=Identify
+- https://kclpure.kcl.ac.uk/ws/oai?verb=ListMetadataFormats
+- https://kclpure.kcl.ac.uk/ws/oai?verb=ListSets
+- http://metadata.ukfederation.org.uk/ukfederation-metadata.xml
+- https://met.refeds.org/met/entity/https%3A%2F%2Fkclidp.kcl.ac.uk%2Fidp%2Fshibboleth/
+- https://api.datacite.org/providers/hcbr
+- https://api.datacite.org/dois?provider-id=hcbr
+- https://api.crossref.org/members?query=king%27s+college+london
+- https://ai.create.kcl.ac.uk/api/v1/models
+- https://keats.kcl.ac.uk/mod/lti/auth.php
+- https://keats.kcl.ac.uk/webservice/rest/server.php
+docs: https://docs.er.kcl.ac.uk/
+note: >-
+  Conformance against the Kin Score `education` regulatory regime standards[], probed live on
+  2026-08-19 as part of the university re-profile. Every entry below is a machine-observable
+  response, not a prose claim on a web page. Two of the hits belong to King's outright (the
+  DataCite membership and the eduGAIN/UK federation registration); the OAI-PMH and LTI hits are
+  real but run on tenanted vendor software, which is recorded on the surface entries themselves.
+  Absences are recorded as `false` deliberately — this rubric check is reward-only and an
+  invented conformance is worse than a zero.
+standards:
+- id: oai-pmh
+  name: OAI-PMH 2.0 (Open Archives Initiative Protocol for Metadata Harvesting)
+  conforms: true
+  operator: tenant
+  evidence: >-
+    https://kclpure.kcl.ac.uk/ws/oai?verb=Identify returns 200 with a valid OAI-PMH 2.0
+    envelope: repositoryName "Pure OAI Repository", baseURL https://kclpure.kcl.ac.uk/ws/oai,
+    protocolVersion 2.0, adminEmail puresupport@kcl.ac.uk, earliestDatestamp
+    2014-10-22T13:26:46Z, deletedRecord no, granularity YYYY-MM-DDThh:mm:ssZ. ListMetadataFormats
+    returns six prefixes — oai_dc, qdc, mods, uketd_dc, xmetadiss, nl_didl — of which uketd_dc is
+    the UK electronic theses profile, evidence of a configured repository rather than a default
+    install. ListSets returns persons:all, publications:all, publications:withFiles and a
+    per-year publication set from 1972 forward. The response envelope declares the OpenAIRE
+    CERIF 1.2 profile in xsi:schemaLocation.
+  caveat: >-
+    The protocol conformance is genuine and the adminEmail is a King's address, but
+    kclpure.kcl.ac.uk is a CNAME to kings.elsevierpure.com -> eu.prod.elsevierpure.com. The
+    implementation is Elsevier Pure's.
+  spec: https://www.openarchives.org/OAI/openarchivesprotocol.html
+- id: saml
+  name: SAML 2.0 Web Browser SSO
+  conforms: true
+  operator: tenant
+  evidence: >-
+    entityID https://kclidp.kcl.ac.uk/idp/shibboleth is present in the UK Access Management
+    Federation aggregate (uk001282, registrationInstant 2010-04-22, registrationAuthority
+    http://ukfederation.org.uk) among 11,113 entities, carrying an IDPSSODescriptor with
+    protocolSupportEnumeration for SAML 2.0, SAML 1.1 and urn:mace:shibboleth:1.0, signing and
+    encryption KeyDescriptors, an mdui:UIInfo block, and shibmd:Scope kcl.ac.uk. REFEDS MET
+    confirms the entity is exported to eduGAIN.
+  spec: http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
+- id: shibboleth
+  name: Shibboleth / UK Access Management Federation + eduGAIN
+  conforms: partial
+  operator: tenant
+  evidence: >-
+    King's is a registered UK federation identity provider and the entity is exported to
+    eduGAIN, with a SIRTFI assurance certification (https://refeds.org/sirtfi), REFEDS Research
+    and Scholarship entity-category support, a security contact at sirtfi@kcl.ac.uk and a
+    technical contact at ade.tayo@kcl.ac.uk. Marked partial rather than true because the entity
+    is not a King's-run Shibboleth IdP: the metadata comment reads "This is a OpenAthens IdP for
+    King's College London" and both SingleSignOnService Locations point at
+    https://login.openathens.net/saml/2/sso/kcl.ac.uk/c/ukfed. kclidp.kcl.ac.uk resolves to
+    193.61.202.17 but answers no HTTP request — the entityID is a name, not a service King's
+    operates.
+  spec: https://www.ukfederation.org.uk/
+- id: datacite
+  name: DataCite DOI registration
+  conforms: true
+  operator: institution
+  evidence: >-
+    https://api.datacite.org/providers/hcbr returns 200: symbol HCBR, name "King's College
+    London", memberType consortium_organization, country GB, rorId
+    https://ror.org/0220mzb33, created 2020-09-01. One repository (client) is registered under
+    it, BL.KCL, and 1,118 DOIs have been minted, under prefix 10.18742 — e.g.
+    10.18742/32789199, publisher "King's College London". The DataCite membership, prefix and
+    metadata are King's own; the landing pages the DOIs resolve to are on kcl.figshare.com.
+  spec: https://schema.datacite.org/
+- id: orcid
+  name: ORCID
+  conforms: false
+  evidence: >-
+    No ORCID iD appears anywhere in the Pure OAI-PMH output. ListRecords for set persons:all
+    returned 94,472 bytes of oai_dc person records containing dc:identifier (a Pure portal URL),
+    dc:title, dc:type, dc:date and dc:creator, and zero occurrences of the string "orcid".
+    Requesting metadataPrefix=qdc for the same set returns the same oai_dc payload. King's may
+    hold an ORCID membership, but no machine-readable surface exposes ORCID iDs, so there is
+    nothing here for a conformance check to read.
+- id: crossref
+  name: Crossref
+  conforms: false
+  evidence: >-
+    https://api.crossref.org/members?query=king%27s+college+london returns 200 with
+    total-results 0. King's is not a Crossref member in its own right.
+- id: lti
+  name: IMS/1EdTech Learning Tools Interoperability
+  conforms: partial
+  operator: tenant
+  evidence: >-
+    KEATS, the King's VLE at keats.kcl.ac.uk, is Moodle and serves a live LTI authorization
+    endpoint at /mod/lti/auth.php (200) plus the Moodle web-service entry points
+    /webservice/rest/server.php (200, XML `invalidtoken` fault) and /lib/ajax/service.php (200,
+    JSON error envelope). No LTI 1.3 platform JWKS and no OIDC discovery document is published
+    — /.well-known/openid-configuration returns 404. Partial, and tenant: keats.kcl.ac.uk is a
+    CNAME to kcl-vle.bloom.ulcc.ac.uk / kcl-vle-cluster.kcl.cdl.cosector.com, so the LMS is
+    operated by ULCC/Cosector.
+  spec: https://www.1edtech.org/standards/lti
+- id: scim
+  name: SCIM 2.0 (System for Cross-domain Identity Management)
+  conforms: false
+  evidence: >-
+    No SCIM endpoint was found on any King's host. /scim/v2 and /ServiceProviderConfig were not
+    reachable on ai.create.kcl.ac.uk, keats.kcl.ac.uk or kclpure.kcl.ac.uk, and no SCIM
+    provisioning surface is documented at docs.er.kcl.ac.uk.
+- id: oneroster
+  name: 1EdTech OneRoster
+  conforms: false
+  evidence: No OneRoster surface, rostering API or claim was found on any kcl.ac.uk host.
+- id: ed-fi
+  name: Ed-Fi Data Standard
+  conforms: false
+  evidence: >-
+    Ed-Fi is a US K-12 and state-agency standard; no Ed-Fi ODS, API or claim exists at King's,
+    and none would be expected of a UK higher-education institution.
+- id: caliper
+  name: 1EdTech Caliper Analytics
+  conforms: false
+  evidence: No Caliper event store, sensor endpoint or claim was found.
+- id: qti
+  name: 1EdTech Question and Test Interoperability
+  conforms: false
+  evidence: >-
+    No QTI import/export surface is exposed publicly. KEATS is Moodle, which can consume QTI,
+    but nothing is published or callable.
+summary:
+  regime: education
+  probed: 12
+  conforms_true: 3
+  conforms_partial: 2
+  conforms_false: 7
+  institution_operated_hits: 1
+  tenant_operated_hits: 4
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

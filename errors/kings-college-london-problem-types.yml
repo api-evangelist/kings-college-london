@@ -1,0 +1,74 @@
+generated: '2026-08-19'
+method: probed
+source:
+- https://ai.create.kcl.ac.uk/api/v1/models
+- https://ai.create.kcl.ac.uk/openapi.json
+- https://kclpure.kcl.ac.uk/ws/oai?verb=Identify
+format: openai-error-envelope
+rfc9457: false
+note: >-
+  Recorded from live responses, not from a specification — King's publishes no OpenAPI for any
+  surface. The e-Research AI Hub returns the OpenAI error envelope verbatim, which is the
+  correct choice for a platform whose stated value proposition is that any OpenAI client works
+  by changing base_url and api_key. It is not RFC 9457 problem+json and does not claim to be.
+  Only two error shapes could be observed without a credential; nothing further is asserted.
+envelope:
+  content_type: application/json
+  shape:
+    error:
+      message: string
+      type: string
+      param: string|null
+      code: string
+  example:
+    error:
+      message: Unauthorized — no bearer token provided
+      type: invalid_request_error
+      param: null
+      code: invalid_api_key
+status_codes:
+- status: 401
+  surface: https://ai.create.kcl.ac.uk/api/v1/models
+  meaning: Missing or invalid bearer token
+  retryable: false
+  observed: true
+  variants:
+  - trigger: no Authorization header
+    body: '{"error":{"message":"Unauthorized — no bearer token provided","type":"invalid_request_error","param":null,"code":"invalid_api_key"}}'
+  - trigger: Authorization Bearer with an unknown key
+    body: '{"error":{"message":"Unauthorized — invalid API key","type":"invalid_request_error","param":null,"code":"invalid_api_key"}}'
+  headers:
+    server: nginx/1.30.4
+    content-type: application/json
+    cache-control: no-cache, private
+    access-control-allow-origin: '*'
+- status: 404
+  surface: https://ai.create.kcl.ac.uk/
+  meaning: Unknown path
+  retryable: false
+  observed: true
+  note: >-
+    Unknown paths under ai.create.kcl.ac.uk return a 6,603-byte Laravel "404 Not Found" HTML
+    page rather than JSON — including /openapi.json, /v1/models and /.well-known/openapi. Worth
+    recording because it is the negative probe that establishes the API is namespaced under
+    /api/v1 and that no machine-readable contract is published at any conventional location.
+- status: 301
+  surface: https://ai.create.kcl.ac.uk/api/v1/
+  meaning: Trailing-slash normalisation
+  retryable: true
+  observed: true
+oai_pmh_errors:
+  surface: https://kclpure.kcl.ac.uk/ws/oai
+  format: OAI-PMH <error> element with a code attribute, HTTP 200
+  note: >-
+    The Pure OAI-PMH endpoint follows the OAI-PMH convention of returning HTTP 200 with an
+    in-body <error code="..."> element rather than an HTTP error status. A legacy path,
+    /ws/OAIHandler, answers 405; the canonical base URL is /ws/oai.
+  observed_status_for_legacy_path: 405
+unverified:
+  - >-
+    Rate-limit, quota and billing error codes for the AI Hub are documented behind institutional
+    SSO at https://ai.create.kcl.ac.uk/docs and could not be read. No 429 shape is asserted here.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
