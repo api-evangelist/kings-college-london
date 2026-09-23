@@ -4,7 +4,7 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: King's College London
 providerId: kings-college-london
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reconciled: false
 tags:
 - Education
@@ -12,21 +12,39 @@ tags:
 - University
 - Rate Limiting
 description: >-
-  King's College London does not publish a unified public rate-limit table across its APIs. Open
-  metadata and harvesting endpoints (OAI-PMH, IIIF, library) may throttle large-scale
-  or automated harvesting; clients should harvest politely, honor Retry-After, and
-  contact the relevant service for bulk access.
-notes: Confirm per-service limits with each API's documentation; harvest responsibly.
+  King's College London publishes no rate-limit table on any public surface. Re-checked
+  2026-08-19: the one institution-operated API, the e-Research AI Hub at
+  ai.create.kcl.ac.uk/api/v1, is metered — new accounts get an allocation of free tokens and
+  sustained use is billed against a project budget — but the limits, the quota units and the
+  429 shape are all documented behind Microsoft Entra ID sign-in at ai.create.kcl.ac.uk/docs and
+  could not be read. The 401 responses carry no RateLimit or Retry-After headers. The Pure
+  OAI-PMH endpoint at kclpure.kcl.ac.uk/ws/oai answers unauthenticated and publishes no stated
+  limit; harvest politely and honor Retry-After. No 429 was observed on any King's host.
+notes: >-
+  Nothing here is asserted from a specification — King's publishes none. The AI Hub metering is
+  read from King's own e-Research documentation; every numeric limit remains unknown.
 sources:
 - https://raw.githubusercontent.com/api-evangelist/kings-college-london/refs/heads/main/apis.yml
+- https://docs.er.kcl.ac.uk/CREATE/ai_hub/
+- https://ai.create.kcl.ac.uk/api/v1/models
+- https://kclpure.kcl.ac.uk/ws/oai?verb=Identify
 responseCodes:
   throttled: 429
 limits:
-- name: Default
+- name: e-Research AI Hub token allocation
+  scope: account
+  metric: tokens
+  limit: unknown
+  notes: >-
+    New AI Hub accounts receive an allocation of free tokens; beyond it usage is metered against
+    a project budget. The numeric allocation is behind institutional sign-in.
+- name: Pure OAI-PMH harvesting
   scope: client
   metric: requests-per-minute
-  limit: see service documentation
-  notes: No published global limit; large harvests may be rate-limited.
+  limit: unpublished
+  notes: >-
+    No published limit and no 429 observed across Identify, ListMetadataFormats, ListSets and a
+    94KB ListRecords page. Standard OAI-PMH resumption-token pacing applies.
 policies:
 - name: Backoff Strategy
   description: Exponential backoff with jitter; honor Retry-After; harvest during off-peak hours.

@@ -1,18 +1,103 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/kings-college-london-figshare-repository.yaml
+generated: '2026-08-19'
+method: probed
+source:
+- https://ai.create.kcl.ac.uk/api/v1/models
+- https://ai.create.kcl.ac.uk/
+- https://ai.create.kcl.ac.uk/docs
+- https://docs.er.kcl.ac.uk/CREATE/ai_hub/
+- https://docs.er.kcl.ac.uk/CREATE/cloud/openstack_api/
+- https://kclpure.kcl.ac.uk/ws/oai?verb=Identify
+- http://metadata.ukfederation.org.uk/ukfederation-metadata.xml
+note: >-
+  King's publishes no OpenAPI, so nothing here is derived from a contract — every scheme below
+  was established by probing the live surface or by reading King's own e-Research documentation.
+  The institution runs three distinct authentication regimes and they do not share a credential:
+  an open unauthenticated metadata surface, a bearer-token API on the e-Research AI Hub, and
+  Microsoft Entra ID institutional SSO in front of everything with a user interface.
 summary:
   types:
-  - oauth2
-  oauth2_flows:
-  - authorizationCode
+  - http
+  - openIdConnect
+  - saml
+  - none
 schemes:
-- name: OAuth2
-  type: oauth2
-  flows:
-  - flow: authorizationCode
-    authorizationUrl: https://figshare.com/account/applications/authorize
-    tokenUrl: https://api.figshare.com/v2/token
-    scopes: 1
+- name: aiHubBearer
+  type: http
+  scheme: bearer
+  applies_to: https://ai.create.kcl.ac.uk/api/v1
+  operator: institution
+  description: >-
+    The e-Research AI Hub exposes an OpenAI-compatible API that authenticates with an API key
+    presented as `Authorization: Bearer <key>`. Keys are self-issued from the signed-in AI Hub
+    dashboard; there is no public sign-up. Verified by probe: GET /api/v1/models with no header
+    returns 401 `{"error":{"message":"Unauthorized — no bearer token provided","type":
+    "invalid_request_error","param":null,"code":"invalid_api_key"}}`, and the same request with
+    a syntactically valid but unknown bearer returns 401 with message "Unauthorized — invalid
+    API key". The two distinct messages confirm the token is actually being validated rather
+    than the header merely being required.
+  key_issuance: self-service, after institutional sign-in, from the AI Hub dashboard
+  eligibility: researchers, students and staff of King's College London
+  cors: 'access-control-allow-origin: * on the 401 response'
   sources:
-  - openapi/kings-college-london-figshare-repository.yaml
+  - https://ai.create.kcl.ac.uk/api/v1/models
+  - https://docs.er.kcl.ac.uk/CREATE/ai_hub/
+- name: entraIdSso
+  type: openIdConnect
+  applies_to:
+  - https://ai.create.kcl.ac.uk/
+  - https://ai.create.kcl.ac.uk/docs
+  - https://portal.er.kcl.ac.uk/
+  operator: institution
+  description: >-
+    Every human-facing e-Research surface sits behind Microsoft Entra ID. GET / and GET /docs on
+    ai.create.kcl.ac.uk both return 200 carrying the Microsoft `BssoInterrupt` redirect document
+    (aadcdn.msftauth.net assets, login.microsoftonline.com, autologon.microsoftazuread-sso.com),
+    not the application. This is why the AI Hub's own API reference could not be read for this
+    profile: the documentation is authenticated, and the profile says so rather than guessing at
+    its contents.
+  discovery: not published on a kcl.ac.uk host; the tenancy is Microsoft-hosted
+  sources:
+  - https://ai.create.kcl.ac.uk/
+  - https://portal.er.kcl.ac.uk/
+- name: ukFederationSaml
+  type: saml
+  applies_to: https://kclidp.kcl.ac.uk/idp/shibboleth
+  operator: tenant
+  description: >-
+    King's federated identity for external e-resources runs through the UK Access Management
+    Federation and eduGAIN under entityID https://kclidp.kcl.ac.uk/idp/shibboleth, scoped to
+    kcl.ac.uk, SIRTFI-certified and supporting the REFEDS Research and Scholarship entity
+    category. Bindings offered are SAML 2.0 HTTP-Redirect and the legacy Shibboleth 1.0 AuthnRequest
+    profile. Marked tenant because both SingleSignOnService Locations resolve to
+    https://login.openathens.net/saml/2/sso/kcl.ac.uk/c/ukfed — OpenAthens operates the IdP on
+    King's behalf.
+  sources:
+  - http://metadata.ukfederation.org.uk/ukfederation-metadata.xml
+  - https://met.refeds.org/met/entity/https%3A%2F%2Fkclidp.kcl.ac.uk%2Fidp%2Fshibboleth/
+- name: openAthensClientCertificate
+  type: http
+  scheme: mutual-tls
+  applies_to: CREATE Cloud OpenStack API
+  operator: institution
+  description: >-
+    Programmatic access to the CREATE Cloud OpenStack API requires three things, per King's own
+    documentation: an active OpenVPN session onto the e-Research network, an OpenStack
+    application credential downloaded as clouds.yaml from the identity dashboard, and the KCL
+    e-Research Root CA certificate added to the local trust store. cloud.er.kcl.ac.uk publishes
+    no DNS record to the public internet, so none of this is reachable or verifiable from
+    outside — recorded from documentation, not from a probe.
+  sources:
+  - https://docs.er.kcl.ac.uk/CREATE/cloud/openstack_api/
+- name: none
+  type: none
+  applies_to: https://kclpure.kcl.ac.uk/ws/oai
+  operator: tenant
+  description: >-
+    The King's Research Portal OAI-PMH interface is fully open. Identify, ListMetadataFormats,
+    ListSets and ListRecords all answer 200 with no credential of any kind, which is what an
+    aggregator-facing harvesting endpoint should do.
+  sources:
+  - https://kclpure.kcl.ac.uk/ws/oai?verb=Identify
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

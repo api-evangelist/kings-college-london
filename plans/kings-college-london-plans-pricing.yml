@@ -4,7 +4,7 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: King's College London
 providerId: kings-college-london
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reconciled: false
 tags:
 - Education
@@ -12,17 +12,25 @@ tags:
 - University
 - Plans
 description: >-
-  King's College London is a non-commercial higher-education institution; its APIs are not sold
-  as a commercial product. Public APIs (library, repository, course, and open-metadata
-  interfaces) are offered free of charge, typically for non-commercial use. Most
-  administrative and identity APIs are not openly self-service and require institutional
-  affiliation, credentials, or federation membership rather than a paid plan.
+  King's College London is a non-commercial higher-education institution and does not sell API
+  access to the public. Corrected 2026-08-19: the June 2026 profile described "library,
+  repository, course and open-metadata" plans that mostly did not exist. What does exist is
+  three-tier and internal. Open metadata — the Pure OAI-PMH endpoint — is free and
+  unauthenticated to anyone. The e-Research AI Hub and CREATE Cloud are chargeback services for
+  King's affiliates: the AI Hub gives new accounts free starter tokens and meters use against a
+  project budget thereafter, and CREATE Cloud gives every King's researcher one free-tier project
+  (4 vCPU / 8GB memory / 40GB disk, best-effort support, development only) with paid quota sold
+  in 1 vCPU + 2GB increments against grant and departmental budgets. There is no public signup
+  for either. The remaining surfaces are vendor tenancies whose commercial terms are King's
+  contracts with Elsevier, Figshare, Ex Libris, OpenAthens and Cosector, not published prices.
 notes: >-
   No published per-seat or per-call commercial pricing. "Free / Open" reflects open
   public endpoints; "Affiliation / Credentialed" reflects access gated by institutional
   identity rather than payment.
 sources:
 - https://raw.githubusercontent.com/api-evangelist/kings-college-london/refs/heads/main/apis.yml
+- https://docs.er.kcl.ac.uk/CREATE/ai_hub/
+- https://docs.er.kcl.ac.uk/CREATE/cloud/cloud_pricing/
 plans:
 - id: kings-college-london-free-open
   name: Free / Open
@@ -42,7 +50,11 @@ plans:
 - id: kings-college-london-affiliation
   name: Affiliation / Credentialed
   type: free
-  description: Administrative and identity APIs gated behind institutional SSO, client certificates, or federation membership rather than payment.
+  description: >-
+    Institution-operated services gated behind King's SSO, VPN, client certificates or federation
+    membership rather than payment — the AI Hub free token allocation, the CREATE Cloud free-tier
+    project (4 vCPU, 8GB memory, 40GB disk, development use only, forum support), and the
+    federated identity provider.
   entries:
   - label: Credentialed Access
     name: credentialed_access
@@ -53,6 +65,26 @@ plans:
     geo: global
     unit: 1
     price: '0.00'
+    userMultiplied: false
+- id: kings-college-london-chargeback
+  name: Internal Chargeback
+  type: paid
+  description: >-
+    Metered research computing billed to grant and departmental budgets, not sold externally. AI
+    Hub usage beyond the starter token allocation is charged against a project budget; CREATE
+    Cloud quota is sold in 1 vCPU + 2GB memory increments, with SSD root disks charged per GB and
+    RDS data storage charged per TB above 5TB. Published rates live on the e-Research grant
+    costing pages; no per-call price list exists.
+  entries:
+  - label: Research Computing Chargeback
+    name: research_computing_chargeback
+    type: paid
+    metric: requests
+    limit: -1
+    timeFrame: usage
+    geo: global
+    unit: 1
+    price: unpublished
     userMultiplied: false
 maintainers:
 - FN: Kin Lane

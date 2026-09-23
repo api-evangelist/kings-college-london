@@ -3,8 +3,69 @@ name: King's College London
 description: King's College London public developer/API footprint review for APIs.json cataloging.
 url: https://raw.githubusercontent.com/api-evangelist/kings-college-london/refs/heads/main/review.yml
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reviews:
+  - date: '2026-08-19'
+    rating: 3
+    summary: >-
+      Re-profiled under the API Evangelist university pipeline, which settles WHO
+      OPERATES a surface before crediting it. The 2026-06-03 review credited King's
+      with the Figshare REST API; that was a vendor contract on a host twenty-five
+      universities in this catalog claimed at once, and the ten OpenAPIs, eleven
+      apis[] entries, twenty collection files and one agentic-access classification
+      derived from it have been removed. In their place, one genuinely
+      institution-operated API was found and verified: the King's e-Research AI Hub
+      at ai.create.kcl.ac.uk, an OpenAI-compatible LLM inference platform King's
+      built and runs on its own infrastructure for its own researchers. It is live
+      and bearer-authenticated but publishes no contract and its reference is behind
+      Entra ID. Four tenancies are recorded as relationships rather than as
+      contracts: Elsevier Pure, Figshare, Ex Libris Primo and OpenAthens. King's is
+      registered in the UK Access Management Federation and eduGAIN and holds its own
+      DataCite membership. The rating rises by one because the profile is now
+      accurate and names a real institutional API; the Kin Score will fall, because
+      ten contracts that were never King's have gone.
+    endpoints:
+      - url: https://ai.create.kcl.ac.uk/api/v1/models
+        status: 401
+        note: >-
+          Live institution-operated API. Returns the OpenAI error envelope; a request
+          with an unknown bearer returns a different message, so the key is validated.
+      - url: https://ai.create.kcl.ac.uk/openapi.json
+        status: 404
+        note: No machine-readable contract published at any conventional location.
+      - url: https://docs.er.kcl.ac.uk/CREATE/ai_hub/
+        status: 200
+        note: King's own documentation for the AI Hub, on King's own host.
+      - url: https://kclpure.kcl.ac.uk/ws/oai?verb=Identify
+        status: 200
+        note: >-
+          Live Pure OAI-PMH. TENANT — kclpure.kcl.ac.uk CNAMEs to kings.elsevierpure.com.
+      - url: http://metadata.ukfederation.org.uk/ukfederation-metadata.xml
+        status: 200
+        note: >-
+          Contains entityID https://kclidp.kcl.ac.uk/idp/shibboleth, SIRTFI-certified,
+          scope kcl.ac.uk, SSO endpoints on login.openathens.net — TENANT.
+      - url: https://api.datacite.org/providers/hcbr
+        status: 200
+        note: >-
+          King's own DataCite membership, ROR 0220mzb33, prefix 10.18742, 1,118 DOIs.
+      - url: https://librarysearch.kcl.ac.uk/
+        status: 200
+        note: Ex Libris Primo, vid=44KCL_INST — TENANT.
+      - url: https://keats.kcl.ac.uk/webservice/rest/server.php
+        status: 200
+        note: Moodle web services, hosted by ULCC/Cosector — TENANT.
+      - url: https://api.kcl.ac.uk/
+        status: 0
+        note: >-
+          Resolves to 137.73.130.161 but accepts no TCP connection on 80 or 443. Not a surface.
+      - url: https://cloud.er.kcl.ac.uk/
+        status: 0
+        note: >-
+          CREATE Cloud OpenStack API. No public DNS on 1.1.1.1 or 8.8.8.8 — VPN-only.
+      - url: https://www.kcl.ac.uk/llms.txt
+        status: 404
+        note: No agent-guidance file published.
   - date: '2026-06-03'
     rating: 2
     summary: >-
