@@ -50,6 +50,9 @@ position: Consuming
 access: Private
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/kings-college-london.png
 url: https://raw.githubusercontent.com/api-evangelist/kings-college-london/refs/heads/main/apis.yml
+x-docs-platform: mkdocs
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
 tags:
 - University
 - Higher Education
