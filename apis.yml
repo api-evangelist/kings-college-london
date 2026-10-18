@@ -375,6 +375,11 @@ apis:
   humanURL: https://keats.kcl.ac.uk/
   baseURL: https://keats.kcl.ac.uk/webservice/rest/server.php
   tags:
+  - LMS
+  - Moodle
+  - LTI
+  - Education Technology
+  tags_raw:
   - Learning Management
   - Moodle
   - LTI
