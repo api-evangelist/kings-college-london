@@ -1,4 +1,4 @@
-# King's College London (kings-college-london)
+# King's College London
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,71 +64,119 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-King's College London (KCL) is a UK public research university and Russell Group member, founded in 1829, ranked #40 in the QS World University Rankings. This repository profiles King's programmable footprint as an APIs.json profile, re-profiled on **2026-08-19** under the API Evangelist university pipeline, which settles **who operates** a surface before crediting it to the institution.
+King's College London is a UK public research university and Russell Group member, founded in 1829, ranked #40 in the QS World University Rankings. Re-profiled on 2026-08-19 under the API Evangelist university pipeline, which settles WHO OPERATES a surface before crediting it to the institution. The June 2026 profile credited King's with eleven API entries and ten OpenAPI contracts; every one of them was api.figshare.com/v2 — a single Figshare document that the same pass attributed to twenty-five different universities — split by tag into eleven apparent surfaces. Those contracts, and the collections and agentic-access artifacts derived from them, have been removed. What is left is what King's actually operates. The genuine find is the e-Research AI Hub at ai.create.kcl.ac.uk: King's own OpenAI-compatible LLM inference platform for researchers, live, bearer-authenticated, metered and billed, running on King's own infrastructure — a real institution-operated API, and a rare one in this cohort. Alongside it sit four tenancies that are real institutional facts but somebody else's engineering: the King's Research Portal OAI-PMH endpoint (Elsevier Pure), the research data repository (Figshare), LibrarySearch (Ex Libris Primo) and the UK federation identity provider (OpenAthens). King's holds its own DataCite membership and prefix, and is registered in the UK Access Management Federation and eduGAIN. It publishes no OpenAPI, no developer portal, no open data portal, no llms.txt and no security.txt.
 
-**What changed on 2026-08-19.** The June 2026 profile credited King's with eleven API entries and ten OpenAPI contracts. Every one of them described `api.figshare.com/v2` — a single Figshare document that the same pass attributed to twenty-five different universities, split by tag into eleven apparent surfaces. Those contracts, and the collections, schemas, examples and agentic-access classifications derived from them, have been removed. Figshare's API scores against Figshare's own repository, not King's.
+**Areas:** University · Higher Education · Education · Russell Group · United Kingdom · London · Research · Research Computing · Artificial Intelligence · Institutional Repository · Identity Federation · OAI-PMH
 
-- APIs.json: https://raw.githubusercontent.com/api-evangelist/kings-college-london/refs/heads/main/apis.yml
-- Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=kings-college-london-api-evangelist&utm_content=repo
+## King's College London on APIs.io
 
-## Type
+Everything profiled for King's College London is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/kings-college-london/](https://apis.io/providers/kings-college-london/)** — or go straight to one of the APIs or properties below.
 
-- Index / Consumer / Private — `x-type: university`, `x-category: Public Research University`
+### APIs (6)
 
-## Tags
+- [King's e-Research AI Hub API](https://apis.io/apis/kings-college-london/er-ai-hub/) — An OpenAI-compatible LLM inference API operated by King's e-Research for researchers, students and staff. Per King's documentation it serves chat…
+- [King's Research Portal (Pure) OAI-PMH](https://apis.io/apis/kings-college-london/pure-oai/) — The standards-based harvesting interface for the King's Research Portal, the front end of Pure — how King's research outputs reach OpenAIRE, CORE, BASE and…
+- [King's College London Research Data Repository (Figshare tenancy)](https://apis.io/apis/kings-college-london/figshare-repository/) — King's research data repository, operated for King's by Figshare. The data, the DOIs, the DataCite membership and the curation decisions are King's; the…
+- [King's UK Access Management Federation / eduGAIN Identity Provider](https://apis.io/apis/kings-college-london/uk-federation-idp/) — King's federated identity, and the surface class this pipeline flags as most often missed. The entity is registered in the UK Access Management Federation…
+- [King's LibrarySearch (Ex Libris Primo)](https://apis.io/apis/kings-college-london/librarysearch-primo/) — Library discovery for King's, on Ex Libris Primo. GET / returns 200 and redirects to /discovery/search?vid=44KCL_INST:44KCL_INST. Recorded as a tenancy…
+- [KEATS Virtual Learning Environment (Moodle) web services](https://apis.io/apis/kings-college-london/keats-moodle/) — King's VLE exposes the standard Moodle machine interfaces on a King's hostname: /webservice/rest/server.php answers 200 with an XML `invalidtoken` fault,…
 
-University, Higher Education, Education, Russell Group, United Kingdom, London, Research, Research Computing, Artificial Intelligence, Institutional Repository, Identity Federation, OAI-PMH, Library
+### Published properties
 
-## Surfaces, by operator
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### Institution-operated
+#### Vocabulary (1)
 
-- **King's e-Research AI Hub API** — `https://ai.create.kcl.ac.uk/api/v1`. King's own OpenAI-compatible LLM inference platform for researchers, students and staff: chat completions, image generation, streaming, RAG, agent workflows and MCP integrations, reachable by pointing an OpenAI client at a new base URL. Live and bearer-authenticated — `GET /api/v1/models` returns 401 with the OpenAI error envelope, and answers differently for a missing header than for an unknown key. Runs on King's own e-Research load balancer (`lbext-vip.er.kcl.ac.uk`). No OpenAPI is published; the API reference at `/docs` is behind Microsoft Entra ID. Docs: https://docs.er.kcl.ac.uk/CREATE/ai_hub/
+The provider's domain terms, defined.
 
-### Tenant — King's data, a vendor's contract
+- [King's College London Research Repository Vocabulary](https://apis.io/vocabularies/kings-college-london/kings-college-london-vocabulary/)
 
-- **King's Research Portal (Pure) OAI-PMH** — `https://kclpure.kcl.ac.uk/ws/oai`. Fully open OAI-PMH 2.0, six metadata prefixes including `uketd_dc`, sets back to 1972. `kclpure.kcl.ac.uk` CNAMEs to `kings.elsevierpure.com`; the implementation is Elsevier Pure's.
-- **Research data repository (Figshare)** — https://kcl.figshare.com/ CNAMEs to `figshare.com`. King's holds the DataCite membership (provider `HCBR`, ROR `0220mzb33`, prefix `10.18742`, 1,118 DOIs); Figshare holds the contract.
-- **UK Access Management Federation / eduGAIN identity provider** — entityID `https://kclidp.kcl.ac.uk/idp/shibboleth`, registered 2010, SIRTFI-certified, scope `kcl.ac.uk`. The SSO endpoints resolve to `login.openathens.net/saml/2/sso/kcl.ac.uk/c/ukfed` — OpenAthens runs the IdP.
-- **LibrarySearch** — https://librarysearch.kcl.ac.uk/ CNAMEs to `kcl.primo.exlibrisgroup.com` (Ex Libris Primo, `vid=44KCL_INST`).
-- **KEATS virtual learning environment** — https://keats.kcl.ac.uk/ CNAMEs to `kcl-vle.bloom.ulcc.ac.uk` (Moodle, hosted by ULCC/Cosector). Live web-service and LTI endpoints; no LTI 1.3 JWKS or OIDC discovery.
+#### Security (2)
 
-### Real but not reachable from the public internet
+Authentication, trust centre, and vulnerability disclosure.
 
-- **CREATE Cloud OpenStack API** — documented at https://docs.er.kcl.ac.uk/CREATE/cloud/openstack_api/, requires OpenVPN, an OpenStack application credential and the KCL e-Research root CA. `cloud.er.kcl.ac.uk` publishes no public DNS record.
-- **KCL e-Research Authentication API** — https://github.com/kcl-eresearch/auth_api documents King's own REST surface for SSH keys, OpenVPN certificates and MFA approvals. Internal; no public base URL, no OpenAPI.
+- [Kings College London Authentication](https://apis.io/security/kings-college-london/kings-college-london-authentication/)
+- [Kings College London Domain Security](https://apis.io/security/kings-college-london/kings-college-london-domain-security/)
 
-## Artifacts
+#### Plans and pricing (1)
 
-- Conformance (education regime): [conformance/kings-college-london-education-standards.yml](conformance/kings-college-london-education-standards.yml)
-- Authentication: [authentication/kings-college-london-authentication.yml](authentication/kings-college-london-authentication.yml)
-- Errors: [errors/kings-college-london-problem-types.yml](errors/kings-college-london-problem-types.yml)
-- Domain security: [security/kings-college-london-domain-security.yml](security/kings-college-london-domain-security.yml)
-- Plans: [plans/kings-college-london-plans-pricing.yml](plans/kings-college-london-plans-pricing.yml)
-- Rate Limits: [rate-limits/kings-college-london-rate-limits.yml](rate-limits/kings-college-london-rate-limits.yml)
-- FinOps: [finops/kings-college-london-finops.yml](finops/kings-college-london-finops.yml)
-- Review: [review.yml](review.yml)
+Published plans, tiers and prices.
 
-No `openapi/` directory exists in this repository, and that is the correct state: King's publishes no machine-readable API contract for any surface it operates.
+- [Kings College London Plans Pricing](https://apis.io/plans/kings-college-london/kings-college-london-plans-pricing/)
 
-## Timestamps
+#### Rate limits (1)
 
-- Created: 2026-06-03
-- Modified: 2026-08-19
+Published request limits.
 
-## Common Properties
+- [Kings College London Rate Limits](https://apis.io/rate-limits/kings-college-london/kings-college-london-rate-limits/)
 
-- Website: https://www.kcl.ac.uk/
-- GitHub: https://github.com/kcl-eresearch
-- LinkedIn: https://www.linkedin.com/school/king's-college-london/
-- Developer Portal (e-Research): https://docs.er.kcl.ac.uk/
-- AI Policy: https://www.kcl.ac.uk/about/strategy/learning-and-teaching/ai-guidance
-- Terms: https://www.kcl.ac.uk/terms · Privacy: https://www.kcl.ac.uk/terms/privacy
+#### FinOps (1)
 
-## Notes
+What the API costs to run, by operation.
 
-Every claim above was probed live on 2026-08-19; 40+ hosts and paths were checked and the full status table is in `apis.yml` under `x-coverage.evidence`. Confirmed absent: no DNS for `data.kcl.ac.uk`, `developer.kcl.ac.uk`, `courses.kcl.ac.uk`, `sis.kcl.ac.uk`, `idp.kcl.ac.uk` or `sso.kcl.ac.uk`; `api.kcl.ac.uk` resolves to 137.73.130.161 but accepts no TCP connection on port 80 or 443; `www.kcl.ac.uk/llms.txt` and `/.well-known/security.txt` both return 404. King's is not a Crossref member and exposes no ORCID iD on any machine-readable surface. No endpoints were fabricated and no vendor contract is credited to the institution.
+- [Kings College London Finops](https://apis.io/finops/kings-college-london/kings-college-london-finops/)
 
-## Maintainers
+## Where to find this API
 
-- Kin Lane — kin@apievangelist.com
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.kcl.ac.uk/)
+- [Documentation](https://docs.er.kcl.ac.uk/CREATE/ai_hub/)
+- [Support](https://docs.er.kcl.ac.uk/CREATE/getting_help/)
+- [Blog](https://www.kcl.ac.uk/news)
+- [Terms of service](https://www.kcl.ac.uk/terms)
+- [Privacy policy](https://www.kcl.ac.uk/terms/privacy)
+- [GitHub](https://github.com/kcl-eresearch)
+
+## API Evangelist rating
+
+**Kin Score 26.0** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 62.5 |
+| Contract quality | 4.4 |
+| Contract governance | 18.2 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 45.2 |
+| Access clarity | 28.9 |
+
+**Agent readiness 3.1** — human-only
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 22.7** — Education & Research
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/kings-college-london/](https://apis.io/providers/kings-college-london/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for King's College London: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/kings-college-london/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
